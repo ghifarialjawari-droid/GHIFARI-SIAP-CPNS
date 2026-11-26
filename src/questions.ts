@@ -462,7 +462,7 @@ function generateTiuQuestions(): Question[] {
   const tingkats: ('Dasar' | 'Menengah' | 'HOTS')[] = ['Dasar', 'Menengah', 'HOTS'];
 
   // 1. Analogi Verbal (50 soal unik)
-  const analogiPairs = [
+  const analogiPairs: [string, string, string[], string][] = [
     ['KALIBRASI : AKURASI', 'VAKSINASI : IMUNITAS', ['KOROSI : LOGAM', 'INSPEKSI : KERUSAKAN', 'PRODUKSI : DISTRIBUSI', 'ANGGARAN : REALISASI'], 'Hubungan proses dan hasil positifnya'],
     ['ARSITEK : BLUEPRINT', 'SUTRADARA : SKENARIO', ['DOKTER : STETOSKOP', 'HAKIM : PENGADILAN', 'NELAYAN : JARING', 'PETANI : CANGKUL'], 'Hubungan profesi dan rancangan kerja utamanya'],
     ['KATALISATOR : REAKSI', 'PELUMAS : GESEKAN', ['GENERATOR : LISTRIK', 'TERMOMETER : SUHU', 'BAROMETER : TEKANAN', 'KOMPAS : ARAH'], 'Hubungan zat/alat yang memengaruhi laju/hambatan suatu proses'],
