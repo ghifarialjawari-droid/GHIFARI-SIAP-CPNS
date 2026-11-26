@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import {
   Award, BookOpen, Brain, Calendar, CheckCircle2, ChevronRight, Clock,
-  Compass, Download, FileText, Filter, Flame, GraduationCap, LayoutDashboard,
-  Medal, Menu, MessageSquare, Play, Plus, RefreshCw, Search, Settings,
-  ShieldCheck, Sparkles, Target, TrendingUp, Trophy, Users, X, AlertTriangle,
-  BarChart3, Database, Save, Check, HelpCircle
+  Compass, Download, FileText, Flame, LayoutDashboard,
+  Menu, Play, Settings, TrendingUp, Trophy, X, AlertTriangle,
+  BarChart3, Database, Zap, RotateCcw, Eye
 } from 'lucide-react';
+import { QUESTION_BANK, Question } from './questions';
 
 // --- TYPES ---
 interface UserProfile {
@@ -33,19 +33,6 @@ interface FormasiItem {
   pelamarHistoris: number;
   sumberData: 'Data Historis Resmi BKN' | 'Simulasi Proyeksi';
   persyaratan: string[];
-  passingGradeKhusus?: { twk: number; tiu: number; tkp: number };
-}
-
-interface Question {
-  id: string;
-  kategori: 'TWK' | 'TIU' | 'TKP';
-  subMateri: string;
-  tingkat: 'Dasar' | 'Menengah' | 'HOTS';
-  paket: 'Harian' | 'Mingguan' | 'Bulanan';
-  soal: string;
-  opsi: { label: string; text: string; skor: number }[];
-  pembahasan: string;
-  referensi: string;
 }
 
 interface TryoutRecord {
@@ -206,168 +193,6 @@ const INITIAL_FORMASI: FormasiItem[] = [
   }
 ];
 
-const QUESTION_BANK: Question[] = [
-  // TWK
-  {
-    id: 'TWK-01', kategori: 'TWK', subMateri: 'Pancasila & Pengamalan', tingkat: 'Menengah', paket: 'Harian',
-    soal: 'Dalam rapat musyawarah desa untuk menentukan prioritas pembangunan infrastruktur, terjadi perbedaan pendapat yang tajam antarwarga. Pimpinan rapat mengajak seluruh peserta untuk tetap mengutamakan kepentingan bersama di atas kepentingan golongan serta menerima keputusan akhir dengan lapang dada. Sikap tersebut mencerminkan pengamalan Pancasila khususnya sila ke-...',
-    opsi: [
-      { label: 'A', text: 'Sila kedua dan ketiga', skor: 0 },
-      { label: 'B', text: 'Sila ketiga dan keempat', skor: 5 },
-      { label: 'C', text: 'Sila keempat dan kelima', skor: 0 },
-      { label: 'D', text: 'Sila pertama dan keempat', skor: 0 },
-      { label: 'E', text: 'Sila kedua dan kelima', skor: 0 }
-    ],
-    pembahasan: 'Mengutamakan kepentingan bersama di atas golongan merupakan butir Sila ke-3 (Persatuan Indonesia), sedangkan musyawarah mufakat dan menerima keputusan bersama dengan lapang dada adalah butir Sila ke-4.',
-    referensi: 'Tap MPR No. I/MPR/2003 tentang Butir-Butir Pengamalan Pancasila'
-  },
-  {
-    id: 'TWK-02', kategori: 'TWK', subMateri: 'UUD 1945 & Konstitusi', tingkat: 'HOTS', paket: 'Harian',
-    soal: 'Berdasarkan Pasal 24C ayat (1) UUD NRI Tahun 1945 setelah amandemen, salah satu kewenangan Mahkamah Konstitusi yang memutus pada tingkat pertama dan terakhir yang putusannya bersifat final adalah...',
-    opsi: [
-      { label: 'A', text: 'Menguji peraturan perundang-undangan di bawah undang-undang terhadap undang-undang', skor: 0 },
-      { label: 'B', text: 'Memutus sengketa kewenangan lembaga negara yang kewenangannya diberikan oleh UUD 1945', skor: 5 },
-      { label: 'C', text: 'Memberikan pertimbangan hukum kepada Presiden dalam pemberian grasi dan rehabilitasi', skor: 0 },
-      { label: 'D', text: 'Mengusulkan pengangkatan hakim agung kepada Dewan Perwakilan Rakyat', skor: 0 },
-      { label: 'E', text: 'Mengawasi perilaku hakim agung dan hakim konstitusi secara independen', skor: 0 }
-    ],
-    pembahasan: 'Pasal 24C ayat (1) UUD 1945 menegaskan MK berwenang mengadili pada tingkat pertama dan terakhir yang putusannya bersifat final untuk: (1) menguji UU terhadap UUD, (2) memutus sengketa kewenangan lembaga negara yang kewenangannya diberikan UUD, (3) memutus pembubaran parpol, dan (4) memutus perselisihan hasil pemilu.',
-    referensi: 'UUD NRI Tahun 1945 Pasal 24C Ayat (1)'
-  },
-  {
-    id: 'TWK-03', kategori: 'TWK', subMateri: 'Integritas & Antikorupsi', tingkat: 'HOTS', paket: 'Mingguan',
-    soal: 'Seorang pejabat pembuat komitmen (PPK) menolak pemberian paket liburan keluarga dari vendor pemenang tender proyek pengadaan mesin industri meskipun seluruh proses lelang telah selesai dilaksanakan sesuai prosedur. Tindakan PPK tersebut merupakan wujud nilai dasar ASN BerAKHLAK khususnya pada aspek...',
-    opsi: [
-      { label: 'A', text: 'Kompeten dan Adaptif', skor: 0 },
-      { label: 'B', text: 'Akuntabel (tidak menyalahgunakan kewenangan jabatan)', skor: 5 },
-      { label: 'C', text: 'Harmonis dan Kolaboratif', skor: 0 },
-      { label: 'D', text: 'Loyal kepada pimpinan instansi', skor: 0 },
-      { label: 'E', text: 'Berorientasi Pelayanan prima', skor: 0 }
-    ],
-    pembahasan: 'Gratifikasi pasca-tender tetap berpotensi konflik kepentingan dan dilarang dalam UU Tipikor serta panduan perilaku ASN "Akuntabel": melaksanakan tugas dengan jujur, bertanggung jawab, cermat, disiplin, dan berintegritas tinggi serta tidak menyalahgunakan kewenangan jabatan.',
-    referensi: 'SE MenPANRB No. 20 Tahun 2021 & UU No. 20 Tahun 2001 Pasal 12B'
-  },
-  {
-    id: 'TWK-04', kategori: 'TWK', subMateri: 'Bela Negara & NKRI', tingkat: 'Menengah', paket: 'Bulanan',
-    soal: 'Ancaman nonmiliter di era transformasi digital berupa penyebaran disinformasi yang memecah belah persatuan bangsa dapat ditangkal oleh ASN melalui implementasi nilai dasar Bela Negara yaitu...',
-    opsi: [
-      { label: 'A', text: 'Kemampuan awal bela negara secara fisik di garis perbatasan', skor: 0 },
-      { label: 'B', text: 'Sadar berbangsa dan bernegara dengan literasi digital serta verifikasi informasi', skor: 5 },
-      { label: 'C', text: 'Rela berkorban harta benda untuk pembangunan alutsista', skor: 0 },
-      { label: 'D', text: 'Cinta tanah air dengan membatasi seluruh akses teknologi asing', skor: 0 },
-      { label: 'E', text: 'Setia pada Pancasila sebagai ideologi tertutup', skor: 0 }
-    ],
-    pembahasan: 'Lima nilai dasar bela negara meliputi: cinta tanah air, sadar berbangsa dan bernegara, setia pada Pancasila sebagai ideologi negara, rela berkorban untuk bangsa dan negara, serta kemampuan awal bela negara. Menjaga ruang digital dari hoaks adalah bagian dari kesadaran berbangsa dan bernegara.',
-    referensi: 'UU No. 23 Tahun 2019 tentang Pengelolaan Sumber Daya Nasional untuk Pertahanan Negara'
-  },
-  // TIU
-  {
-    id: 'TIU-01', kategori: 'TIU', subMateri: 'Penalaran Logis (Silogisme)', tingkat: 'Menengah', paket: 'Harian',
-    soal: 'Semua insinyur yang lulus uji kompetensi berhak menandatangani dokumen rancangan teknis. Sebagian pegawai di Direktorat Industri adalah insinyur yang lulus uji kompetensi. Simpulan yang paling tepat adalah...',
-    opsi: [
-      { label: 'A', text: 'Semua pegawai di Direktorat Industri berhak menandatangani dokumen rancangan teknis.', skor: 0 },
-      { label: 'B', text: 'Sebagian pegawai di Direktorat Industri berhak menandatangani dokumen rancangan teknis.', skor: 5 },
-      { label: 'C', text: 'Sebagian insinyur yang lulus uji kompetensi bukan pegawai Direktorat Industri.', skor: 0 },
-      { label: 'D', text: 'Semua yang berhak menandatangani dokumen rancangan teknis adalah pegawai Direktorat Industri.', skor: 0 },
-      { label: 'E', text: 'Tidak ada pegawai Direktorat Industri yang berhak menandatangani dokumen rancangan teknis.', skor: 0 }
-    ],
-    pembahasan: 'Premis 1: Semua A adalah B. Premis 2: Sebagian C adalah A. Dengan aturan silogisme kategorik (Modus Barbara parsial), kesimpulan sahnya adalah: Sebagian C adalah B (Sebagian pegawai di Direktorat Industri berhak menandatangani dokumen rancangan teknis).',
-    referensi: 'Logika Deduktif - Silogisme Kategorik'
-  },
-  {
-    id: 'TIU-02', kategori: 'TIU', subMateri: 'Numerik (Deret & Perbandingan)', tingkat: 'Menengah', paket: 'Harian',
-    soal: 'Perhatikan pola deret bilangan berikut: 4, 7, 13, 25, 49, ... Bilangan selanjutnya yang tepat untuk melengkapi deret tersebut adalah...',
-    opsi: [
-      { label: 'A', text: '85', skor: 0 },
-      { label: 'B', text: '93', skor: 0 },
-      { label: 'C', text: '97', skor: 5 },
-      { label: 'D', text: '98', skor: 0 },
-      { label: 'E', text: '101', skor: 0 }
-    ],
-    pembahasan: 'Selisih antar suku: 7-4 = +3; 13-7 = +6; 25-13 = +12; 49-25 = +24. Pola selisih selalu dikali 2 (+3, +6, +12, +24, +48). Maka bilangan berikutnya = 49 + 48 = 97 (atau rumus 2n - 1).',
-    referensi: 'TIU Numerik - Pola Deret Geometri Bertingkat'
-  },
-  {
-    id: 'TIU-03', kategori: 'TIU', subMateri: 'Numerik (Perbandingan Kuantitatif)', tingkat: 'HOTS', paket: 'Mingguan',
-    soal: 'Sebuah mesin produksi mampu mencetak 240 komponen presisi dalam waktu 40 menit. Jika ditambahkan 2 mesin identik yang bekerja bersamaan dengan kecepatan sama, berapa menit waktu yang dibutuhkan untuk mencetak 900 komponen?',
-    opsi: [
-      { label: 'A', text: '45 menit', skor: 0 },
-      { label: 'B', text: '50 menit', skor: 5 },
-      { label: 'C', text: '60 menit', skor: 0 },
-      { label: 'D', text: '75 menit', skor: 0 },
-      { label: 'E', text: '90 menit', skor: 0 }
-    ],
-    pembahasan: 'Kecepatan 1 mesin = 240 / 40 = 6 komponen/menit. Jika ditambah 2 mesin identik, total ada 1 + 2 = 3 mesin. Kecepatan total = 3 × 6 = 18 komponen/menit. Waktu untuk 900 komponen = 900 / 18 = 50 menit.',
-    referensi: 'TIU Numerik - Perbandingan Senilai & Berbalik Nilai'
-  },
-  {
-    id: 'TIU-04', kategori: 'TIU', subMateri: 'Penalaran Analitis', tingkat: 'HOTS', paket: 'Bulanan',
-    soal: 'Lima peserta seleksi (A, B, C, D, E) memperoleh nilai SKD berbeda. Nilai A lebih tinggi dari B tetapi lebih rendah dari C. Nilai D lebih tinggi dari C, sedangkan nilai E berada tepat di antara nilai A dan B. Peserta dengan peringkat nilai tertinggi kedua adalah...',
-    opsi: [
-      { label: 'A', text: 'A', skor: 0 },
-      { label: 'B', text: 'B', skor: 0 },
-      { label: 'C', text: 'C', skor: 5 },
-      { label: 'D', text: 'D', skor: 0 },
-      { label: 'E', text: 'E', skor: 0 }
-    ],
-    pembahasan: 'Urutan dari tertinggi ke terendah: D > C > A > E > B. Peringkat 1 = D, peringkat 2 = C, peringkat 3 = A, peringkat 4 = E, peringkat 5 = B.',
-    referensi: 'TIU Penalaran Analitis - Pemeringkatan'
-  },
-  // TKP
-  {
-    id: 'TKP-01', kategori: 'TKP', subMateri: 'Pelayanan Publik', tingkat: 'Menengah', paket: 'Harian',
-    soal: 'Anda bertugas di loket pelayanan perizinan terpadu. Menjelang jam istirahat siang, seorang warga lansia datang dari desa terpencil dengan berkas permohonan yang belum lengkap, padahal sistem antrean daring sudah ditutup. Sikap Anda adalah...',
-    opsi: [
-      { label: 'A', text: 'Menjelaskan dengan sopan prosedur kelengkapan berkas, membantu memeriksa kekurangan dokumennya saat itu juga, dan mengarahkan jadwal pengajuan prioritas berikutnya.', skor: 5 },
-      { label: 'B', text: 'Meminta warga tersebut pulang dan kembali besok pagi sesuai jam operasional standar loket.', skor: 2 },
-      { label: 'C', text: 'Tetap memproses permohonannya meskipun berkas belum lengkap karena merasa kasihan.', skor: 1 },
-      { label: 'D', text: 'Menyarankan warga tersebut meminta bantuan petugas keamanan untuk mengisi formulir daring.', skor: 3 },
-      { label: 'E', text: 'Mencatat nomor teleponnya dan berjanji akan menghubunginya jika ada waktu luang minggu depan.', skor: 4 }
-    ],
-    pembahasan: 'Dalam TKP Pelayanan Publik, skor 5 menggabungkan empati tinggi tanpa melanggar aturan/SOP (tetap mensyaratkan kelengkapan berkas, namun proaktif membantu memeriksa dan memberi solusi terukur).',
-    referensi: 'Kisi-kisi TKP PermenPANRB - Aspek Pelayanan Publik'
-  },
-  {
-    id: 'TKP-02', kategori: 'TKP', subMateri: 'Teknologi Informasi & Komunikasi', tingkat: 'Menengah', paket: 'Harian',
-    soal: 'Instansi Anda baru saja meluncurkan sistem pelaporan kinerja digital untuk menggantikan pelaporan manual berbasis kertas. Beberapa rekan senior di unit Anda kesulitan beradaptasi sehingga progres laporan divisi melambat. Langkah yang Anda ambil adalah...',
-    opsi: [
-      { label: 'A', text: 'Fokus menyelesaikan laporan bagian saya sendiri tepat waktu agar kinerja pribadi tetap dinilai baik.', skor: 2 },
-      { label: 'B', text: 'Membuat panduan ringkas langkah demi langkah dan menawarkan pendampingan praktik langsung di sela waktu kerja.', skor: 5 },
-      { label: 'C', text: 'Melaporkan kepada atasan bahwa rekan senior menghambat digitalisasi unit kerja.', skor: 1 },
-      { label: 'D', text: 'Mengambil alih seluruh penginputan data rekan senior agar laporan divisi cepat selesai.', skor: 3 },
-      { label: 'E', text: 'Menyarankan mereka mengikuti pelatihan mandiri melalui video tutorial di internet.', skor: 4 }
-    ],
-    pembahasan: 'Aspek TIK & Jejaring Kerja mengutamakan kemauan berbagi pengetahuan teknologi secara solutif dan memberdayakan rekan kerja (bukan mengambil alih tugas atau membiarkan).',
-    referensi: 'Kisi-kisi TKP PermenPANRB - Aspek TIK'
-  },
-  {
-    id: 'TKP-03', kategori: 'TKP', subMateri: 'Profesionalisme & Anti Radikalisme', tingkat: 'HOTS', paket: 'Mingguan',
-    soal: 'Di grup percakapan internal pegawai, seorang rekan membagikan tautan artikel yang mempertanyakan keabsahan dasar negara dan mengajak anggota grup menolak kebijakan resmi pemerintah dengan alasan ideologi kelompok tertentu. Respons Anda adalah...',
-    opsi: [
-      { label: 'A', text: 'Keluar dari grup secara diam-diam agar tidak terlibat polemik.', skor: 2 },
-      { label: 'B', text: 'Mengingatkan secara objektif di grup mengenai netralitas serta kode etik ASN untuk setia pada Pancasila dan UUD 1945, lalu melaporkan konten tersebut sesuai mekanisme pembinaan internal.', skor: 5 },
-      { label: 'C', text: 'Membalas dengan kemarahan dan memperdebatkan pandangan tersebut secara emosional di grup.', skor: 1 },
-      { label: 'D', text: 'Mengabaikan pesan tersebut karena menganggapnya hanya candaan atau opini pribadi.', skor: 3 },
-      { label: 'E', text: 'Menghubungi rekan tersebut secara pribadi untuk menyarankan agar menghapus tautannya saja.', skor: 4 }
-    ],
-    pembahasan: 'Aspek Anti-Radikalisme menuntut ketegasan sikap ASN dalam menjaga keutuhan ideologi negara secara elegan, edukatif, dan sesuai prosedur pelaporan pembinaan kepegawaian.',
-    referensi: 'SKB Penanganan Radikalisme ASN & UU No. 20 Tahun 2023 tentang ASN'
-  },
-  {
-    id: 'TKP-04', kategori: 'TKP', subMateri: 'Sosial Budaya & Jejaring Kerja', tingkat: 'Menengah', paket: 'Bulanan',
-    soal: 'Anda dipindahtugaskan ke unit kerja di daerah dengan latar belakang bahasa dan adat istiadat yang berbeda dari daerah asal Anda. Pada minggu pertama, komunikasi tim terasa kaku. Upaya terbaik yang Anda lakukan adalah...',
-    opsi: [
-      { label: 'A', text: 'Tetap bekerja seperti biasa dan menunggu rekan kerja mengajak berbicara terlebih dahulu.', skor: 2 },
-      { label: 'B', text: 'Aktif mempelajari etika budaya setempat, bersikap terbuka dalam berdialog, dan membangun kolaborasi kerja yang inklusif.', skor: 5 },
-      { label: 'C', text: 'Hanya berinteraksi secara formal sebatas urusan pekerjaan agar terhindar dari salah paham budaya.', skor: 3 },
-      { label: 'D', text: 'Meminta rekan kerja menyesuaikan diri menggunakan kebiasaan komunikasi dari daerah asal Anda.', skor: 1 },
-      { label: 'E', text: 'Mengikuti kegiatan informal kantor sesekali sambil mengamati kebiasaan mereka.', skor: 4 }
-    ],
-    pembahasan: 'Aspek Sosial Budaya mengukur kemampuan beradaptasi dan bekerja efektif dalam masyarakat majemuk dengan sikap menghargai keragaman secara aktif.',
-    referensi: 'Kisi-kisi TKP PermenPANRB - Aspek Sosial Budaya'
-  }
-];
-
 const LEARNING_MODULES = [
   {
     kategori: 'TWK',
@@ -375,8 +200,8 @@ const LEARNING_MODULES = [
     targetPG: '65 Poin (30 Soal)',
     subTopik: [
       { nama: 'Pancasila', ringkasan: 'Kedudukan Pancasila sebagai dasar negara, pandangan hidup, ideologi terbuka, serta implementasi 45 butir pengamalan sila ke-1 hingga ke-5 dalam studi kasus pelayanan publik.', tips: 'Identifikasi kata kunci perilaku: Ketuhanan (toleransi), Kemanusiaan (empati/HAM), Persatuan (rela berkorban/cinta tanah air), Kerakyatan (musyawarah/mufakat), Keadilan (hak & kewajiban seimbang).' },
-      { nama: 'UUD 1945 & Sistem Ketatanegaraan', ringkasan: 'Batang tubuh UUD 1945 pasca-amandemen (I–IV), tugas & wewenang MPR, DPR, DPD, Presiden, BPK, MA, MK, dan KY.', tips: 'Hafalkan pasal kunci: Pasal 1 (Bentuk negara), Pasal 7A-7B (Pemakzulan), Pasal 24A-24C (Kekuasaan Kehakiman), Pasal 27-34 (Warga Negara & Kesra).' },
-      { nama: 'NKRI & Bhinneka Tunggal Ika', ringkasan: 'Wawasan Nusantara, otonomi daerah (UU No. 23/2014), pengelolaan keberagaman suku, agama, ras, dan antargolongan.', tips: 'Fokus pada konsep persatuan dalam keberagaman dan batas kewenangan pemerintah pusat vs daerah (absolut vs konkuren).' },
+      { nama: 'UUD 1945 & Sistem Ketatanegaraan', ringkasan: 'Batang tubuh UUD 1945 pasca-amandemen (I–IV), tugas & wewenang MPR, DPR, DPD, Presiden, BPK, MA, MK, dan KY.', tips: 'Hafalkan pasal kunci: Pasal 1 (Bentuk negara), Pasal 7A-7B (Pemakzulan), Pasal 20 (Legislasi), Pasal 24A-24C (Kekuasaan Kehakiman).' },
+      { nama: 'NKRI & Bhinneka Tunggal Ika', ringkasan: 'Wawasan Nusantara, otonomi daerah (UU No. 23/2014), pengelolaan keberagaman suku, agama, ras, dan antargolongan.', tips: 'Fokus pada konsep persatuan dalam keberagaman dan 6 urusan absolut pemerintah pusat vs urusan konkuren daerah.' },
       { nama: 'Nasionalisme, Integritas & Bela Negara', ringkasan: 'Sejarah pergerakan nasional, nilai dasar ASN BerAKHLAK, pencegahan gratifikasi/korupsi (UU Tipikor), serta 5 nilai dasar Bela Negara.', tips: 'Soal TWK modern berbentuk penalaran kasus. Pilih jawaban yang paling mencerminkan kepatuhan regulasi dan kepentingan bangsa.' }
     ]
   },
@@ -385,9 +210,9 @@ const LEARNING_MODULES = [
     judul: 'Tes Intelegensia Umum (TIU)',
     targetPG: '80 Poin (35 Soal)',
     subTopik: [
-      { nama: 'Kemampuan Verbal (Analogi, Silogisme, Analitis)', ringkasan: 'Hubungan padanan kata, penarikan kesimpulan logis (Modus Ponens, Tollens, Silogisme), serta pemecahan masalah urutan/posisi.', tips: 'Untuk silogisme, gunakan diagram Venn atau aturan: Premis partikular (sebagian) selalu menghasilkan kesimpulan partikular.' },
+      { nama: 'Kemampuan Verbal (Analogi, Silogisme, Analitis)', ringkasan: 'Hubungan padanan kata, penarikan kesimpulan logis (Modus Ponens, Tollens, Silogisme), serta pemecahan masalah urutan/posisi.', tips: 'Untuk silogisme, gunakan aturan: Premis partikular (sebagian) selalu menghasilkan kesimpulan partikular.' },
       { nama: 'Kemampuan Numerik (Berhitung, Deret, Perbandingan)', ringkasan: 'Operasi pecahan/desimal cepat, pola deret aritmetika/geometri bertingkat, perbandingan senilai/berbalik nilai, serta soal cerita kuantitatif.', tips: 'Ubah desimal berulang menjadi pecahan istimewa (misal 0,125 = 1/8; 0,375 = 3/8; 0,1667 = 1/6) untuk menghemat 30 detik per soal.' },
-      { nama: 'Kemampuan Figural (Analogi, Ketidaksamaan, Serial)', ringkasan: 'Rotasi bangun datar, pencerminan (refleksi), penambahan/pengurangan elemen visual, dan perubahan warna pola gambar.', tips: 'Amati satu elemen kecil terlebih dahulu (misal arah jarum/titik sudut) dan eliminasi 3 opsi yang arah rotasinya salah.' }
+      { nama: 'Kemampuan Figural & Spasial', ringkasan: 'Rotasi bangun datar dan ruang 3D (kubus/jaring-jaring), pencerminan (refleksi), penambahan/pengurangan elemen visual.', tips: 'Amati pergerakan satu sisi kunci secara bertahap dan eliminasi opsi yang arah rotasinya berlawanan.' }
     ]
   },
   {
@@ -396,7 +221,7 @@ const LEARNING_MODULES = [
     targetPG: '166 Poin (45 Soal)',
     subTopik: [
       { nama: 'Pelayanan Publik & Profesionalisme', ringkasan: 'Orientasi kepuasan masyarakat sesuai SOP, akuntabilitas kerja, dan ketangguhan menyelesaikan tugas di bawah tekanan.', tips: 'Selalu pilih opsi yang menunjukkan inisiatif membantu pemohon secara ramah NAMUN tetap patuh pada prosedur resmi.' },
-      { nama: 'Jejaring Kerja, Sosial Budaya & TIK', ringkasan: 'Kolaborasi lintas unit, adaptasi budaya lokal, serta pemanfaatan teknologi informasi untuk efisiensi birokrasi.', tips: 'Pilih opsi yang membangun sinergi tim, mentransfer ilmu teknologi kepada rekan kerja, dan menghormati kearifan lokal.' },
+      { nama: 'Jejaring Kerja, Sosial Budaya & TIK', ringkasan: 'Kolaborasi lintas unit, adaptasi budaya lokal, serta pemanfaatan teknologi informasi & keamanan siber.', tips: 'Pilih opsi yang membangun sinergi tim, mentransfer ilmu teknologi kepada rekan kerja, dan waspada terhadap ancaman siber.' },
       { nama: 'Anti Radikalisme', ringkasan: 'Deteksi dini paham intoleran/radikal di lingkungan kerja, menjaga netralitas ASN, dan kesetiaan pada konstitusi.', tips: 'Hindari sikap apatis (diam saja) maupun reaktif emosional. Pilih sikap edukatif berbasis aturan kepegawaian.' }
     ]
   }
@@ -455,7 +280,7 @@ export default function App() {
 
   const [config, setConfig] = useState<SelectionConfig>(() => {
     const saved = localStorage.getItem('gsc_config');
-    return saved ? JSON.parse(saved) : INITIAL_CONFIG;
+    return saved ? { ...INITIAL_CONFIG, ...JSON.parse(saved), gasUrl: JSON.parse(saved).gasUrl || INITIAL_CONFIG.gasUrl } : INITIAL_CONFIG;
   });
 
   const [formasiList, setFormasiList] = useState<FormasiItem[]>(() => {
@@ -486,6 +311,58 @@ export default function App() {
   useEffect(() => { localStorage.setItem('gsc_formasi', JSON.stringify(formasiList)); }, [formasiList]);
   useEffect(() => { localStorage.setItem('gsc_history', JSON.stringify(history)); }, [history]);
   useEffect(() => { localStorage.setItem('gsc_study_logs', JSON.stringify(studyLogs)); }, [studyLogs]);
+
+  // --- QUICK PRACTICE (LATIHAN CEPAT TWK / TIU / TKP) ---
+  const [quickCat, setQuickCat] = useState<'TWK' | 'TIU' | 'TKP'>('TWK');
+  const [quickSubFilter, setQuickSubFilter] = useState<string>('Semua');
+  const [quickIdx, setQuickIdx] = useState<number>(0);
+  const [quickSelectedOpt, setQuickSelectedOpt] = useState<number | null>(null);
+  const [quickStats, setQuickStats] = useState<{ dijawab: number; skorTotal: number; benar: number }>({
+    dijawab: 0,
+    skorTotal: 0,
+    benar: 0
+  });
+
+  const quickQuestions = useMemo(() => {
+    return QUESTION_BANK.filter((q) => {
+      if (q.kategori !== quickCat) return false;
+      if (quickSubFilter !== 'Semua' && q.subMateri !== quickSubFilter) return false;
+      return true;
+    });
+  }, [quickCat, quickSubFilter]);
+
+  const quickSubTopics = useMemo(() => {
+    const subs = new Set(QUESTION_BANK.filter((q) => q.kategori === quickCat).map((q) => q.subMateri));
+    return ['Semua', ...Array.from(subs)];
+  }, [quickCat]);
+
+  const startQuickDrill = (cat: 'TWK' | 'TIU' | 'TKP') => {
+    setQuickCat(cat);
+    setQuickSubFilter('Semua');
+    setQuickIdx(0);
+    setQuickSelectedOpt(null);
+    setActiveTab('latihan');
+  };
+
+  const handleQuickAnswer = (optIdx: number) => {
+    if (quickSelectedOpt !== null) return;
+    setQuickSelectedOpt(optIdx);
+    const currentQ = quickQuestions[quickIdx];
+    if (!currentQ) return;
+    const earned = currentQ.opsi[optIdx].skor;
+    setQuickStats((prev) => ({
+      dijawab: prev.dijawab + 1,
+      skorTotal: prev.skorTotal + earned,
+      benar: prev.benar + (earned === 5 ? 1 : 0)
+    }));
+    const today = new Date().toISOString().split('T')[0];
+    setStudyLogs((prev) => ({ ...prev, [today]: (prev[today] || 0) + 1 }));
+  };
+
+  const nextQuickQuestion = () => {
+    setQuickSelectedOpt(null);
+    setQuickIdx((prev) => (prev + 1) % quickQuestions.length);
+  };
 
   // --- MODULE 11: FORMASI FILTER STATE ---
   const [filterJenisInstansi, setFilterJenisInstansi] = useState<string>('Semua');
@@ -544,9 +421,8 @@ export default function App() {
   }, [history]);
 
   const simulationResult = useMemo(() => {
-    const kuotaSkd = customKuota * 3; // Aturan 3x formasi ke SKB
+    const kuotaSkd = customKuota * 3;
     const rasioKeketatan = customKuota > 0 ? (customPelamar / customKuota).toFixed(1) : '0';
-    // Distribusi skor pembanding berbasis kurva normal simulasi (mean 355, std 42)
     const zBase = (simulasiSkorUser - 355) / 42;
     const percentileBase = 1 / (1 + Math.exp(-1.7 * zBase));
     const estRankBase = Math.max(1, Math.round((1 - percentileBase) * customPelamar) + 1);
@@ -614,7 +490,6 @@ export default function App() {
       if (skor === 5) detailSubMateri[q.subMateri].benar += 1;
     });
 
-    // Skala proporsional jika paket mini agar selaras dengan standar PG 110 soal
     const countTwk = examQuestions.filter((q) => q.kategori === 'TWK').length || 1;
     const countTiu = examQuestions.filter((q) => q.kategori === 'TIU').length || 1;
     const countTkp = examQuestions.filter((q) => q.kategori === 'TKP').length || 1;
@@ -685,23 +560,22 @@ export default function App() {
         const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Maaf, respons AI tidak tersedia.';
         setAiMessages((prev) => [...prev, { role: 'ai', text: reply }]);
       } else {
-        // Offline / Fallback Rule-Based Academic Engine
-        await new Promise((r) => setTimeout(r, 500));
+        await new Promise((r) => setTimeout(r, 400));
         let reply = '';
         const low = promptText.toLowerCase();
         if (low.includes('analisis') || low.includes('kelemahan')) {
-          reply = `**Analisis Kelemahan Berbasis Skor Terakhir (${latestScore?.total || 0}):**\n• **TWK (${latestScore?.twk || 0}/${config.pgTwk}):** Sudah melampaui ambang batas, namun perlu pendalaman pada studi kasus Pasal UUD 1945 & Integritas ASN.\n• **TIU (${latestScore?.tiu || 0}/${config.pgTiu}):** Tingkatkan kecepatan pada Penalaran Analitis & Perbandingan Kuantitatif (targetkan < 50 detik/soal).\n• **TKP (${latestScore?.tkp || 0}/${config.pgTkp}):** Fokus membedakan opsi poin 4 dan 5 pada aspek Anti-Radikalisme dan Pelayanan Publik berbasis SOP.`;
+          reply = `**Analisis Kelemahan Berbasis Skor Terakhir (${latestScore?.total || 0}):**\n• **TWK (${latestScore?.twk || 0}/${config.pgTwk}):** Sudah melampaui ambang batas, namun perlu pendalaman pada studi kasus Pasal UUD 1945, Otonomi Daerah & Integritas ASN.\n• **TIU (${latestScore?.tiu || 0}/${config.pgTiu}):** Tingkatkan kecepatan pada Penalaran Analitis, Perbandingan P vs Q, dan Waktu Berpapasan.\n• **TKP (${latestScore?.tkp || 0}/${config.pgTkp}):** Fokus membedakan opsi poin 4 dan 5 pada aspek Anti-Radikalisme dan Pelayanan Publik berbasis SOP.`;
         } else if (low.includes('trik') || low.includes('tiu')) {
-          reply = `**Trik Cepat TIU (Metode Eliminasi & Pecahan Istimewa):**\n1. **Deret Angka:** Cek selisih 1 tingkat dulu. Jika tidak konstan, cek selisih 2 tingkat atau pola lompat 1 suku (ganjil-genap terpisah).\n2. **Silogisme:** Coret term tengah yang sama. Jika salah satu premis memuat kata *"Sebagian/Beberapa"*, maka kesimpulan WAJIB memuat kata *"Sebagian/Beberapa"*.\n3. **Pecahan:** Hafalkan konversi 1/8 = 12,5%, 3/8 = 37,5%, 5/8 = 62,5%, 1/6 = 16,67%.`;
+          reply = `**Trik Cepat TIU (Metode Eliminasi & Pecahan Istimewa):**\n1. **Deret Angka:** Cek selisih 1 tingkat dulu. Jika tidak konstan, cek selisih 2 tingkat atau pola lompat 1 suku.\n2. **Silogisme:** Jika salah satu premis memuat kata *"Sebagian/Beberapa"*, kesimpulan WAJIB memuat *"Sebagian/Beberapa"*.\n3. **Pecahan:** Hafalkan 1/8 = 12,5%, 3/8 = 37,5%, 5/8 = 62,5%, 1/6 = 16,67%.`;
         } else if (low.includes('jadwal')) {
-          reply = `**Rekomendasi Jadwal Belajar Harian (${profile.targetSoalHarian} Soal/Hari):**\n• **Senin & Kamis (TWK - 45 Menit):** Bedah 15 soal studi kasus Pancasila, UUD 1945 & BerAKHLAK + catat pasal kunci.\n• **Selasa & Jumat (TIU - 50 Menit):** Latihan 15 soal Numerik & Silogisme menggunakan stopwatch (maksimal 60 detik/soal).\n• **Rabu & Sabtu (TKP - 40 Menit):** Latihan 20 soal TKP dan evaluasi mengapa sebuah opsi bernilai 5 vs 4.\n• **Minggu (Simulasi CAT):** Ikuti paket Tryout Mingguan di menu Tryout Nasional.`;
+          reply = `**Rekomendasi Jadwal Belajar Harian (${profile.targetSoalHarian} Soal/Hari):**\n• **Senin & Kamis (TWK):** Latihan Cepat TWK 15 soal studi kasus Pancasila, UUD 1945 & BerAKHLAK.\n• **Selasa & Jumat (TIU):** Latihan Cepat TIU 15 soal Numerik, Silogisme & Spasial dengan target < 60 detik/soal.\n• **Rabu & Sabtu (TKP):** Latihan Cepat TKP 20 soal dengan evaluasi alasan poin 5.\n• **Minggu:** Simulasi Tryout CAT Mingguan.`;
         } else {
-          reply = `Berdasarkan regulasi **${config.regulasi}**, seleksi SKD terdiri dari **TWK (${config.jumlahTwk} soal, PG ${config.pgTwk})**, **TIU (${config.jumlahTiu} soal, PG ${config.pgTiu})**, dan **TKP (${config.jumlahTkp} soal, PG ${config.pgTkp})** dalam waktu **${config.durasiMenit} menit**.\n\nUntuk jawaban AI generatif dinamis (pembuatan soal baru tak terbatas), Anda dapat memasukkan **Gemini API Key** pada menu *Pengaturan Tahun Seleksi*.`;
+          reply = `Berdasarkan regulasi **${config.regulasi}**, seleksi SKD terdiri dari **TWK (${config.jumlahTwk} soal, PG ${config.pgTwk})**, **TIU (${config.jumlahTiu} soal, PG ${config.pgTiu})**, dan **TKP (${config.jumlahTkp} soal, PG ${config.pgTkp})** dalam waktu **${config.durasiMenit} menit**.\n\nUntuk jawaban AI generatif dinamis (pembuatan soal baru tak terbatas), masukkan **Gemini API Key** pada menu *Pengaturan Tahun Seleksi*.`;
         }
         setAiMessages((prev) => [...prev, { role: 'ai', text: reply }]);
       }
     } catch {
-      setAiMessages((prev) => [...prev, { role: 'ai', text: 'Terjadi kendala koneksi saat menghubungi layanan AI. Periksa API Key atau koneksi internet Anda.' }]);
+      setAiMessages((prev) => [...prev, { role: 'ai', text: 'Terjadi kendala koneksi saat menghubungi layanan AI.' }]);
     } finally {
       setAiLoading(false);
     }
@@ -712,7 +586,7 @@ export default function App() {
     if (history.length === 0) {
       return {
         avgTwk: 0, avgTiu: 0, avgTkp: 0, avgTotal: 0,
-        pgRate: 0, status: 'Belum siap', badgeColor: 'bg-rose-100 text-rose-700',
+        pgRate: 0, status: 'Belum siap',
         strongest: '-', weakest: '-', prediksiSkor: 350
       };
     }
@@ -730,16 +604,12 @@ export default function App() {
     ].sort((a, b) => b.ratio - a.ratio);
 
     let status = 'Belum siap';
-    let badgeColor = 'bg-rose-100 text-rose-700';
     if (avgTotal >= 410 && pgRate === 100) {
       status = 'Siap mengikuti simulasi seleksi';
-      badgeColor = 'bg-emerald-100 text-emerald-700';
     } else if (avgTotal >= 370 && pgRate >= 50) {
       status = 'Hampir siap';
-      badgeColor = 'bg-sky-100 text-sky-700';
     } else if (avgTotal >= 320) {
       status = 'Perlu peningkatan';
-      badgeColor = 'bg-amber-100 text-amber-700';
     }
 
     const trend = history.length >= 2 ? history[history.length - 1].total - history[0].total : 10;
@@ -747,7 +617,7 @@ export default function App() {
 
     return {
       avgTwk, avgTiu, avgTkp, avgTotal, pgRate,
-      status, badgeColor,
+      status,
       strongest: ratios[0].name,
       weakest: ratios[ratios.length - 1].name,
       prediksiSkor
@@ -828,18 +698,20 @@ export default function App() {
   };
 
   const navItems = [
-    { id: 'dashboard', label: 'Ringkasan & Kesiapan', icon: LayoutDashboard },
+    { id: 'dashboard', label: 'Beranda & Latihan Cepat', icon: LayoutDashboard },
+    { id: 'latihan', label: 'Latihan TWK / TIU / TKP', icon: Zap },
+    { id: 'tryout', label: 'Tryout Nasional CAT', icon: Award },
     { id: 'formasi', label: 'Rekomendasi Formasi', icon: Compass },
     { id: 'simulasi', label: 'Simulasi Peringkat', icon: BarChart3 },
-    { id: 'tryout', label: 'Tryout Nasional CAT', icon: Award },
     { id: 'tutor', label: 'AI Tutor CPNS', icon: Brain },
     { id: 'materi', label: 'Materi Pembelajaran', icon: BookOpen },
     { id: 'target', label: 'Target & Kalender', icon: Calendar },
     { id: 'laporan', label: 'Laporan & Sertifikat PDF', icon: FileText },
-    { id: 'pengaturan', label: 'Pengaturan Tahun Seleksi', icon: Settings }
+    { id: 'pengaturan', label: 'Pengaturan & Sinkronisasi', icon: Settings }
   ];
 
   const latestReport = history[history.length - 1] || INITIAL_HISTORY[0];
+  const currentQuickQ = quickQuestions[quickIdx];
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-slate-50">
@@ -849,7 +721,7 @@ export default function App() {
           <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center font-bold text-lg">G</div>
           <div>
             <h1 className="font-bold text-base leading-tight">Ghifari Siap CPNS</h1>
-            <p className="text-[11px] text-cyan-100">Seleksi ASN Tahun {config.tahun}</p>
+            <p className="text-[11px] text-cyan-100">Bank Soal Bervariasi • SKD {config.tahun}</p>
           </div>
         </div>
         <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 rounded-lg bg-white/10">
@@ -867,7 +739,7 @@ export default function App() {
             <div>
               <h1 className="font-extrabold text-lg tracking-tight leading-tight">Ghifari Siap CPNS</h1>
               <span className="inline-block mt-0.5 text-[11px] bg-white/20 px-2 py-0.5 rounded-full font-medium">
-                Tahun Seleksi {config.tahun}
+                Seleksi ASN {config.tahun}
               </span>
             </div>
           </div>
@@ -916,457 +788,317 @@ export default function App() {
 
       {/* MAIN CONTENT */}
       <main className="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full space-y-6">
-        {/* TOP NOTIFICATION IF TARGET UNMET */}
-        {todaySolved < profile.targetSoalHarian && (
-          <div className="no-print bg-amber-50 border border-amber-200 rounded-2xl p-3.5 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex items-center gap-2.5 text-sm text-amber-900">
-              <AlertTriangle size={18} className="text-amber-600 shrink-0" />
-              <span>
-                Target latihan harian belum tercapai ({todaySolved}/{profile.targetSoalHarian} soal). Selesaikan minimal{' '}
-                <strong>{profile.targetSoalHarian - todaySolved} soal</strong> lagi hari ini!
-              </span>
-            </div>
-            <button
-              onClick={() => {
-                setActiveTab('tryout');
-                startTryout('Harian');
-              }}
-              className="px-3 py-1.5 rounded-xl bg-amber-600 text-white text-xs font-semibold hover:bg-amber-700"
-            >
-              Mulai Tryout Harian
-            </button>
-          </div>
-        )}
-
-        {/* TAB 1: DASHBOARD & ANALISIS KESIAPAN (MODUL 16) */}
+        {/* TAB 1: DASHBOARD SIMPLE & PILIH LATIHAN TWK / TIU / TKP */}
         {activeTab === 'dashboard' && (
           <div className="space-y-6">
+            {/* HERO BANNER */}
             <div className="bg-gradient-to-r from-cyan-600 via-sky-600 to-blue-700 rounded-3xl p-6 md:p-8 text-white shadow-lg flex flex-col md:flex-row justify-between gap-6 items-start md:items-center">
               <div>
                 <span className="text-xs uppercase tracking-wider bg-white/20 px-3 py-1 rounded-full font-semibold">
-                  Dashboard Kesiapan SKD {config.tahun}
+                  Ghifari Siap CPNS • Tahun {config.tahun}
                 </span>
-                <h2 className="text-2xl md:text-3xl font-extrabold mt-2">{profile.nama}</h2>
+                <h2 className="text-2xl md:text-3xl font-extrabold mt-2">Halo, {profile.nama}!</h2>
                 <p className="text-sky-100 text-sm mt-1">
-                  {profile.pendidikan} {profile.jurusan} • Minat Lokasi: {profile.lokasiMinat}
+                  Pilih langsung kategori latihan di bawah ini untuk mulai mengasah kemampuan SKD Anda.
                 </p>
               </div>
               <div className="bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 min-w-[230px]">
                 <p className="text-xs text-sky-100">Status Kesiapan Saat Ini</p>
                 <p className="text-lg font-bold mt-0.5">{readiness.status}</p>
-                <p className="text-[11px] text-sky-100 mt-1">*Indikator latihan, bukan jaminan kelulusan resmi BKN.</p>
+                <p className="text-[11px] text-sky-100 mt-1">Rata-rata SKD: <strong>{readiness.avgTotal}</strong> / Target {profile.targetSkor}</p>
               </div>
             </div>
 
-            {/* METRIC CARDS */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <p className="text-xs text-slate-500 font-medium">Rata-rata Total SKD</p>
-                <div className="flex items-end justify-between mt-2">
-                  <span className="text-3xl font-extrabold text-slate-900">{readiness.avgTotal}</span>
-                  <span className="text-xs font-semibold text-sky-600 bg-sky-50 px-2 py-1 rounded-lg">
-                    Target: {profile.targetSkor}
-                  </span>
+            {/* SIMPLE QUICK-START CARDS: PILIH TWK, TIU, ATAU TKP */}
+            <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <h3 className="text-lg font-extrabold text-slate-900">Mulai Latihan Cepat (Pilih Subtes)</h3>
+                  <p className="text-xs text-slate-500">Klik salah satu kartu subtes untuk langsung mengerjakan soal bervariasi beserta pembahasan instan.</p>
                 </div>
-                <p className="text-xs text-slate-400 mt-2">Prediksi realistis berikutnya: <strong>{readiness.prediksiSkor}</strong></p>
+                <span className="text-xs font-semibold text-sky-700 bg-sky-50 px-3 py-1 rounded-full">
+                  Total Bank Soal Aktif: {QUESTION_BANK.length} Soal HOTS & Bervariasi
+                </span>
               </div>
 
-              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <p className="text-xs text-slate-500 font-medium">Kelulusan Passing Grade</p>
-                <div className="flex items-end justify-between mt-2">
-                  <span className="text-3xl font-extrabold text-emerald-600">{readiness.pgRate}%</span>
-                  <span className="text-xs text-slate-500">{history.length}x Tryout</span>
-                </div>
-                <p className="text-xs text-slate-400 mt-2">PG: TWK {config.pgTwk} | TIU {config.pgTiu} | TKP {config.pgTkp}</p>
-              </div>
-
-              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <p className="text-xs text-slate-500 font-medium">Formasi Memenuhi Kualifikasi</p>
-                <div className="flex items-end justify-between mt-2">
-                  <span className="text-3xl font-extrabold text-cyan-600">
-                    {evaluatedFormasi.filter((f) => f.memenuhi).length}
-                  </span>
-                  <span className="text-xs text-slate-500">dari {formasiList.length} formasi</span>
-                </div>
-                <p className="text-xs text-slate-400 mt-2">Jurusan: {profile.jurusan}</p>
-              </div>
-
-              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <p className="text-xs text-slate-500 font-medium">Streak Belajar Harian</p>
-                <div className="flex items-end justify-between mt-2">
-                  <span className="text-3xl font-extrabold text-orange-500 flex items-center gap-1">
-                    <Flame size={26} /> {streakDays} Hari
-                  </span>
-                </div>
-                <p className="text-xs text-slate-400 mt-2">Hari ini: {todaySolved} soal dikerjakan</p>
-              </div>
-            </div>
-
-            {/* ANALISIS KEKUATAN & KELEMAHAN + KONSISTENSI */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-                <h3 className="font-bold text-slate-900 flex items-center gap-2">
-                  <TrendingUp size={18} className="text-sky-600" />
-                  Grafik Konsistensi Skor Tryout & Rata-Rata Kategori
-                </h3>
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="p-3.5 rounded-xl bg-sky-50 border border-sky-100">
-                    <p className="text-xs text-slate-500">Rata-rata TWK</p>
-                    <p className="text-xl font-extrabold text-sky-700">{readiness.avgTwk} <span className="text-xs font-normal text-slate-500">/ PG {config.pgTwk}</span></p>
-                  </div>
-                  <div className="p-3.5 rounded-xl bg-cyan-50 border border-cyan-100">
-                    <p className="text-xs text-slate-500">Rata-rata TIU</p>
-                    <p className="text-xl font-extrabold text-cyan-700">{readiness.avgTiu} <span className="text-xs font-normal text-slate-500">/ PG {config.pgTiu}</span></p>
-                  </div>
-                  <div className="p-3.5 rounded-xl bg-indigo-50 border border-indigo-100">
-                    <p className="text-xs text-slate-500">Rata-rata TKP</p>
-                    <p className="text-xl font-extrabold text-indigo-700">{readiness.avgTkp} <span className="text-xs font-normal text-slate-500">/ PG {config.pgTkp}</span></p>
-                  </div>
-                </div>
-
-                {/* VISUAL BAR HISTORY */}
-                <div className="space-y-2 pt-2">
-                  {history.map((h) => (
-                    <div key={h.id} className="space-y-1">
-                      <div className="flex justify-between text-xs font-medium">
-                        <span>{h.tanggal} — {h.paket}</span>
-                        <span className="font-bold text-slate-800">{h.total} Poin ({h.lulusPG ? 'Lulus PG' : 'Belum PG'})</span>
-                      </div>
-                      <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-cyan-500 to-sky-600 rounded-full"
-                          style={{ width: `${Math.min(100, Math.round((h.total / 550) * 100))}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-                <h3 className="font-bold text-slate-900">Diagnostik Materi & Rekomendasi</h3>
-                <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-100">
-                  <p className="text-xs font-semibold text-emerald-800">Materi Paling Dikuasai</p>
-                  <p className="text-sm font-bold text-emerald-950 mt-0.5">{readiness.strongest}</p>
-                </div>
-                <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-100">
-                  <p className="text-xs font-semibold text-rose-800">Materi Perlu Ditingkatkan</p>
-                  <p className="text-sm font-bold text-rose-950 mt-0.5">{readiness.weakest}</p>
-                </div>
-                <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-1.5">
-                  <p className="font-semibold text-slate-800">Rekomendasi Latihan Berikutnya:</p>
-                  <p>1. Kerjakan paket latihan terfokus pada <strong>{readiness.weakest}</strong>.</p>
-                  <p>2. Simulasikan peningkatan skor +15 poin pada formasi prioritas Anda.</p>
-                </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* KARTU TWK */}
                 <button
-                  onClick={() => setActiveTab('laporan')}
-                  className="w-full py-2.5 rounded-xl bg-sky-600 text-white text-sm font-semibold hover:bg-sky-700 flex items-center justify-center gap-2"
+                  onClick={() => startQuickDrill('TWK')}
+                  className="group text-left p-6 rounded-2xl border-2 border-sky-100 bg-gradient-to-br from-sky-50 to-white hover:border-sky-500 hover:shadow-md transition-all flex flex-col justify-between gap-4"
                 >
-                  <Download size={16} /> Unduh Laporan Kesiapan PDF
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="px-3 py-1 rounded-xl bg-sky-600 text-white text-xs font-extrabold">TWK</span>
+                      <span className="text-xs font-semibold text-sky-700">PG: {config.pgTwk} Poin</span>
+                    </div>
+                    <h4 className="text-lg font-extrabold text-slate-900 mt-3 group-hover:text-sky-700">
+                      Tes Wawasan Kebangsaan
+                    </h4>
+                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                      Pancasila, UUD 1945, NKRI, Bhinneka Tunggal Ika, Integritas, Bela Negara & Bahasa Indonesia.
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between pt-3 border-t border-sky-100 text-xs font-bold text-sky-700">
+                    <span>{QUESTION_BANK.filter((q) => q.kategori === 'TWK').length} Soal Bervariasi</span>
+                    <span className="flex items-center gap-1">Mulai Latihan <ChevronRight size={16} /></span>
+                  </div>
+                </button>
+
+                {/* KARTU TIU */}
+                <button
+                  onClick={() => startQuickDrill('TIU')}
+                  className="group text-left p-6 rounded-2xl border-2 border-cyan-100 bg-gradient-to-br from-cyan-50 to-white hover:border-cyan-500 hover:shadow-md transition-all flex flex-col justify-between gap-4"
+                >
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="px-3 py-1 rounded-xl bg-cyan-600 text-white text-xs font-extrabold">TIU</span>
+                      <span className="text-xs font-semibold text-cyan-700">PG: {config.pgTiu} Poin</span>
+                    </div>
+                    <h4 className="text-lg font-extrabold text-slate-900 mt-3 group-hover:text-cyan-700">
+                      Tes Intelegensia Umum
+                    </h4>
+                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                      Analogi, Silogisme, Penalaran Analitis, Deret Angka, Pecahan Cepat, Perbandingan P vs Q & Spasial.
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between pt-3 border-t border-cyan-100 text-xs font-bold text-cyan-700">
+                    <span>{QUESTION_BANK.filter((q) => q.kategori === 'TIU').length} Soal Bervariasi</span>
+                    <span className="flex items-center gap-1">Mulai Latihan <ChevronRight size={16} /></span>
+                  </div>
+                </button>
+
+                {/* KARTU TKP */}
+                <button
+                  onClick={() => startQuickDrill('TKP')}
+                  className="group text-left p-6 rounded-2xl border-2 border-indigo-100 bg-gradient-to-br from-indigo-50 to-white hover:border-indigo-500 hover:shadow-md transition-all flex flex-col justify-between gap-4"
+                >
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="px-3 py-1 rounded-xl bg-indigo-600 text-white text-xs font-extrabold">TKP</span>
+                      <span className="text-xs font-semibold text-indigo-700">PG: {config.pgTkp} Poin</span>
+                    </div>
+                    <h4 className="text-lg font-extrabold text-slate-900 mt-3 group-hover:text-indigo-700">
+                      Tes Karakteristik Pribadi
+                    </h4>
+                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                      Pelayanan Publik, Jejaring Kerja, Sosial Budaya, Teknologi Informasi & Keamanan Data, Anti Radikalisme.
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between pt-3 border-t border-indigo-100 text-xs font-bold text-indigo-700">
+                    <span>{QUESTION_BANK.filter((q) => q.kategori === 'TKP').length} Soal Bervariasi</span>
+                    <span className="flex items-center gap-1">Mulai Latihan <ChevronRight size={16} /></span>
+                  </div>
                 </button>
               </div>
             </div>
+
+            {/* RINGKASAN STATISTIK SINGKAT */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                <p className="text-xs text-slate-500">Rata-rata Total SKD</p>
+                <p className="text-2xl font-extrabold text-slate-900 mt-1">{readiness.avgTotal}</p>
+                <p className="text-[11px] text-sky-600 mt-1">Prediksi: {readiness.prediksiSkor} poin</p>
+              </div>
+              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                <p className="text-xs text-slate-500">Kelulusan Passing Grade</p>
+                <p className="text-2xl font-extrabold text-emerald-600 mt-1">{readiness.pgRate}%</p>
+                <p className="text-[11px] text-slate-400 mt-1">Dari {history.length}x Tryout CAT</p>
+              </div>
+              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                <p className="text-xs text-slate-500">Formasi Cocok Jurusan</p>
+                <p className="text-2xl font-extrabold text-cyan-600 mt-1">
+                  {evaluatedFormasi.filter((f) => f.memenuhi).length} Formasi
+                </p>
+                <p className="text-[11px] text-slate-400 mt-1">{profile.jurusan}</p>
+              </div>
+              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                <p className="text-xs text-slate-500">Progres Belajar Hari Ini</p>
+                <p className="text-2xl font-extrabold text-orange-500 mt-1">{todaySolved} / {profile.targetSoalHarian}</p>
+                <p className="text-[11px] text-slate-400 mt-1">Streak: {streakDays} hari aktif</p>
+              </div>
+            </div>
           </div>
         )}
 
-        {/* TAB 2: REKOMENDASI FORMASI BERDASARKAN JURUSAN (MODUL 11) */}
-        {activeTab === 'formasi' && (
-          <div className="space-y-6">
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <div>
-                  <h2 className="text-xl font-extrabold text-slate-900">Rekomendasi Formasi CPNS {config.tahun}</h2>
-                  <p className="text-xs text-slate-500">
-                    Pencocokan otomatis kualifikasi pendidikan & prioritas jurusan. Data ditandai jelas antara historis BKN dan simulasi proyeksi.
-                  </p>
-                </div>
-              </div>
-
-              {/* INPUT PROFIL KUALIFIKASI */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-3 pt-2">
-                <div>
-                  <label className="text-xs font-semibold text-slate-600">Pendidikan Terakhir</label>
-                  <select
-                    value={profile.pendidikan}
-                    onChange={(e) => setProfile({ ...profile, pendidikan: e.target.value })}
-                    className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+        {/* TAB 2: LATIHAN CEPAT INTERAKTIF (PILIH TWK / TIU / TKP) */}
+        {activeTab === 'latihan' && (
+          <div className="space-y-5">
+            {/* TOP SWITCHER PILIH KATEGORI */}
+            <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                {(['TWK', 'TIU', 'TKP'] as const).map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => {
+                      setQuickCat(cat);
+                      setQuickSubFilter('Semua');
+                      setQuickIdx(0);
+                      setQuickSelectedOpt(null);
+                    }}
+                    className={`px-5 py-2.5 rounded-xl text-sm font-extrabold transition-all ${
+                      quickCat === cat
+                        ? 'bg-gradient-to-r from-cyan-600 to-sky-600 text-white shadow-sm'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
                   >
-                    <option value="SLTA / SMK">SLTA / SMK</option>
-                    <option value="D-III">D-III</option>
-                    <option value="S1 / D-IV">S1 / D-IV</option>
-                    <option value="S2">S2</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="text-xs font-semibold text-slate-600">Program Studi / Jurusan</label>
-                  <input
-                    type="text"
-                    value={profile.jurusan}
-                    onChange={(e) => setProfile({ ...profile, jurusan: e.target.value })}
-                    placeholder="Contoh: Teknik Mesin"
-                    className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-semibold text-slate-600">Universitas (Opsional)</label>
-                  <input
-                    type="text"
-                    value={profile.universitas}
-                    onChange={(e) => setProfile({ ...profile, universitas: e.target.value })}
-                    placeholder="Nama Perguruan Tinggi"
-                    className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-semibold text-slate-600">Lokasi Penempatan Diinginkan</label>
-                  <input
-                    type="text"
-                    value={profile.lokasiMinat}
-                    onChange={(e) => setProfile({ ...profile, lokasiMinat: e.target.value })}
-                    placeholder="Contoh: Jawa Barat"
-                    className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
-                  />
-                </div>
+                    Latihan {cat}
+                  </button>
+                ))}
               </div>
 
-              {/* FILTER BAR */}
-              <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-slate-100">
-                <select
-                  value={filterJenisInstansi}
-                  onChange={(e) => setFilterJenisInstansi(e.target.value)}
-                  className="rounded-xl border border-slate-300 px-3 py-1.5 text-xs font-medium"
+              <div className="flex items-center gap-3 text-xs">
+                <span className="px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-800 font-bold">
+                  Sesi Ini: {quickStats.dijawab} Soal • Skor {quickStats.skorTotal}
+                </span>
+                <button
+                  onClick={() => setQuickStats({ dijawab: 0, skorTotal: 0, benar: 0 })}
+                  className="p-2 rounded-xl border border-slate-200 text-slate-500 hover:text-slate-800"
+                  title="Reset Skor Sesi"
                 >
-                  <option value="Semua">Semua Jenis Instansi</option>
-                  <option value="Kementerian/Lembaga">Kementerian / Lembaga</option>
-                  <option value="Instansi Daerah">Instansi Daerah (Pemda)</option>
-                </select>
-                <select
-                  value={filterJenisJabatan}
-                  onChange={(e) => setFilterJenisJabatan(e.target.value)}
-                  className="rounded-xl border border-slate-300 px-3 py-1.5 text-xs font-medium"
-                >
-                  <option value="Semua">Semua Jenis Jabatan</option>
-                  <option value="Jabatan Fungsional">Jabatan Fungsional</option>
-                  <option value="Jabatan Pelaksana">Jabatan Pelaksana</option>
-                </select>
-                <input
-                  type="text"
-                  value={filterProvinsi}
-                  onChange={(e) => setFilterProvinsi(e.target.value)}
-                  placeholder="Filter Provinsi / Kab / Kota..."
-                  className="rounded-xl border border-slate-300 px-3 py-1.5 text-xs"
-                />
-                <label className="flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer ml-auto">
-                  <input
-                    type="checkbox"
-                    checked={hanyaSesuaiJurusan}
-                    onChange={(e) => setHanyaSesuaiJurusan(e.target.checked)}
-                    className="rounded text-sky-600"
-                  />
-                  Hanya tampilkan yang memenuhi kualifikasi
-                </label>
+                  <RotateCcw size={15} />
+                </button>
               </div>
             </div>
 
-            {/* LIST FORMASI */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {evaluatedFormasi.map((item) => (
-                <div
-                  key={item.id}
-                  className={`bg-white rounded-2xl p-5 border shadow-sm flex flex-col justify-between transition-all ${
-                    item.memenuhi ? 'border-emerald-200' : 'border-slate-200 opacity-85'
+            {/* FILTER SUB-MATERI */}
+            <div className="flex flex-wrap gap-2">
+              {quickSubTopics.map((sub) => (
+                <button
+                  key={sub}
+                  onClick={() => {
+                    setQuickSubFilter(sub);
+                    setQuickIdx(0);
+                    setQuickSelectedOpt(null);
+                  }}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                    quickSubFilter === sub
+                      ? 'bg-sky-700 text-white'
+                      : 'bg-white border border-slate-200 text-slate-600 hover:bg-sky-50'
                   }`}
                 >
-                  <div className="space-y-2.5">
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span
-                        className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full ${
-                          item.memenuhi ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-700'
-                        }`}
-                      >
-                        {item.memenuhi ? '✓ Memenuhi Kualifikasi' : '✕ Tidak Memenuhi Kualifikasi'}
-                      </span>
-                      <span
-                        className={`text-[11px] font-medium px-2.5 py-0.5 rounded-full ${
-                          item.sumberData === 'Data Historis Resmi BKN'
-                            ? 'bg-sky-100 text-sky-800'
-                            : 'bg-amber-100 text-amber-800'
-                        }`}
-                      >
-                        {item.sumberData}
-                      </span>
-                    </div>
-
-                    <div>
-                      <p className="text-xs font-semibold text-sky-600">{item.instansi} ({item.jenisInstansi})</p>
-                      <h3 className="text-base font-extrabold text-slate-900">{item.jabatan}</h3>
-                    </div>
-
-                    <div className="text-xs text-slate-600 space-y-1">
-                      <p><strong>Penempatan:</strong> {item.kabKota}, {item.provinsi}</p>
-                      <p><strong>Kualifikasi:</strong> {item.pendidikanMin.join('/')} — {item.jurusanList.join(', ')}</p>
-                      <p><strong>Kuota Formasi:</strong> {item.kuota} kursi • <strong>Pelamar Acuan:</strong> {item.pelamarHistoris} orang</p>
-                    </div>
-
-                    <div className="bg-slate-50 p-2.5 rounded-xl text-[11px] text-slate-600">
-                      <p className="font-semibold text-slate-700 mb-1">Persyaratan Umum & Khusus:</p>
-                      <ul className="list-disc list-inside space-y-0.5">
-                        {item.persyaratan.map((p, idx) => <li key={idx}>{p}</li>)}
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between">
-                    <span className="text-xs font-semibold text-slate-500">
-                      Rasio: 1 : {(item.pelamarHistoris / item.kuota).toFixed(1)}
-                    </span>
-                    <button
-                      onClick={() => {
-                        setSelectedFormasiId(item.id);
-                        setActiveTab('simulasi');
-                      }}
-                      className="px-3.5 py-1.5 rounded-xl bg-sky-600 text-white text-xs font-semibold hover:bg-sky-700 flex items-center gap-1"
-                    >
-                      Simulasikan Peringkat <ChevronRight size={14} />
-                    </button>
-                  </div>
-                </div>
+                  {sub}
+                </button>
               ))}
             </div>
-          </div>
-        )}
 
-        {/* TAB 3: SIMULASI PERINGKAT & PERSAINGAN (MODUL 12) */}
-        {activeTab === 'simulasi' && (
-          <div className="space-y-6">
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-              <div className="flex flex-wrap justify-between items-start gap-3">
-                <div>
-                  <h2 className="text-xl font-extrabold text-slate-900">Simulasi Peringkat & Keketatan Formasi</h2>
-                  <p className="text-xs text-slate-500">
-                    Proyeksi posisi peringkat SKD menggunakan aturan pemeringkatan 3x formasi menuju tahap SKB.
-                  </p>
+            {/* KARTU SOAL INTERAKTIF */}
+            {currentQuickQ ? (
+              <div className="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-slate-100">
+                  <div className="flex items-center gap-2">
+                    <span className="px-3 py-1 rounded-lg bg-sky-100 text-sky-800 text-xs font-extrabold">
+                      {currentQuickQ.kategori} • {currentQuickQ.subMateri}
+                    </span>
+                    <span className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 text-xs font-semibold">
+                      Level: {currentQuickQ.tingkat}
+                    </span>
+                  </div>
+                  <span className="text-xs font-bold text-slate-500">
+                    Soal {quickIdx + 1} dari {quickQuestions.length}
+                  </span>
                 </div>
-                <span className="text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1 rounded-xl">
-                  Catatan: Proyeksi simulasi statistik, bukan peringkat resmi SSCASN BKN
-                </span>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
-                <div className="lg:col-span-2">
-                  <label className="text-xs font-semibold text-slate-600">Pilih Formasi Tujuan</label>
-                  <select
-                    value={selectedFormasiId}
-                    onChange={(e) => setSelectedFormasiId(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
-                  >
-                    {formasiList.map((f) => (
-                      <option key={f.id} value={f.id}>
-                        {f.instansi} — {f.jabatan} ({f.sumberData})
-                      </option>
+                <p className="text-base md:text-lg text-slate-900 font-medium leading-relaxed">
+                  {currentQuickQ.soal}
+                </p>
+
+                <div className="space-y-3">
+                  {currentQuickQ.opsi.map((opt, idx) => {
+                    const isPicked = quickSelectedOpt === idx;
+                    const isAnswered = quickSelectedOpt !== null;
+                    const isBest = opt.skor === 5;
+
+                    let cardStyle = 'border-slate-200 hover:border-sky-400 hover:bg-sky-50/40 text-slate-800';
+                    if (isAnswered) {
+                      if (isBest) {
+                        cardStyle = 'border-emerald-500 bg-emerald-50 text-emerald-950 font-semibold';
+                      } else if (isPicked) {
+                        cardStyle = 'border-rose-400 bg-rose-50 text-rose-950';
+                      } else {
+                        cardStyle = 'border-slate-200 opacity-70 text-slate-600';
+                      }
+                    }
+
+                    return (
+                      <button
+                        key={opt.label}
+                        onClick={() => handleQuickAnswer(idx)}
+                        disabled={isAnswered}
+                        className={`w-full text-left p-4 rounded-2xl border-2 text-sm flex items-start justify-between gap-3 transition-all ${cardStyle}`}
+                      >
+                        <div className="flex items-start gap-3">
+                          <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-extrabold shrink-0 ${
+                            isAnswered && isBest
+                              ? 'bg-emerald-600 text-white'
+                              : isPicked
+                              ? 'bg-rose-600 text-white'
+                              : 'bg-slate-100 text-slate-700'
+                          }`}>
+                            {opt.label}
+                          </span>
+                          <span className="pt-0.5">{opt.text}</span>
+                        </div>
+                        {isAnswered && (
+                          <span className={`text-xs font-extrabold px-2.5 py-1 rounded-lg shrink-0 ${
+                            opt.skor === 5 ? 'bg-emerald-200 text-emerald-900' : 'bg-slate-200 text-slate-700'
+                          }`}>
+                            +{opt.skor} Poin
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* PEMBAHASAN LANGSUNG SETELAH MENJAWAB */}
+                {quickSelectedOpt !== null && (
+                  <div className="p-5 rounded-2xl bg-sky-50 border border-sky-200 space-y-2">
+                    <p className="text-xs font-extrabold uppercase tracking-wider text-sky-800">
+                      Pembahasan & Kunci Jawaban
+                    </p>
+                    <p className="text-sm text-slate-800 leading-relaxed">{currentQuickQ.pembahasan}</p>
+                    <p className="text-xs font-semibold text-sky-700 pt-1">
+                      Referensi: {currentQuickQ.referensi}
+                    </p>
+                  </div>
+                )}
+
+                <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                  <div className="flex gap-1.5 flex-wrap">
+                    {quickQuestions.map((q, i) => (
+                      <button
+                        key={q.id}
+                        onClick={() => {
+                          setQuickIdx(i);
+                          setQuickSelectedOpt(null);
+                        }}
+                        className={`w-8 h-8 rounded-lg text-xs font-bold ${
+                          quickIdx === i ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                        }`}
+                      >
+                        {i + 1}
+                      </button>
                     ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="text-xs font-semibold text-slate-600">Jumlah Kuota Formasi (Asumsi)</label>
-                  <input
-                    type="number"
-                    min={1}
-                    value={customKuota}
-                    onChange={(e) => setCustomKuota(Math.max(1, Number(e.target.value)))}
-                    className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-semibold text-slate-600">Jumlah Pelamar (Historis/Asumsi)</label>
-                  <input
-                    type="number"
-                    min={1}
-                    value={customPelamar}
-                    onChange={(e) => setCustomPelamar(Math.max(1, Number(e.target.value)))}
-                    className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
-                  />
-                </div>
-              </div>
+                  </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-                <div>
-                  <label className="text-xs font-semibold text-slate-600">
-                    Skor SKD Anda Saat Ini: <strong>{simulasiSkorUser} Poin</strong>
-                  </label>
-                  <input
-                    type="range"
-                    min={250}
-                    max={520}
-                    value={simulasiSkorUser}
-                    onChange={(e) => setSimulasiSkorUser(Number(e.target.value))}
-                    className="w-full mt-2 accent-sky-600"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-semibold text-slate-600">
-                    Skenario Kenaikan Skor Latihan: <strong>+{kenaikanSkor} Poin (Menjadi {simulationResult.skorBoosted})</strong>
-                  </label>
-                  <input
-                    type="range"
-                    min={5}
-                    max={60}
-                    step={5}
-                    value={kenaikanSkor}
-                    onChange={(e) => setKenaikanSkor(Number(e.target.value))}
-                    className="w-full mt-2 accent-emerald-600"
-                  />
+                  <button
+                    onClick={nextQuickQuestion}
+                    className="px-5 py-2.5 rounded-xl bg-sky-600 text-white text-sm font-bold hover:bg-sky-700 flex items-center gap-1.5"
+                  >
+                    Soal Berikutnya <ChevronRight size={16} />
+                  </button>
                 </div>
               </div>
-            </div>
-
-            {/* HASIL SIMULASI */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <span className="text-[11px] font-semibold text-sky-700 bg-sky-50 px-2 py-0.5 rounded">
-                  {activeFormasiSim.sumberData}
-                </span>
-                <p className="text-xs text-slate-500 mt-2">Rasio Keketatan & Kuota SKB (3x)</p>
-                <p className="text-2xl font-extrabold text-slate-900 mt-1">1 : {simulationResult.rasioKeketatan}</p>
-                <p className="text-xs text-slate-600 mt-1">
-                  Batas aman peringkat SKD: <strong>Top {simulationResult.kuotaSkd}</strong> dari {customPelamar} pelamar.
-                </p>
+            ) : (
+              <div className="bg-white p-8 rounded-2xl border border-slate-200 text-center text-sm text-slate-500">
+                Tidak ada soal pada filter sub-materi ini.
               </div>
-
-              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <span className="text-[11px] font-semibold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">
-                  Asumsi Distribusi Skor Saat Ini ({simulasiSkorUser})
-                </span>
-                <p className="text-xs text-slate-500 mt-2">Perkiraan Posisi Peringkat</p>
-                <p className="text-2xl font-extrabold text-slate-900 mt-1">
-                  Peringkat #{simulationResult.estRankBase}
-                </p>
-                <p className={`text-xs font-bold mt-1 ${simulationResult.lolosSkdBase ? 'text-emerald-600' : 'text-rose-600'}`}>
-                  {simulationResult.lolosSkdBase
-                    ? '✓ Masuk Zona Aman Perangkingan 3x Formasi'
-                    : '✕ Di Luar Kuota 3x Formasi (Perlu Kenaikan Skor)'}
-                </p>
-              </div>
-
-              <div className="bg-white p-5 rounded-2xl border border-emerald-200 shadow-sm">
-                <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
-                  Skenario Kenaikan +{kenaikanSkor} Poin ({simulationResult.skorBoosted})
-                </span>
-                <p className="text-xs text-slate-500 mt-2">Proyeksi Peringkat Setelah Optimasi</p>
-                <p className="text-2xl font-extrabold text-emerald-700 mt-1">
-                  Peringkat #{simulationResult.estRankBoost}
-                </p>
-                <p className={`text-xs font-bold mt-1 ${simulationResult.lolosSkdBoost ? 'text-emerald-600' : 'text-amber-600'}`}>
-                  {simulationResult.lolosSkdBoost
-                    ? '✓ Lolos Pemeringkatan SKD ke Tahap SKB'
-                    : 'Masih perlu tambahan poin lebih tinggi'}
-                </p>
-              </div>
-            </div>
+            )}
           </div>
         )}
 
-        {/* TAB 4: TRYOUT NASIONAL CAT (MODUL 13) */}
+        {/* TAB 3: TRYOUT NASIONAL CAT (MODUL 13) */}
         {activeTab === 'tryout' && (
           <div className="space-y-6">
             {tryoutMode === 'lobby' && (
@@ -1384,7 +1116,7 @@ export default function App() {
                             Paket {pkt}
                           </span>
                           <h3 className="font-bold text-slate-900 mt-2">
-                            {pkt === 'Semua' ? 'Simulasi Gabungan Lengkap' : `Tryout ${pkt} Terjadwal`}
+                            {pkt === 'Semua' ? `Simulasi Lengkap (${QUESTION_BANK.length} Soal)` : `Tryout ${pkt} Terjadwal`}
                           </h3>
                           <p className="text-xs text-slate-500 mt-1">
                             TWK, TIU, TKP • Sistem CAT Timer & Pembahasan Otomatis
@@ -1480,7 +1212,6 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* QUESTION BODY */}
                 <div className="space-y-4">
                   <p className="text-sm md:text-base text-slate-900 leading-relaxed font-medium">
                     {examQuestions[currentIdx].soal}
@@ -1510,7 +1241,6 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* NAVIGATION */}
                 <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-100">
                   <div className="flex gap-2">
                     <button
@@ -1592,7 +1322,6 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* PEMBAHASAN SOAL */}
                 <div className="space-y-3">
                   <h4 className="font-bold text-slate-900">Pembahasan Detail & Dasar Regulasi</h4>
                   {examQuestions.map((q, idx) => {
@@ -1624,7 +1353,298 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 5: AI TUTOR CPNS (MODUL 14) */}
+        {/* TAB 4: REKOMENDASI FORMASI BERDASARKAN JURUSAN */}
+        {activeTab === 'formasi' && (
+          <div className="space-y-6">
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+              <div>
+                <h2 className="text-xl font-extrabold text-slate-900">Rekomendasi Formasi CPNS {config.tahun}</h2>
+                <p className="text-xs text-slate-500">
+                  Pencocokan otomatis kualifikasi pendidikan & prioritas jurusan. Data ditandai jelas antara historis BKN dan simulasi proyeksi.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-3 pt-2">
+                <div>
+                  <label className="text-xs font-semibold text-slate-600">Pendidikan Terakhir</label>
+                  <select
+                    value={profile.pendidikan}
+                    onChange={(e) => setProfile({ ...profile, pendidikan: e.target.value })}
+                    className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+                  >
+                    <option value="SLTA / SMK">SLTA / SMK</option>
+                    <option value="D-III">D-III</option>
+                    <option value="S1 / D-IV">S1 / D-IV</option>
+                    <option value="S2">S2</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-600">Program Studi / Jurusan</label>
+                  <input
+                    type="text"
+                    value={profile.jurusan}
+                    onChange={(e) => setProfile({ ...profile, jurusan: e.target.value })}
+                    placeholder="Contoh: Teknik Mesin"
+                    className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-600">Universitas (Opsional)</label>
+                  <input
+                    type="text"
+                    value={profile.universitas}
+                    onChange={(e) => setProfile({ ...profile, universitas: e.target.value })}
+                    placeholder="Nama Perguruan Tinggi"
+                    className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-600">Lokasi Penempatan Diinginkan</label>
+                  <input
+                    type="text"
+                    value={profile.lokasiMinat}
+                    onChange={(e) => setProfile({ ...profile, lokasiMinat: e.target.value })}
+                    placeholder="Contoh: Jawa Barat"
+                    className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-slate-100">
+                <select
+                  value={filterJenisInstansi}
+                  onChange={(e) => setFilterJenisInstansi(e.target.value)}
+                  className="rounded-xl border border-slate-300 px-3 py-1.5 text-xs font-medium"
+                >
+                  <option value="Semua">Semua Jenis Instansi</option>
+                  <option value="Kementerian/Lembaga">Kementerian / Lembaga</option>
+                  <option value="Instansi Daerah">Instansi Daerah (Pemda)</option>
+                </select>
+                <select
+                  value={filterJenisJabatan}
+                  onChange={(e) => setFilterJenisJabatan(e.target.value)}
+                  className="rounded-xl border border-slate-300 px-3 py-1.5 text-xs font-medium"
+                >
+                  <option value="Semua">Semua Jenis Jabatan</option>
+                  <option value="Jabatan Fungsional">Jabatan Fungsional</option>
+                  <option value="Jabatan Pelaksana">Jabatan Pelaksana</option>
+                </select>
+                <input
+                  type="text"
+                  value={filterProvinsi}
+                  onChange={(e) => setFilterProvinsi(e.target.value)}
+                  placeholder="Filter Provinsi / Kab / Kota..."
+                  className="rounded-xl border border-slate-300 px-3 py-1.5 text-xs"
+                />
+                <label className="flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer ml-auto">
+                  <input
+                    type="checkbox"
+                    checked={hanyaSesuaiJurusan}
+                    onChange={(e) => setHanyaSesuaiJurusan(e.target.checked)}
+                    className="rounded text-sky-600"
+                  />
+                  Hanya tampilkan yang memenuhi kualifikasi
+                </label>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {evaluatedFormasi.map((item) => (
+                <div
+                  key={item.id}
+                  className={`bg-white rounded-2xl p-5 border shadow-sm flex flex-col justify-between transition-all ${
+                    item.memenuhi ? 'border-emerald-200' : 'border-slate-200 opacity-85'
+                  }`}
+                >
+                  <div className="space-y-2.5">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span
+                        className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full ${
+                          item.memenuhi ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-700'
+                        }`}
+                      >
+                        {item.memenuhi ? '✓ Memenuhi Kualifikasi' : '✕ Tidak Memenuhi Kualifikasi'}
+                      </span>
+                      <span
+                        className={`text-[11px] font-medium px-2.5 py-0.5 rounded-full ${
+                          item.sumberData === 'Data Historis Resmi BKN'
+                            ? 'bg-sky-100 text-sky-800'
+                            : 'bg-amber-100 text-amber-800'
+                        }`}
+                      >
+                        {item.sumberData}
+                      </span>
+                    </div>
+
+                    <div>
+                      <p className="text-xs font-semibold text-sky-600">{item.instansi} ({item.jenisInstansi})</p>
+                      <h3 className="text-base font-extrabold text-slate-900">{item.jabatan}</h3>
+                    </div>
+
+                    <div className="text-xs text-slate-600 space-y-1">
+                      <p><strong>Penempatan:</strong> {item.kabKota}, {item.provinsi}</p>
+                      <p><strong>Kualifikasi:</strong> {item.pendidikanMin.join('/')} — {item.jurusanList.join(', ')}</p>
+                      <p><strong>Kuota Formasi:</strong> {item.kuota} kursi • <strong>Pelamar Acuan:</strong> {item.pelamarHistoris} orang</p>
+                    </div>
+
+                    <div className="bg-slate-50 p-2.5 rounded-xl text-[11px] text-slate-600">
+                      <p className="font-semibold text-slate-700 mb-1">Persyaratan Umum & Khusus:</p>
+                      <ul className="list-disc list-inside space-y-0.5">
+                        {item.persyaratan.map((p, idx) => <li key={idx}>{p}</li>)}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between">
+                    <span className="text-xs font-semibold text-slate-500">
+                      Rasio: 1 : {(item.pelamarHistoris / item.kuota).toFixed(1)}
+                    </span>
+                    <button
+                      onClick={() => {
+                        setSelectedFormasiId(item.id);
+                        setActiveTab('simulasi');
+                      }}
+                      className="px-3.5 py-1.5 rounded-xl bg-sky-600 text-white text-xs font-semibold hover:bg-sky-700 flex items-center gap-1"
+                    >
+                      Simulasikan Peringkat <ChevronRight size={14} />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* TAB 5: SIMULASI PERINGKAT & PERSAINGAN */}
+        {activeTab === 'simulasi' && (
+          <div className="space-y-6">
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+              <div className="flex flex-wrap justify-between items-start gap-3">
+                <div>
+                  <h2 className="text-xl font-extrabold text-slate-900">Simulasi Peringkat & Keketatan Formasi</h2>
+                  <p className="text-xs text-slate-500">
+                    Proyeksi posisi peringkat SKD menggunakan aturan pemeringkatan 3x formasi menuju tahap SKB.
+                  </p>
+                </div>
+                <span className="text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1 rounded-xl">
+                  Catatan: Proyeksi simulasi statistik, bukan peringkat resmi SSCASN BKN
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+                <div className="lg:col-span-2">
+                  <label className="text-xs font-semibold text-slate-600">Pilih Formasi Tujuan</label>
+                  <select
+                    value={selectedFormasiId}
+                    onChange={(e) => setSelectedFormasiId(e.target.value)}
+                    className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+                  >
+                    {formasiList.map((f) => (
+                      <option key={f.id} value={f.id}>
+                        {f.instansi} — {f.jabatan} ({f.sumberData})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-600">Jumlah Kuota Formasi (Asumsi)</label>
+                  <input
+                    type="number"
+                    min={1}
+                    value={customKuota}
+                    onChange={(e) => setCustomKuota(Math.max(1, Number(e.target.value)))}
+                    className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-600">Jumlah Pelamar (Historis/Asumsi)</label>
+                  <input
+                    type="number"
+                    min={1}
+                    value={customPelamar}
+                    onChange={(e) => setCustomPelamar(Math.max(1, Number(e.target.value)))}
+                    className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                <div>
+                  <label className="text-xs font-semibold text-slate-600">
+                    Skor SKD Anda Saat Ini: <strong>{simulasiSkorUser} Poin</strong>
+                  </label>
+                  <input
+                    type="range"
+                    min={250}
+                    max={520}
+                    value={simulasiSkorUser}
+                    onChange={(e) => setSimulasiSkorUser(Number(e.target.value))}
+                    className="w-full mt-2 accent-sky-600"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-600">
+                    Skenario Kenaikan Skor Latihan: <strong>+{kenaikanSkor} Poin (Menjadi {simulationResult.skorBoosted})</strong>
+                  </label>
+                  <input
+                    type="range"
+                    min={5}
+                    max={60}
+                    step={5}
+                    value={kenaikanSkor}
+                    onChange={(e) => setKenaikanSkor(Number(e.target.value))}
+                    className="w-full mt-2 accent-emerald-600"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                <span className="text-[11px] font-semibold text-sky-700 bg-sky-50 px-2 py-0.5 rounded">
+                  {activeFormasiSim.sumberData}
+                </span>
+                <p className="text-xs text-slate-500 mt-2">Rasio Keketatan & Kuota SKB (3x)</p>
+                <p className="text-2xl font-extrabold text-slate-900 mt-1">1 : {simulationResult.rasioKeketatan}</p>
+                <p className="text-xs text-slate-600 mt-1">
+                  Batas aman peringkat SKD: <strong>Top {simulationResult.kuotaSkd}</strong> dari {customPelamar} pelamar.
+                </p>
+              </div>
+
+              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                <span className="text-[11px] font-semibold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">
+                  Asumsi Distribusi Skor Saat Ini ({simulasiSkorUser})
+                </span>
+                <p className="text-xs text-slate-500 mt-2">Perkiraan Posisi Peringkat</p>
+                <p className="text-2xl font-extrabold text-slate-900 mt-1">
+                  Peringkat #{simulationResult.estRankBase}
+                </p>
+                <p className={`text-xs font-bold mt-1 ${simulationResult.lolosSkdBase ? 'text-emerald-600' : 'text-rose-600'}`}>
+                  {simulationResult.lolosSkdBase
+                    ? '✓ Masuk Zona Aman Perangkingan 3x Formasi'
+                    : '✕ Di Luar Kuota 3x Formasi (Perlu Kenaikan Skor)'}
+                </p>
+              </div>
+
+              <div className="bg-white p-5 rounded-2xl border border-emerald-200 shadow-sm">
+                <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
+                  Skenario Kenaikan +{kenaikanSkor} Poin ({simulationResult.skorBoosted})
+                </span>
+                <p className="text-xs text-slate-500 mt-2">Proyeksi Peringkat Setelah Optimasi</p>
+                <p className="text-2xl font-extrabold text-emerald-700 mt-1">
+                  Peringkat #{simulationResult.estRankBoost}
+                </p>
+                <p className={`text-xs font-bold mt-1 ${simulationResult.lolosSkdBoost ? 'text-emerald-600' : 'text-amber-600'}`}>
+                  {simulationResult.lolosSkdBoost
+                    ? '✓ Lolos Pemeringkatan SKD ke Tahap SKB'
+                    : 'Masih perlu tambahan poin lebih tinggi'}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 6: AI TUTOR CPNS */}
         {activeTab === 'tutor' && (
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col h-[620px]">
             <div className="p-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-2">
@@ -1700,7 +1720,7 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 6: MATERI PEMBELAJARAN (MODUL 15) */}
+        {/* TAB 7: MATERI PEMBELAJARAN */}
         {activeTab === 'materi' && (
           <div className="space-y-6">
             {LEARNING_MODULES.map((mod) => (
@@ -1733,7 +1753,7 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 7: TARGET & KALENDER BELAJAR (MODUL 17) */}
+        {/* TAB 8: TARGET & KALENDER BELAJAR */}
         {activeTab === 'target' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
@@ -1797,7 +1817,7 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 8: HASIL & LAPORAN PDF (MODUL 18) */}
+        {/* TAB 9: HASIL & LAPORAN PDF */}
         {activeTab === 'laporan' && (
           <div className="space-y-4">
             <div className="no-print flex flex-wrap items-center justify-between gap-3 bg-white p-4 rounded-2xl border border-slate-200">
@@ -1813,7 +1833,6 @@ export default function App() {
               </button>
             </div>
 
-            {/* PRINTABLE REPORT SHEET */}
             <div className="bg-white p-8 rounded-2xl border border-slate-300 shadow-sm space-y-6 max-w-4xl mx-auto">
               <div className="border-b-2 border-sky-700 pb-4 flex justify-between items-center">
                 <div>
@@ -1896,7 +1915,7 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 9: PENGATURAN TAHUN SELEKSI & APPS SCRIPT (MODUL 19) */}
+        {/* TAB 10: PENGATURAN TAHUN SELEKSI & APPS SCRIPT */}
         {activeTab === 'pengaturan' && (
           <div className="space-y-6">
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
@@ -1978,13 +1997,12 @@ export default function App() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-3 border-t border-slate-100">
                 <div>
-                  <label className="text-xs font-semibold text-slate-600">URL Web App Google Apps Script (Code.gs)</label>
+                  <label className="text-xs font-semibold text-slate-600">URL Web App Google Apps Script (Terhubung Otomatis)</label>
                   <input
                     type="url"
                     value={config.gasUrl}
                     onChange={(e) => setConfig({ ...config, gasUrl: e.target.value })}
-                    placeholder="https://script.google.com/macros/s/.../exec"
-                    className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+                    className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm bg-sky-50/40"
                   />
                 </div>
                 <div>
@@ -2010,7 +2028,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* TAMBAH FORMASI TAHUN BARU */}
             <form onSubmit={handleAddFormasi} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
               <h3 className="font-bold text-slate-900">Tambah Data Formasi CPNS Tahun {config.tahun}</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">

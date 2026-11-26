@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ghifari-siap-cpns-v1';
+const CACHE_NAME = 'ghifari-siap-cpns-v2';
 const URLS_TO_CACHE = ['/', '/index.html', '/manifest.webmanifest', '/favicon.svg', '/knowledge.json'];
 
 self.addEventListener('install', (event) => {
