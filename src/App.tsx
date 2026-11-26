@@ -103,7 +103,7 @@ const INITIAL_CONFIG: SelectionConfig = {
   bobotBenarTwkTiu: 5,
   jadwalPendaftaran: 'Agustus – September 2026 (Proyeksi BKN)',
   jadwalSkd: 'Oktober – November 2026 (Proyeksi BKN)',
-  gasUrl: '',
+  gasUrl: 'https://script.google.com/macros/s/AKfycbxhBU8H4qysXgHbqm4j5Zi1cz9fZPT8Ti2--PUGM299lnIWYJyEkVKQ4nLIv8eIazK6/exec',
   geminiApiKey: ''
 };
 
