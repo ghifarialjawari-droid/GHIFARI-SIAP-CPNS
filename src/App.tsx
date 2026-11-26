@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import {
-  Award, BookOpen, Brain, Calendar, CheckCircle2, ChevronRight, Clock,
-  Compass, Download, FileText, Flame, LayoutDashboard,
-  Menu, Play, Settings, TrendingUp, Trophy, X, AlertTriangle,
-  BarChart3, Database, Zap, RotateCcw, Eye
+  Award, BookOpen, Brain, Calendar, ChevronRight, Clock,
+  Compass, Download, FileText, LayoutDashboard,
+  Menu, Play, Settings, Trophy, X,
+  BarChart3, Database, Zap, RotateCcw, Shuffle
 } from 'lucide-react';
 import { QUESTION_BANK, Question } from './questions';
 
@@ -268,6 +268,15 @@ const INITIAL_HISTORY: TryoutRecord[] = [
   }
 ];
 
+function pickRandomSubset(pool: Question[], count: number): Question[] {
+  const copy = [...pool];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy.slice(0, Math.min(count, copy.length));
+}
+
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>('dashboard');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -306,17 +315,25 @@ export default function App() {
     };
   });
 
+  // Track answered question IDs so user never repeats solved questions unless reset
+  const [solvedIds, setSolvedIds] = useState<Record<string, number>>(() => {
+    const saved = localStorage.getItem('gsc_solved_ids');
+    return saved ? JSON.parse(saved) : {};
+  });
+
   useEffect(() => { localStorage.setItem('gsc_profile', JSON.stringify(profile)); }, [profile]);
   useEffect(() => { localStorage.setItem('gsc_config', JSON.stringify(config)); }, [config]);
   useEffect(() => { localStorage.setItem('gsc_formasi', JSON.stringify(formasiList)); }, [formasiList]);
   useEffect(() => { localStorage.setItem('gsc_history', JSON.stringify(history)); }, [history]);
   useEffect(() => { localStorage.setItem('gsc_study_logs', JSON.stringify(studyLogs)); }, [studyLogs]);
+  useEffect(() => { localStorage.setItem('gsc_solved_ids', JSON.stringify(solvedIds)); }, [solvedIds]);
 
   // --- QUICK PRACTICE (LATIHAN CEPAT TWK / TIU / TKP) ---
   const [quickCat, setQuickCat] = useState<'TWK' | 'TIU' | 'TKP'>('TWK');
   const [quickSubFilter, setQuickSubFilter] = useState<string>('Semua');
   const [quickIdx, setQuickIdx] = useState<number>(0);
   const [quickSelectedOpt, setQuickSelectedOpt] = useState<number | null>(null);
+  const [jumpNumber, setJumpNumber] = useState<string>('1');
   const [quickStats, setQuickStats] = useState<{ dijawab: number; skorTotal: number; benar: number }>({
     dijawab: 0,
     skorTotal: 0,
@@ -336,10 +353,26 @@ export default function App() {
     return ['Semua', ...Array.from(subs)];
   }, [quickCat]);
 
+  const countByCat = useMemo(() => {
+    const twk = QUESTION_BANK.filter((q) => q.kategori === 'TWK');
+    const tiu = QUESTION_BANK.filter((q) => q.kategori === 'TIU');
+    const tkp = QUESTION_BANK.filter((q) => q.kategori === 'TKP');
+    return {
+      twkTotal: twk.length,
+      tiuTotal: tiu.length,
+      tkpTotal: tkp.length,
+      twkSolved: twk.filter((q) => solvedIds[q.id] !== undefined).length,
+      tiuSolved: tiu.filter((q) => solvedIds[q.id] !== undefined).length,
+      tkpSolved: tkp.filter((q) => solvedIds[q.id] !== undefined).length
+    };
+  }, [solvedIds]);
+
   const startQuickDrill = (cat: 'TWK' | 'TIU' | 'TKP') => {
     setQuickCat(cat);
     setQuickSubFilter('Semua');
-    setQuickIdx(0);
+    const pool = QUESTION_BANK.filter((q) => q.kategori === cat);
+    const firstUnsolved = pool.findIndex((q) => solvedIds[q.id] === undefined);
+    setQuickIdx(firstUnsolved >= 0 ? firstUnsolved : 0);
     setQuickSelectedOpt(null);
     setActiveTab('latihan');
   };
@@ -350,6 +383,7 @@ export default function App() {
     const currentQ = quickQuestions[quickIdx];
     if (!currentQ) return;
     const earned = currentQ.opsi[optIdx].skor;
+    setSolvedIds((prev) => ({ ...prev, [currentQ.id]: earned }));
     setQuickStats((prev) => ({
       dijawab: prev.dijawab + 1,
       skorTotal: prev.skorTotal + earned,
@@ -362,6 +396,17 @@ export default function App() {
   const nextQuickQuestion = () => {
     setQuickSelectedOpt(null);
     setQuickIdx((prev) => (prev + 1) % quickQuestions.length);
+  };
+
+  const pickRandomUnsolved = () => {
+    if (quickQuestions.length === 0) return;
+    const unsolvedIndices = quickQuestions
+      .map((q, idx) => (solvedIds[q.id] === undefined ? idx : -1))
+      .filter((idx) => idx !== -1);
+    const targetPool = unsolvedIndices.length > 0 ? unsolvedIndices : quickQuestions.map((_, i) => i);
+    const randomIdx = targetPool[Math.floor(Math.random() * targetPool.length)];
+    setQuickSelectedOpt(null);
+    setQuickIdx(randomIdx);
   };
 
   // --- MODULE 11: FORMASI FILTER STATE ---
@@ -437,14 +482,14 @@ export default function App() {
     return { kuotaSkd, rasioKeketatan, estRankBase, estRankBoost, skorBoosted, lolosSkdBase, lolosSkdBoost };
   }, [customKuota, customPelamar, simulasiSkorUser, kenaikanSkor]);
 
-  // --- MODULE 13: TRYOUT CAT ENGINE ---
+  // --- MODULE 13: TRYOUT CAT ENGINE (ACAK DARI 1.200 SOAL) ---
   const [tryoutMode, setTryoutMode] = useState<'lobby' | 'exam' | 'review'>('lobby');
-  const [selectedPaket, setSelectedPaket] = useState<'Semua' | 'Harian' | 'Mingguan' | 'Bulanan'>('Semua');
+  const [selectedPaket, setSelectedPaket] = useState<'Mini 30' | 'Standar 60' | 'Full CAT 110'>('Full CAT 110');
   const [examQuestions, setExamQuestions] = useState<Question[]>([]);
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [flagged, setFlagged] = useState<Record<string, boolean>>({});
-  const [secondsLeft, setSecondsLeft] = useState<number>(1800);
+  const [secondsLeft, setSecondsLeft] = useState<number>(6000);
   const [lastResult, setLastResult] = useState<TryoutRecord | null>(null);
 
   useEffect(() => {
@@ -462,15 +507,30 @@ export default function App() {
     return () => clearInterval(timer);
   }, [tryoutMode]);
 
-  const startTryout = (paket: 'Semua' | 'Harian' | 'Mingguan' | 'Bulanan') => {
-    const filtered = paket === 'Semua' ? QUESTION_BANK : QUESTION_BANK.filter((q) => q.paket === paket);
-    const qs = filtered.length > 0 ? filtered : QUESTION_BANK;
+  const startTryout = (paket: 'Mini 30' | 'Standar 60' | 'Full CAT 110') => {
+    const twkPool = QUESTION_BANK.filter((q) => q.kategori === 'TWK');
+    const tiuPool = QUESTION_BANK.filter((q) => q.kategori === 'TIU');
+    const tkpPool = QUESTION_BANK.filter((q) => q.kategori === 'TKP');
+
+    let qs: Question[] = [];
+    let durasiDetik = 6000;
+    if (paket === 'Mini 30') {
+      qs = [...pickRandomSubset(twkPool, 8), ...pickRandomSubset(tiuPool, 10), ...pickRandomSubset(tkpPool, 12)];
+      durasiDetik = 27 * 60;
+    } else if (paket === 'Standar 60') {
+      qs = [...pickRandomSubset(twkPool, 16), ...pickRandomSubset(tiuPool, 20), ...pickRandomSubset(tkpPool, 24)];
+      durasiDetik = 55 * 60;
+    } else {
+      qs = [...pickRandomSubset(twkPool, 30), ...pickRandomSubset(tiuPool, 35), ...pickRandomSubset(tkpPool, 45)];
+      durasiDetik = config.durasiMenit * 60;
+    }
+
     setSelectedPaket(paket);
     setExamQuestions(qs);
     setCurrentIdx(0);
     setAnswers({});
     setFlagged({});
-    setSecondsLeft(qs.length * 90);
+    setSecondsLeft(durasiDetik);
     setTryoutMode('exam');
   };
 
@@ -506,7 +566,7 @@ export default function App() {
     const record: TryoutRecord = {
       id: `TO-${Date.now().toString().slice(-6)}`,
       tanggal: new Date().toISOString().split('T')[0],
-      paket: `Tryout CAT (${selectedPaket})`,
+      paket: `Tryout CAT Acak (${selectedPaket})`,
       twk: scaledTwk,
       tiu: scaledTiu,
       tkp: scaledTkp,
@@ -528,7 +588,7 @@ export default function App() {
   const [aiMessages, setAiMessages] = useState<{ role: 'user' | 'ai'; text: string }[]>([
     {
       role: 'ai',
-      text: `Halo ${profile.nama}! Saya AI Tutor Ghifari Siap CPNS. Saya siap membantu menjelaskan konsep TWK/TIU/TKP berbasis regulasi resmi, memberi trik cepat berhitung TIU, membuat latihan soal baru, atau menyusun jadwal belajar sesuai target skor ${profile.targetSkor}. Apa yang ingin kita bahas hari ini?`
+      text: `Halo ${profile.nama}! Saya AI Tutor Ghifari Siap CPNS. Sekarang bank soal sudah berisi 1.200 soal unik (400 TWK, 400 TIU, 400 TKP). Tanyakan pembahasan materi, trik cepat TIU, atau jadwal latihan sesuai target skor ${profile.targetSkor}.`
     }
   ]);
   const [aiInput, setAiInput] = useState('');
@@ -542,7 +602,7 @@ export default function App() {
     setAiLoading(true);
 
     const latestScore = history[history.length - 1];
-    const systemContext = `Anda adalah AI Tutor CPNS profesional pada aplikasi "Ghifari Siap CPNS". Peserta bernama ${profile.nama}, lulusan ${profile.pendidikan} ${profile.jurusan}, target skor ${profile.targetSkor}. Skor tryout terakhir: TWK ${latestScore?.twk || 0}, TIU ${latestScore?.tiu || 0}, TKP ${latestScore?.tkp || 0}. Aturan wajib: Jawab akurat berdasarkan UUD 1945, UU ASN No. 20/2023, dan KepmenPANRB No. 321/2024. Jangan mengarang aturan atau regulasi.`;
+    const systemContext = `Anda adalah AI Tutor CPNS profesional pada aplikasi "Ghifari Siap CPNS". Peserta bernama ${profile.nama}, lulusan ${profile.pendidikan} ${profile.jurusan}, target skor ${profile.targetSkor}. Skor tryout terakhir: TWK ${latestScore?.twk || 0}, TIU ${latestScore?.tiu || 0}, TKP ${latestScore?.tkp || 0}. Aturan wajib: Jawab akurat berdasarkan UUD 1945, UU ASN No. 20/2023, dan KepmenPANRB No. 321/2024.`;
 
     try {
       if (config.geminiApiKey) {
@@ -560,17 +620,17 @@ export default function App() {
         const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Maaf, respons AI tidak tersedia.';
         setAiMessages((prev) => [...prev, { role: 'ai', text: reply }]);
       } else {
-        await new Promise((r) => setTimeout(r, 400));
+        await new Promise((r) => setTimeout(r, 350));
         let reply = '';
         const low = promptText.toLowerCase();
         if (low.includes('analisis') || low.includes('kelemahan')) {
-          reply = `**Analisis Kelemahan Berbasis Skor Terakhir (${latestScore?.total || 0}):**\n• **TWK (${latestScore?.twk || 0}/${config.pgTwk}):** Sudah melampaui ambang batas, namun perlu pendalaman pada studi kasus Pasal UUD 1945, Otonomi Daerah & Integritas ASN.\n• **TIU (${latestScore?.tiu || 0}/${config.pgTiu}):** Tingkatkan kecepatan pada Penalaran Analitis, Perbandingan P vs Q, dan Waktu Berpapasan.\n• **TKP (${latestScore?.tkp || 0}/${config.pgTkp}):** Fokus membedakan opsi poin 4 dan 5 pada aspek Anti-Radikalisme dan Pelayanan Publik berbasis SOP.`;
+          reply = `**Analisis Kelemahan Berbasis Skor Terakhir (${latestScore?.total || 0}):**\n• **TWK (${latestScore?.twk || 0}/${config.pgTwk}):** Perbanyak latihan pada studi kasus Pasal UUD 1945, Otonomi Daerah & EYD Edisi V.\n• **TIU (${latestScore?.tiu || 0}/${config.pgTiu}):** Latih kecepatan Deret Tingkat 2, Pecahan Istimewa, dan Waktu Berpapasan.\n• **TKP (${latestScore?.tkp || 0}/${config.pgTkp}):** Fokus membedakan opsi poin 4 dan 5 pada aspek Anti-Radikalisme dan Pelayanan Publik berbasis SOP.`;
         } else if (low.includes('trik') || low.includes('tiu')) {
           reply = `**Trik Cepat TIU (Metode Eliminasi & Pecahan Istimewa):**\n1. **Deret Angka:** Cek selisih 1 tingkat dulu. Jika tidak konstan, cek selisih 2 tingkat atau pola lompat 1 suku.\n2. **Silogisme:** Jika salah satu premis memuat kata *"Sebagian/Beberapa"*, kesimpulan WAJIB memuat *"Sebagian/Beberapa"*.\n3. **Pecahan:** Hafalkan 1/8 = 12,5%, 3/8 = 37,5%, 5/8 = 62,5%, 1/6 = 16,67%.`;
         } else if (low.includes('jadwal')) {
-          reply = `**Rekomendasi Jadwal Belajar Harian (${profile.targetSoalHarian} Soal/Hari):**\n• **Senin & Kamis (TWK):** Latihan Cepat TWK 15 soal studi kasus Pancasila, UUD 1945 & BerAKHLAK.\n• **Selasa & Jumat (TIU):** Latihan Cepat TIU 15 soal Numerik, Silogisme & Spasial dengan target < 60 detik/soal.\n• **Rabu & Sabtu (TKP):** Latihan Cepat TKP 20 soal dengan evaluasi alasan poin 5.\n• **Minggu:** Simulasi Tryout CAT Mingguan.`;
+          reply = `**Rekomendasi Jadwal Latihan (Target ${profile.targetSoalHarian} Soal/Hari dari 1.200 Bank Soal):**\n• **Senin & Kamis:** 30 soal Latihan TWK.\n• **Selasa & Jumat:** 30 soal Latihan TIU.\n• **Rabu & Sabtu:** 30 soal Latihan TKP.\n• **Minggu:** Tryout CAT Full 110 Soal Acak.`;
         } else {
-          reply = `Berdasarkan regulasi **${config.regulasi}**, seleksi SKD terdiri dari **TWK (${config.jumlahTwk} soal, PG ${config.pgTwk})**, **TIU (${config.jumlahTiu} soal, PG ${config.pgTiu})**, dan **TKP (${config.jumlahTkp} soal, PG ${config.pgTkp})** dalam waktu **${config.durasiMenit} menit**.\n\nUntuk jawaban AI generatif dinamis (pembuatan soal baru tak terbatas), masukkan **Gemini API Key** pada menu *Pengaturan Tahun Seleksi*.`;
+          reply = `Berdasarkan regulasi **${config.regulasi}**, seleksi SKD terdiri dari **TWK (${config.jumlahTwk} soal, PG ${config.pgTwk})**, **TIU (${config.jumlahTiu} soal, PG ${config.pgTiu})**, dan **TKP (${config.jumlahTkp} soal, PG ${config.pgTkp})** dalam waktu **${config.durasiMenit} menit**. Anda sudah menyelesaikan **${Object.keys(solvedIds).length} dari ${QUESTION_BANK.length} soal** di bank soal latihan.`;
         }
         setAiMessages((prev) => [...prev, { role: 'ai', text: reply }]);
       }
@@ -698,8 +758,8 @@ export default function App() {
   };
 
   const navItems = [
-    { id: 'dashboard', label: 'Beranda & Latihan Cepat', icon: LayoutDashboard },
-    { id: 'latihan', label: 'Latihan TWK / TIU / TKP', icon: Zap },
+    { id: 'dashboard', label: 'Beranda & Pilih Subtes', icon: LayoutDashboard },
+    { id: 'latihan', label: 'Latihan 1.200 Soal', icon: Zap },
     { id: 'tryout', label: 'Tryout Nasional CAT', icon: Award },
     { id: 'formasi', label: 'Rekomendasi Formasi', icon: Compass },
     { id: 'simulasi', label: 'Simulasi Peringkat', icon: BarChart3 },
@@ -721,7 +781,7 @@ export default function App() {
           <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center font-bold text-lg">G</div>
           <div>
             <h1 className="font-bold text-base leading-tight">Ghifari Siap CPNS</h1>
-            <p className="text-[11px] text-cyan-100">Bank Soal Bervariasi • SKD {config.tahun}</p>
+            <p className="text-[11px] text-cyan-100">{QUESTION_BANK.length.toLocaleString('id-ID')} Soal Bervariasi • SKD {config.tahun}</p>
           </div>
         </div>
         <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 rounded-lg bg-white/10">
@@ -739,7 +799,7 @@ export default function App() {
             <div>
               <h1 className="font-extrabold text-lg tracking-tight leading-tight">Ghifari Siap CPNS</h1>
               <span className="inline-block mt-0.5 text-[11px] bg-white/20 px-2 py-0.5 rounded-full font-medium">
-                Seleksi ASN {config.tahun}
+                {QUESTION_BANK.length.toLocaleString('id-ID')} Soal • {config.tahun}
               </span>
             </div>
           </div>
@@ -769,19 +829,19 @@ export default function App() {
           </nav>
         </div>
 
-        <div className="p-4 m-3 rounded-2xl bg-sky-50 border border-sky-100">
-          <div className="flex items-center justify-between text-xs font-semibold text-sky-900 mb-1">
-            <span>Target Harian</span>
-            <span>{todaySolved}/{profile.targetSoalHarian} Soal</span>
+        <div className="p-4 m-3 rounded-2xl bg-sky-50 border border-sky-100 space-y-2">
+          <div className="flex items-center justify-between text-xs font-semibold text-sky-900">
+            <span>Progres Bank Soal</span>
+            <span>{Object.keys(solvedIds).length}/{QUESTION_BANK.length}</span>
           </div>
           <div className="w-full h-2 bg-sky-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-gradient-to-r from-cyan-500 to-sky-600 transition-all"
-              style={{ width: `${Math.min(100, Math.round((todaySolved / profile.targetSoalHarian) * 100))}%` }}
+              style={{ width: `${Math.min(100, Math.round((Object.keys(solvedIds).length / QUESTION_BANK.length) * 100))}%` }}
             />
           </div>
-          <p className="text-[11px] text-slate-500 mt-2">
-            Streak aktif: <strong className="text-orange-600">{streakDays} hari</strong>
+          <p className="text-[11px] text-slate-500">
+            Hari ini: <strong>{todaySolved}/{profile.targetSoalHarian}</strong> • Streak: <strong className="text-orange-600">{streakDays} hr</strong>
           </p>
         </div>
       </aside>
@@ -795,17 +855,19 @@ export default function App() {
             <div className="bg-gradient-to-r from-cyan-600 via-sky-600 to-blue-700 rounded-3xl p-6 md:p-8 text-white shadow-lg flex flex-col md:flex-row justify-between gap-6 items-start md:items-center">
               <div>
                 <span className="text-xs uppercase tracking-wider bg-white/20 px-3 py-1 rounded-full font-semibold">
-                  Ghifari Siap CPNS • Tahun {config.tahun}
+                  Bank Soal Bervariasi • {QUESTION_BANK.length.toLocaleString('id-ID')} Soal Unik
                 </span>
                 <h2 className="text-2xl md:text-3xl font-extrabold mt-2">Halo, {profile.nama}!</h2>
                 <p className="text-sky-100 text-sm mt-1">
-                  Pilih langsung kategori latihan di bawah ini untuk mulai mengasah kemampuan SKD Anda.
+                  Tinggal pilih subtes TWK, TIU, atau TKP di bawah ini untuk langsung berlatih soal yang berbeda setiap nomor.
                 </p>
               </div>
-              <div className="bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 min-w-[230px]">
-                <p className="text-xs text-sky-100">Status Kesiapan Saat Ini</p>
-                <p className="text-lg font-bold mt-0.5">{readiness.status}</p>
-                <p className="text-[11px] text-sky-100 mt-1">Rata-rata SKD: <strong>{readiness.avgTotal}</strong> / Target {profile.targetSkor}</p>
+              <div className="bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 min-w-[240px]">
+                <p className="text-xs text-sky-100">Soal Selesai Dikerjakan</p>
+                <p className="text-2xl font-extrabold mt-0.5">
+                  {Object.keys(solvedIds).length} <span className="text-sm font-normal text-sky-100">/ {QUESTION_BANK.length} Soal</span>
+                </p>
+                <p className="text-[11px] text-sky-100 mt-1">Status SKD: <strong>{readiness.status}</strong></p>
               </div>
             </div>
 
@@ -813,11 +875,11 @@ export default function App() {
             <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
-                  <h3 className="text-lg font-extrabold text-slate-900">Mulai Latihan Cepat (Pilih Subtes)</h3>
-                  <p className="text-xs text-slate-500">Klik salah satu kartu subtes untuk langsung mengerjakan soal bervariasi beserta pembahasan instan.</p>
+                  <h3 className="text-lg font-extrabold text-slate-900">Pilih Kategori Latihan (1.200 Soal Unik)</h3>
+                  <p className="text-xs text-slate-500">Sistem otomatis melanjutkan dari nomor soal yang belum pernah Anda kerjakan.</p>
                 </div>
                 <span className="text-xs font-semibold text-sky-700 bg-sky-50 px-3 py-1 rounded-full">
-                  Total Bank Soal Aktif: {QUESTION_BANK.length} Soal HOTS & Bervariasi
+                  400 TWK • 400 TIU • 400 TKP
                 </span>
               </div>
 
@@ -836,12 +898,17 @@ export default function App() {
                       Tes Wawasan Kebangsaan
                     </h4>
                     <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                      Pancasila, UUD 1945, NKRI, Bhinneka Tunggal Ika, Integritas, Bela Negara & Bahasa Indonesia.
+                      80 Pancasila, 80 UUD 1945, 80 Integritas & BerAKHLAK, 80 NKRI & Bela Negara, 80 Bahasa Indonesia EYD V.
                     </p>
                   </div>
-                  <div className="flex items-center justify-between pt-3 border-t border-sky-100 text-xs font-bold text-sky-700">
-                    <span>{QUESTION_BANK.filter((q) => q.kategori === 'TWK').length} Soal Bervariasi</span>
-                    <span className="flex items-center gap-1">Mulai Latihan <ChevronRight size={16} /></span>
+                  <div className="space-y-2 pt-3 border-t border-sky-100">
+                    <div className="flex items-center justify-between text-xs font-bold text-sky-700">
+                      <span>Selesai: {countByCat.twkSolved} / {countByCat.twkTotal} Soal</span>
+                      <span className="flex items-center gap-1">Latih TWK <ChevronRight size={16} /></span>
+                    </div>
+                    <div className="w-full h-1.5 bg-sky-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-sky-600" style={{ width: `${Math.round((countByCat.twkSolved / countByCat.twkTotal) * 100)}%` }} />
+                    </div>
                   </div>
                 </button>
 
@@ -859,12 +926,17 @@ export default function App() {
                       Tes Intelegensia Umum
                     </h4>
                     <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                      Analogi, Silogisme, Penalaran Analitis, Deret Angka, Pecahan Cepat, Perbandingan P vs Q & Spasial.
+                      50 Analogi, 50 Silogisme, 80 Deret Angka, 60 Pecahan Cepat, 60 Perbandingan Mesin, 50 Jarak/Waktu, 50 Analitis & Spasial.
                     </p>
                   </div>
-                  <div className="flex items-center justify-between pt-3 border-t border-cyan-100 text-xs font-bold text-cyan-700">
-                    <span>{QUESTION_BANK.filter((q) => q.kategori === 'TIU').length} Soal Bervariasi</span>
-                    <span className="flex items-center gap-1">Mulai Latihan <ChevronRight size={16} /></span>
+                  <div className="space-y-2 pt-3 border-t border-cyan-100">
+                    <div className="flex items-center justify-between text-xs font-bold text-cyan-700">
+                      <span>Selesai: {countByCat.tiuSolved} / {countByCat.tiuTotal} Soal</span>
+                      <span className="flex items-center gap-1">Latih TIU <ChevronRight size={16} /></span>
+                    </div>
+                    <div className="w-full h-1.5 bg-cyan-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-cyan-600" style={{ width: `${Math.round((countByCat.tiuSolved / countByCat.tiuTotal) * 100)}%` }} />
+                    </div>
                   </div>
                 </button>
 
@@ -882,12 +954,17 @@ export default function App() {
                       Tes Karakteristik Pribadi
                     </h4>
                     <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                      Pelayanan Publik, Jejaring Kerja, Sosial Budaya, Teknologi Informasi & Keamanan Data, Anti Radikalisme.
+                      400 Studi Kasus Pelayanan Publik, Jejaring Kerja, Sosial Budaya, TIK & Keamanan Siber, Profesionalisme, Anti Radikalisme.
                     </p>
                   </div>
-                  <div className="flex items-center justify-between pt-3 border-t border-indigo-100 text-xs font-bold text-indigo-700">
-                    <span>{QUESTION_BANK.filter((q) => q.kategori === 'TKP').length} Soal Bervariasi</span>
-                    <span className="flex items-center gap-1">Mulai Latihan <ChevronRight size={16} /></span>
+                  <div className="space-y-2 pt-3 border-t border-indigo-100">
+                    <div className="flex items-center justify-between text-xs font-bold text-indigo-700">
+                      <span>Selesai: {countByCat.tkpSolved} / {countByCat.tkpTotal} Soal</span>
+                      <span className="flex items-center gap-1">Latih TKP <ChevronRight size={16} /></span>
+                    </div>
+                    <div className="w-full h-1.5 bg-indigo-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-indigo-600" style={{ width: `${Math.round((countByCat.tkpSolved / countByCat.tkpTotal) * 100)}%` }} />
+                    </div>
                   </div>
                 </button>
               </div>
@@ -921,7 +998,7 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 2: LATIHAN CEPAT INTERAKTIF (PILIH TWK / TIU / TKP) */}
+        {/* TAB 2: LATIHAN CEPAT INTERAKTIF (1.200 SOAL TWK / TIU / TKP) */}
         {activeTab === 'latihan' && (
           <div className="space-y-5">
             {/* TOP SWITCHER PILIH KATEGORI */}
@@ -942,14 +1019,20 @@ export default function App() {
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                     }`}
                   >
-                    Latihan {cat}
+                    {cat} ({cat === 'TWK' ? countByCat.twkTotal : cat === 'TIU' ? countByCat.tiuTotal : countByCat.tkpTotal})
                   </button>
                 ))}
               </div>
 
-              <div className="flex items-center gap-3 text-xs">
-                <span className="px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-800 font-bold">
-                  Sesi Ini: {quickStats.dijawab} Soal • Skor {quickStats.skorTotal}
+              <div className="flex flex-wrap items-center gap-2 text-xs">
+                <button
+                  onClick={pickRandomUnsolved}
+                  className="px-3.5 py-2 rounded-xl bg-amber-50 text-amber-800 border border-amber-200 font-bold hover:bg-amber-100 flex items-center gap-1.5"
+                >
+                  <Shuffle size={14} /> Acak Soal Baru
+                </button>
+                <span className="px-3 py-2 rounded-xl bg-emerald-50 text-emerald-800 font-bold">
+                  Sesi: {quickStats.dijawab} Soal • {quickStats.skorTotal} Poin
                 </span>
                 <button
                   onClick={() => setQuickStats({ dijawab: 0, skorTotal: 0, benar: 0 })}
@@ -986,13 +1069,18 @@ export default function App() {
             {currentQuickQ ? (
               <div className="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
                 <div className="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-slate-100">
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="px-3 py-1 rounded-lg bg-sky-100 text-sky-800 text-xs font-extrabold">
-                      {currentQuickQ.kategori} • {currentQuickQ.subMateri}
+                      {currentQuickQ.id} • {currentQuickQ.subMateri}
                     </span>
                     <span className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 text-xs font-semibold">
-                      Level: {currentQuickQ.tingkat}
+                      {currentQuickQ.tingkat}
                     </span>
+                    {solvedIds[currentQuickQ.id] !== undefined && (
+                      <span className="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-bold">
+                        ✓ Pernah Dikerjakan (+{solvedIds[currentQuickQ.id]})
+                      </span>
+                    )}
                   </div>
                   <span className="text-xs font-bold text-slate-500">
                     Soal {quickIdx + 1} dari {quickQuestions.length}
@@ -1064,30 +1152,47 @@ export default function App() {
                   </div>
                 )}
 
-                <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-                  <div className="flex gap-1.5 flex-wrap">
-                    {quickQuestions.map((q, i) => (
-                      <button
-                        key={q.id}
-                        onClick={() => {
-                          setQuickIdx(i);
-                          setQuickSelectedOpt(null);
-                        }}
-                        className={`w-8 h-8 rounded-lg text-xs font-bold ${
-                          quickIdx === i ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                        }`}
-                      >
-                        {i + 1}
-                      </button>
-                    ))}
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-100">
+                  <div className="flex items-center gap-2 text-xs">
+                    <span className="text-slate-500 font-semibold">Lompat ke nomor (1–{quickQuestions.length}):</span>
+                    <input
+                      type="number"
+                      min={1}
+                      max={quickQuestions.length}
+                      value={jumpNumber}
+                      onChange={(e) => setJumpNumber(e.target.value)}
+                      className="w-20 rounded-xl border border-slate-300 px-2.5 py-1.5 text-xs font-bold"
+                    />
+                    <button
+                      onClick={() => {
+                        const target = Math.max(1, Math.min(quickQuestions.length, Number(jumpNumber) || 1)) - 1;
+                        setQuickIdx(target);
+                        setQuickSelectedOpt(null);
+                      }}
+                      className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-bold text-slate-700"
+                    >
+                      Buka
+                    </button>
                   </div>
 
-                  <button
-                    onClick={nextQuickQuestion}
-                    className="px-5 py-2.5 rounded-xl bg-sky-600 text-white text-sm font-bold hover:bg-sky-700 flex items-center gap-1.5"
-                  >
-                    Soal Berikutnya <ChevronRight size={16} />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      disabled={quickIdx === 0}
+                      onClick={() => {
+                        setQuickIdx((prev) => Math.max(0, prev - 1));
+                        setQuickSelectedOpt(null);
+                      }}
+                      className="px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 disabled:opacity-40"
+                    >
+                      Sebelumnya
+                    </button>
+                    <button
+                      onClick={nextQuickQuestion}
+                      className="px-5 py-2.5 rounded-xl bg-sky-600 text-white text-sm font-bold hover:bg-sky-700 flex items-center gap-1.5"
+                    >
+                      Soal Berikutnya <ChevronRight size={16} />
+                    </button>
+                  </div>
                 </div>
               </div>
             ) : (
@@ -1098,35 +1203,35 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 3: TRYOUT NASIONAL CAT (MODUL 13) */}
+        {/* TAB 3: TRYOUT NASIONAL CAT (ACAK DARI 1.200 SOAL) */}
         {activeTab === 'tryout' && (
           <div className="space-y-6">
             {tryoutMode === 'lobby' && (
               <>
                 <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-                  <h2 className="text-xl font-extrabold text-slate-900">Tryout Nasional CAT BKN</h2>
+                  <h2 className="text-xl font-extrabold text-slate-900">Tryout Nasional CAT BKN (Soal Acak dari 1.200 Bank Soal)</h2>
                   <p className="text-xs text-slate-500">
-                    Pilih paket simulasi berbasis waktu dengan sistem pemeringkatan nasional, pembahasan lengkap, dan sertifikat hasil.
+                    Setiap sesi tryout mengambil kombinasi soal berbeda secara acak dengan proporsi TWK, TIU, dan TKP sesuai standar BKN.
                   </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
-                    {(['Harian', 'Mingguan', 'Bulanan', 'Semua'] as const).map((pkt) => (
-                      <div key={pkt} className="p-4 rounded-2xl border border-sky-100 bg-sky-50/50 flex flex-col justify-between gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                    {([
+                      { id: 'Mini 30' as const, title: 'Sprint CAT 30 Soal', desc: '8 TWK • 10 TIU • 12 TKP (27 Menit)' },
+                      { id: 'Standar 60' as const, title: 'Tryout Menengah 60 Soal', desc: '16 TWK • 20 TIU • 24 TKP (55 Menit)' },
+                      { id: 'Full CAT 110' as const, title: 'Simulasi Akbar SKD 110 Soal', desc: '30 TWK • 35 TIU • 45 TKP (100 Menit Resmi)' }
+                    ]).map((pkt) => (
+                      <div key={pkt.id} className="p-5 rounded-2xl border border-sky-100 bg-sky-50/50 flex flex-col justify-between gap-4">
                         <div>
                           <span className="text-[11px] font-bold uppercase text-sky-700 bg-sky-100 px-2.5 py-0.5 rounded-full">
-                            Paket {pkt}
+                            {pkt.id}
                           </span>
-                          <h3 className="font-bold text-slate-900 mt-2">
-                            {pkt === 'Semua' ? `Simulasi Lengkap (${QUESTION_BANK.length} Soal)` : `Tryout ${pkt} Terjadwal`}
-                          </h3>
-                          <p className="text-xs text-slate-500 mt-1">
-                            TWK, TIU, TKP • Sistem CAT Timer & Pembahasan Otomatis
-                          </p>
+                          <h3 className="font-bold text-slate-900 mt-2">{pkt.title}</h3>
+                          <p className="text-xs text-slate-500 mt-1">{pkt.desc}</p>
                         </div>
                         <button
-                          onClick={() => startTryout(pkt)}
-                          className="w-full py-2 rounded-xl bg-sky-600 text-white text-xs font-semibold hover:bg-sky-700 flex items-center justify-center gap-1.5"
+                          onClick={() => startTryout(pkt.id)}
+                          className="w-full py-2.5 rounded-xl bg-sky-600 text-white text-xs font-bold hover:bg-sky-700 flex items-center justify-center gap-1.5"
                         >
-                          <Play size={14} /> Mulai Kerjakan
+                          <Play size={14} /> Mulai Simulasi CAT
                         </button>
                       </div>
                     ))}
@@ -1265,7 +1370,7 @@ export default function App() {
                     </button>
                   </div>
 
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-1 max-h-28 overflow-y-auto">
                     {examQuestions.map((q, idx) => {
                       const isAns = answers[q.id] !== undefined;
                       const isFlag = flagged[q.id];
@@ -1273,7 +1378,7 @@ export default function App() {
                         <button
                           key={q.id}
                           onClick={() => setCurrentIdx(idx)}
-                          className={`w-8 h-8 rounded-lg text-xs font-bold ${
+                          className={`w-7 h-7 rounded-lg text-[11px] font-bold ${
                             currentIdx === idx
                               ? 'ring-2 ring-sky-600 bg-white text-sky-700'
                               : isFlag
@@ -1654,7 +1759,7 @@ export default function App() {
                 </div>
                 <div>
                   <h2 className="font-bold text-slate-900 text-sm">AI Tutor Ghifari Siap CPNS</h2>
-                  <p className="text-[11px] text-slate-500">Berbasis Regulasi Resmi ASN & Kisi-Kisi SKD</p>
+                  <p className="text-[11px] text-slate-500">Berbasis Regulasi Resmi ASN & 1.200 Bank Soal</p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-1.5">
@@ -1707,7 +1812,7 @@ export default function App() {
                 type="text"
                 value={aiInput}
                 onChange={(e) => setAiInput(e.target.value)}
-                placeholder="Tanyakan pasal UUD 1945, trik TIU, contoh soal TKP, atau rekomendasi materi..."
+                placeholder="Tanyakan pasal UUD 1945, trik TIU, contoh soal TKP, atau progres bank soal..."
                 className="flex-1 rounded-xl border border-slate-300 px-3.5 py-2 text-sm"
               />
               <button
@@ -1776,13 +1881,22 @@ export default function App() {
                   className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
                 />
               </div>
-              <div className="pt-2">
-                <p className="text-xs text-slate-500 mb-2">Catat latihan mandiri hari ini:</p>
+              <div className="pt-2 space-y-2">
                 <button
                   onClick={() => logExtraPractice(10)}
                   className="w-full py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700"
                 >
                   + Tambah 10 Soal Selesai Hari Ini
+                </button>
+                <button
+                  onClick={() => {
+                    if (window.confirm('Reset riwayat penanda soal yang sudah dikerjakan?')) {
+                      setSolvedIds({});
+                    }
+                  }}
+                  className="w-full py-2 rounded-xl border border-slate-300 text-slate-600 text-xs font-semibold hover:bg-slate-50"
+                >
+                  Reset Penanda 1.200 Bank Soal
                 </button>
               </div>
             </div>
@@ -1904,6 +2018,7 @@ export default function App() {
               </table>
 
               <div className="space-y-2 text-xs text-slate-700">
+                <p><strong>Bank Soal Latihan Selesai:</strong> {Object.keys(solvedIds).length} dari {QUESTION_BANK.length} soal unik</p>
                 <p><strong>Analisis Kekuatan:</strong> {readiness.strongest}</p>
                 <p><strong>Materi Perlu Ditingkatkan:</strong> {readiness.weakest}</p>
                 <p>

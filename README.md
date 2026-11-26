@@ -1,4 +1,3 @@
-# Ghifari Siap CPNS v2.0
+# Ghifari Siap CPNS v3.0 (1.200+ Bank Soal Bervariasi)
 
-Platform Persiapan, Latihan Cepat TWK/TIU/TKP, Simulasi CAT, Analisis Formasi, dan AI Tutor CPNS Terpadu.
-Sudah terhubung langsung dengan Google Apps Script Web App Anda.
+Platform Persiapan CPNS dengan **1.200 Soal Unik & Bervariasi** (400 TWK, 400 TIU, 400 TKP), Dashboard Pilih Subtes Instan, Simulasi CAT Acak, Analisis Formasi, dan Sinkronisasi Google Apps Script.

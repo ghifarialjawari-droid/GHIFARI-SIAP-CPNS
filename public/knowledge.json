@@ -1,6 +1,7 @@
 {
   "appName": "Ghifari Siap CPNS",
-  "version": "2.0.0",
+  "version": "3.0.0",
+  "totalQuestions": 1200,
   "regulasi": {
     "dasarHukum": "PermenPANRB No. 6 Tahun 2024 & KepmenPANRB No. 321 Tahun 2024",
     "passingGrade": { "TWK": 65, "TIU": 80, "TKP": 166 },

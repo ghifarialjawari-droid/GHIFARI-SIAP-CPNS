@@ -1,7 +1,7 @@
 {
   "name": "Ghifari Siap CPNS",
   "short_name": "SiapCPNS",
-  "description": "Platform Persiapan CPNS, Latihan Cepat TWK/TIU/TKP, Simulasi CAT & AI Tutor",
+  "description": "Platform Persiapan CPNS dengan 1.200+ Soal Bervariasi TWK/TIU/TKP & Simulasi CAT",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f8fafc",

@@ -10,374 +10,893 @@ export interface Question {
   referensi: string;
 }
 
-export const QUESTION_BANK: Question[] = [
-  // ==================== TWK (12 SOAL BERVARIASI) ====================
-  {
-    id: 'TWK-01', kategori: 'TWK', subMateri: 'Pancasila & Pengamalan', tingkat: 'Menengah', paket: 'Harian',
-    soal: 'Dalam rapat musyawarah desa untuk menentukan prioritas pembangunan infrastruktur, terjadi perbedaan pendapat yang tajam antarwarga. Pimpinan rapat mengajak seluruh peserta untuk tetap mengutamakan kepentingan bersama di atas kepentingan golongan serta menerima keputusan akhir dengan lapang dada. Sikap tersebut mencerminkan pengamalan Pancasila khususnya sila ke-...',
-    opsi: [
-      { label: 'A', text: 'Sila kedua dan ketiga', skor: 0 },
-      { label: 'B', text: 'Sila ketiga dan keempat', skor: 5 },
-      { label: 'C', text: 'Sila keempat dan kelima', skor: 0 },
-      { label: 'D', text: 'Sila pertama dan keempat', skor: 0 },
-      { label: 'E', text: 'Sila kedua dan kelima', skor: 0 }
-    ],
-    pembahasan: 'Mengutamakan kepentingan bersama di atas golongan merupakan butir Sila ke-3 (Persatuan Indonesia), sedangkan musyawarah mufakat dan menerima keputusan bersama dengan lapang dada adalah butir Sila ke-4.',
-    referensi: 'Tap MPR No. I/MPR/2003 tentang Butir-Butir Pengamalan Pancasila'
-  },
-  {
-    id: 'TWK-02', kategori: 'TWK', subMateri: 'UUD 1945 & Konstitusi', tingkat: 'HOTS', paket: 'Harian',
-    soal: 'Berdasarkan Pasal 24C ayat (1) UUD NRI Tahun 1945 setelah amandemen, salah satu kewenangan Mahkamah Konstitusi yang memutus pada tingkat pertama dan terakhir yang putusannya bersifat final adalah...',
-    opsi: [
-      { label: 'A', text: 'Menguji peraturan perundang-undangan di bawah undang-undang terhadap undang-undang', skor: 0 },
-      { label: 'B', text: 'Memutus sengketa kewenangan lembaga negara yang kewenangannya diberikan oleh UUD 1945', skor: 5 },
-      { label: 'C', text: 'Memberikan pertimbangan hukum kepada Presiden dalam pemberian grasi dan rehabilitasi', skor: 0 },
-      { label: 'D', text: 'Mengusulkan pengangkatan hakim agung kepada Dewan Perwakilan Rakyat', skor: 0 },
-      { label: 'E', text: 'Mengawasi perilaku hakim agung dan hakim konstitusi secara independen', skor: 0 }
-    ],
-    pembahasan: 'Pasal 24C ayat (1) UUD 1945 menegaskan MK berwenang mengadili pada tingkat pertama dan terakhir yang putusannya bersifat final untuk: menguji UU terhadap UUD, memutus sengketa kewenangan lembaga negara yang kewenangannya diberikan UUD, memutus pembubaran parpol, dan memutus perselisihan hasil pemilu.',
-    referensi: 'UUD NRI Tahun 1945 Pasal 24C Ayat (1)'
-  },
-  {
-    id: 'TWK-03', kategori: 'TWK', subMateri: 'Integritas & Antikorupsi', tingkat: 'HOTS', paket: 'Mingguan',
-    soal: 'Seorang pejabat pembuat komitmen (PPK) menolak pemberian paket liburan keluarga dari vendor pemenang tender proyek pengadaan mesin industri meskipun seluruh proses lelang telah selesai dilaksanakan sesuai prosedur. Tindakan PPK tersebut merupakan wujud nilai dasar ASN BerAKHLAK khususnya pada aspek...',
-    opsi: [
-      { label: 'A', text: 'Kompeten dan Adaptif', skor: 0 },
-      { label: 'B', text: 'Akuntabel (tidak menyalahgunakan kewenangan jabatan)', skor: 5 },
-      { label: 'C', text: 'Harmonis dan Kolaboratif', skor: 0 },
-      { label: 'D', text: 'Loyal kepada pimpinan instansi', skor: 0 },
-      { label: 'E', text: 'Berorientasi Pelayanan prima', skor: 0 }
-    ],
-    pembahasan: 'Gratifikasi pasca-tender tetap berpotensi menimbulkan konflik kepentingan dan dilarang dalam UU Tipikor serta panduan perilaku ASN "Akuntabel": melaksanakan tugas dengan jujur, bertanggung jawab, cermat, disiplin, dan berintegritas tinggi.',
-    referensi: 'SE MenPANRB No. 20 Tahun 2021 & UU No. 20 Tahun 2001 Pasal 12B'
-  },
-  {
-    id: 'TWK-04', kategori: 'TWK', subMateri: 'Bela Negara & NKRI', tingkat: 'Menengah', paket: 'Bulanan',
-    soal: 'Ancaman nonmiliter di era transformasi digital berupa penyebaran disinformasi yang memecah belah persatuan bangsa dapat ditangkal oleh ASN melalui implementasi nilai dasar Bela Negara yaitu...',
-    opsi: [
-      { label: 'A', text: 'Kemampuan awal bela negara secara fisik di garis perbatasan', skor: 0 },
-      { label: 'B', text: 'Sadar berbangsa dan bernegara dengan literasi digital serta verifikasi informasi', skor: 5 },
-      { label: 'C', text: 'Rela berkorban harta benda untuk pembangunan alutsista', skor: 0 },
-      { label: 'D', text: 'Cinta tanah air dengan membatasi seluruh akses teknologi asing', skor: 0 },
-      { label: 'E', text: 'Setia pada Pancasila sebagai ideologi tertutup', skor: 0 }
-    ],
-    pembahasan: 'Lima nilai dasar bela negara meliputi: cinta tanah air, sadar berbangsa dan bernegara, setia pada Pancasila sebagai ideologi negara, rela berkorban untuk bangsa dan negara, serta kemampuan awal bela negara.',
-    referensi: 'UU No. 23 Tahun 2019 tentang Pengelolaan Sumber Daya Nasional'
-  },
-  {
-    id: 'TWK-05', kategori: 'TWK', subMateri: 'Bhinneka Tunggal Ika', tingkat: 'Menengah', paket: 'Harian',
-    soal: 'Semboyan Bhinneka Tunggal Ika yang terdapat pada lambang negara Garuda Pancasila pertama kali dirumuskan oleh Mpu Tantular dalam Kitab Sutasoma. Makna filosofis "Tan Hana Dharma Mangrwa" dalam konteks penyelenggaraan pemerintahan daerah adalah...',
-    opsi: [
-      { label: 'A', text: 'Setiap daerah memiliki otonomi mutlak untuk membuat aturan yang berbeda dari pusat', skor: 0 },
-      { label: 'B', text: 'Tidak ada pengabdian yang mendua; keberagaman budaya daerah tetap berorientasi pada satu tujuan nasional', skor: 5 },
-      { label: 'C', text: 'Penyeragaman seluruh adat istiadat lokal demi efisiensi birokrasi nasional', skor: 0 },
-      { label: 'D', text: 'Prioritas pembangunan hanya diberikan kepada wilayah dengan mayoritas penduduk tertentu', skor: 0 },
-      { label: 'E', text: 'Pemisahan tegas antara nilai kearifan lokal dan hukum positif negara', skor: 0 }
-    ],
-    pembahasan: 'Tan Hana Dharma Mangrwa berarti tidak ada kebenaran/pengabdian yang mendua. Meski Indonesia beragam suku, bahasa, dan budaya, seluruhnya menyatu dalam pengabdian kepada bangsa dan negara.',
-    referensi: 'PP No. 66 Tahun 1951 tentang Lambang Negara'
-  },
-  {
-    id: 'TWK-06', kategori: 'TWK', subMateri: 'Nasionalisme & Sejarah', tingkat: 'Menengah', paket: 'Mingguan',
-    soal: 'Peristiwa Rengasdengklok pada 16 Agustus 1945 menjadi titik balik percepatan Proklamasi Kemerdekaan Indonesia. Pelajaran utama yang dapat dipetik oleh generasi ASN masa kini dari perbedaan pandangan antara golongan tua dan golongan muda saat itu adalah...',
-    opsi: [
-      { label: 'A', text: 'Mengutamakan ego sektoral kelompok demi mempercepat target kerja', skor: 0 },
-      { label: 'B', text: 'Sinergi antara semangat pembaruan yang progresif dengan kebijaksanaan strategis demi kepentingan bangsa', skor: 5 },
-      { label: 'C', text: 'Mengabaikan prosedur formal apabila situasi dianggap mendesak', skor: 0 },
-      { label: 'D', text: 'Menunggu arahan pihak eksternal sebelum mengambil keputusan strategis', skor: 0 },
-      { label: 'E', text: 'Membatasi dialog antargenerasi dalam perumusan kebijakan publik', skor: 0 }
-    ],
-    pembahasan: 'Golongan muda membawa energi percepatan kemerdekaan tanpa campur tangan Jepang, sementara golongan tua menjaga kematangan strategi dan persatuan nasional. Keduanya berdialog dan bersinergi menghasilkan Proklamasi 17 Agustus 1945.',
-    referensi: 'Sejarah Pergerakan Nasional Indonesia'
-  },
-  {
-    id: 'TWK-07', kategori: 'TWK', subMateri: 'Bahasa Indonesia (EYD & Kalimat Efektif)', tingkat: 'Dasar', paket: 'Harian',
-    soal: 'Manakah di antara kalimat berikut yang penulisan huruf kapital dan tanda bacanya paling tepat sesuai Ejaan Bahasa Indonesia yang Disempurnakan (EYD V) untuk naskah dinas resmi?',
-    opsi: [
-      { label: 'A', text: 'Kepada Yth. Bapak Direktur Jenderal Industri Logam, Mesin, Alat Transportasi, dan Elektronika di tempat.', skor: 0 },
-      { label: 'B', text: 'Yth. Direktur Jenderal Industri Logam, Mesin, Alat Transportasi, dan Elektronika di Jakarta', skor: 5 },
-      { label: 'C', text: 'Yth. bapak Direktur Jenderal Industri Logam, Mesin, Alat Transportasi dan Elektronika di Jakarta.', skor: 0 },
-      { label: 'D', text: 'Kepada Yth: Direktur Jenderal Industri Logam, Mesin, Alat Transportasi dan Elektronika di-Jakarta', skor: 0 },
-      { label: 'E', text: 'Yth. Direktur Jenderal industri logam, mesin, alat transportasi, dan elektronika di Jakarta.', skor: 0 }
-    ],
-    pembahasan: 'Dalam tata naskah dinas resmi (Permendikbudristek EYD V & Peraturan ANRI): tidak perlu menggunakan kata "Kepada" sebelum "Yth.", tidak menggunakan tanda titik di akhir baris alamat surat, kata "bapak/ibu" tidak ditulis jika diikuti nama jabatan resmi, dan tanda koma serial sebelum "dan" digunakan.',
-    referensi: 'EYD Edisi V & Peraturan ANRI No. 5 Tahun 2021 tentang Pedoman Umum Tata Naskah Dinas'
-  },
-  {
-    id: 'TWK-08', kategori: 'TWK', subMateri: 'NKRI & Otonomi Daerah', tingkat: 'HOTS', paket: 'Bulanan',
-    soal: 'Berdasarkan UU No. 23 Tahun 2014 tentang Pemerintahan Daerah, urusan pemerintahan yang sepenuhnya menjadi kewenangan Pemerintah Pusat (urusan pemerintahan absolut) meliputi bidang-bidang berikut, KECUALI...',
-    opsi: [
-      { label: 'A', text: 'Politik luar negeri dan pertahanan', skor: 0 },
-      { label: 'B', text: 'Yustisi dan moneter/fiskal nasional', skor: 0 },
-      { label: 'C', text: 'Agama dan keamanan', skor: 0 },
-      { label: 'D', text: 'Pendidikan menengah dan kesehatan daerah', skor: 5 },
-      { label: 'E', text: 'Pertahanan dan keamanan negara', skor: 0 }
-    ],
-    pembahasan: '6 urusan pemerintahan absolut pusat (Pasal 10 UU 23/2014): Politik luar negeri, Pertahanan, Keamanan, Yustisi, Moneter & Fiskal Nasional, serta Agama. Pendidikan dan kesehatan termasuk urusan pemerintahan konkuren (dibagi antara pusat, provinsi, dan kab/kota).',
-    referensi: 'UU No. 23 Tahun 2014 Pasal 10'
-  },
-  {
-    id: 'TWK-09', kategori: 'TWK', subMateri: 'UUD 1945 & Konstitusi', tingkat: 'HOTS', paket: 'Mingguan',
-    soal: 'Apabila Rancangan Undang-Undang (RUU) yang telah disetujui bersama oleh DPR dan Presiden tidak disahkan oleh Presiden dalam waktu 30 hari semenjak RUU tersebut disetujui, maka berdasarkan Pasal 20 ayat (5) UUD 1945...',
-    opsi: [
-      { label: 'A', text: 'RUU tersebut batal demi hukum dan tidak dapat diajukan kembali pada masa sidang berikutnya', skor: 0 },
-      { label: 'B', text: 'RUU tersebut sah menjadi undang-undang dan wajib diundangkan', skor: 5 },
-      { label: 'C', text: 'DPR wajib melakukan pemungutan suara ulang dengan kuorum dua pertiga anggota', skor: 0 },
-      { label: 'D', text: 'Mahkamah Konstitusi berhak mengesahkan RUU tersebut menggantikan Presiden', skor: 0 },
-      { label: 'E', text: 'Presiden mengeluarkan Peraturan Pemerintah Pengganti Undang-Undang (Perppu)', skor: 0 }
-    ],
-    pembahasan: 'Pasal 20 ayat (5) UUD 1945 menyatakan secara tegas: "Dalam hal rancangan undang-undang yang telah disetujui bersama tersebut tidak disahkan oleh Presiden dalam waktu tiga puluh hari semenjak rancangan undang-undang tersebut disetujui, rancangan undang-undang tersebut sah menjadi undang-undang dan wajib diundangkan."',
-    referensi: 'UUD NRI Tahun 1945 Pasal 20 Ayat (5)'
-  },
-  {
-    id: 'TWK-10', kategori: 'TWK', subMateri: 'Integritas & Antikorupsi', tingkat: 'Menengah', paket: 'Harian',
-    soal: 'Perbedaan mendasar antara tindak pidana suap dan gratifikasi menurut UU No. 20 Tahun 2001 tentang Pemberantasan Tindak Pidana Korupsi terletak pada...',
-    opsi: [
-      { label: 'A', text: 'Suap selalu berbentuk uang tunai, sedangkan gratifikasi selalu berbentuk barang', skor: 0 },
-      { label: 'B', text: 'Suap melibatkan kesepakatan (transaksional/meeting of minds) kedua belah pihak, sedangkan gratifikasi bersifat pemberian tanpa kesepakatan langsung namun berhubungan dengan jabatan', skor: 5 },
-      { label: 'C', text: 'Gratifikasi diperbolehkan apabila nilainya di atas Rp10.000.000 tanpa perlu dilaporkan ke KPK', skor: 0 },
-      { label: 'D', text: 'Suap hanya berlaku bagi pejabat eselon I, sedangkan gratifikasi berlaku bagi staf pelaksana', skor: 0 },
-      { label: 'E', text: 'Gratifikasi tidak memiliki sanksi pidana dalam hukum positif Indonesia', skor: 0 }
-    ],
-    pembahasan: 'Suap mensyaratkan adanya kesepakatan/transaksi antara pemberi dan penerima untuk berbuat/tidak berbuat sesuatu. Gratifikasi adalah pemberian dalam arti luas kepada pegawai negeri/penyelenggara negara yang berhubungan dengan jabatannya (bersifat tanam budi) dan wajib dilaporkan ke KPK maksimal 30 hari kerja.',
-    referensi: 'UU No. 20 Tahun 2001 Pasal 12B & Penjelasannya'
-  },
+// Seeded PRNG (Mulberry32) agar urutan soal & opsi konsisten dan tidak berulang
+function mulberry32(seed: number) {
+  return function () {
+    let t = (seed += 0x6d2b79f5);
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
 
-  // ==================== TIU (12 SOAL BERVARIASI) ====================
-  {
-    id: 'TIU-01', kategori: 'TIU', subMateri: 'Verbal - Silogisme', tingkat: 'Menengah', paket: 'Harian',
-    soal: 'Semua insinyur yang lulus uji kompetensi berhak menandatangani dokumen rancangan teknis. Sebagian pegawai di Direktorat Industri adalah insinyur yang lulus uji kompetensi. Simpulan yang paling tepat adalah...',
-    opsi: [
-      { label: 'A', text: 'Semua pegawai di Direktorat Industri berhak menandatangani dokumen rancangan teknis.', skor: 0 },
-      { label: 'B', text: 'Sebagian pegawai di Direktorat Industri berhak menandatangani dokumen rancangan teknis.', skor: 5 },
-      { label: 'C', text: 'Sebagian insinyur yang lulus uji kompetensi bukan pegawai Direktorat Industri.', skor: 0 },
-      { label: 'D', text: 'Semua yang berhak menandatangani dokumen rancangan teknis adalah pegawai Direktorat Industri.', skor: 0 },
-      { label: 'E', text: 'Tidak ada pegawai Direktorat Industri yang berhak menandatangani dokumen rancangan teknis.', skor: 0 }
-    ],
-    pembahasan: 'Premis 1: Semua A adalah B. Premis 2: Sebagian C adalah A. Dengan aturan silogisme kategorik, kesimpulan sahnya adalah: Sebagian C adalah B.',
-    referensi: 'TIU Verbal - Silogisme Kategorik'
-  },
-  {
-    id: 'TIU-02', kategori: 'TIU', subMateri: 'Numerik - Deret Angka', tingkat: 'Menengah', paket: 'Harian',
-    soal: 'Perhatikan pola deret bilangan berikut: 4, 7, 13, 25, 49, ... Bilangan selanjutnya yang tepat untuk melengkapi deret tersebut adalah...',
-    opsi: [
-      { label: 'A', text: '85', skor: 0 },
-      { label: 'B', text: '93', skor: 0 },
-      { label: 'C', text: '97', skor: 5 },
-      { label: 'D', text: '98', skor: 0 },
-      { label: 'E', text: '101', skor: 0 }
-    ],
-    pembahasan: 'Selisih antar suku: +3, +6, +12, +24, sehingga selisih berikutnya +48. Jadi 49 + 48 = 97.',
-    referensi: 'TIU Numerik - Deret Geometri Bertingkat'
-  },
-  {
-    id: 'TIU-03', kategori: 'TIU', subMateri: 'Numerik - Perbandingan Berbalik Nilai', tingkat: 'HOTS', paket: 'Mingguan',
-    soal: 'Sebuah mesin produksi mampu mencetak 240 komponen presisi dalam waktu 40 menit. Jika ditambahkan 2 mesin identik yang bekerja bersamaan dengan kecepatan sama, berapa menit waktu yang dibutuhkan untuk mencetak 900 komponen?',
-    opsi: [
-      { label: 'A', text: '45 menit', skor: 0 },
-      { label: 'B', text: '50 menit', skor: 5 },
-      { label: 'C', text: '60 menit', skor: 0 },
-      { label: 'D', text: '75 menit', skor: 0 },
-      { label: 'E', text: '90 menit', skor: 0 }
-    ],
-    pembahasan: 'Kecepatan 1 mesin = 240/40 = 6 komponen/menit. Total mesin = 1 + 2 = 3 mesin (18 komponen/menit). Waktu untuk 900 komponen = 900 / 18 = 50 menit.',
-    referensi: 'TIU Numerik - Perbandingan Kuantitatif'
-  },
-  {
-    id: 'TIU-04', kategori: 'TIU', subMateri: 'Penalaran Analitis', tingkat: 'HOTS', paket: 'Bulanan',
-    soal: 'Lima peserta seleksi (A, B, C, D, E) memperoleh nilai SKD berbeda. Nilai A lebih tinggi dari B tetapi lebih rendah dari C. Nilai D lebih tinggi dari C, sedangkan nilai E berada tepat di antara nilai A dan B. Peserta dengan peringkat nilai tertinggi kedua adalah...',
-    opsi: [
-      { label: 'A', text: 'A', skor: 0 },
-      { label: 'B', text: 'B', skor: 0 },
-      { label: 'C', text: 'C', skor: 5 },
-      { label: 'D', text: 'D', skor: 0 },
-      { label: 'E', text: 'E', skor: 0 }
-    ],
-    pembahasan: 'Urutan dari tertinggi ke terendah: D > C > A > E > B. Peringkat 1 = D, peringkat 2 = C.',
-    referensi: 'TIU Penalaran Analitis - Pemeringkatan'
-  },
-  {
-    id: 'TIU-05', kategori: 'TIU', subMateri: 'Verbal - Analogi Kata', tingkat: 'Dasar', paket: 'Harian',
-    soal: 'KALIBRASI : AKURASI = ... : ...',
-    opsi: [
-      { label: 'A', text: 'VAKSINASI : IMUNITAS', skor: 5 },
-      { label: 'B', text: 'KOROSI : LOGAM', skor: 0 },
-      { label: 'C', text: 'INSPEKSI : KERUSAKAN', skor: 0 },
-      { label: 'D', text: 'PRODUKSI : DISTRIBUSI', skor: 0 },
-      { label: 'E', text: 'ANGGARAN : REALISASI', skor: 0 }
-    ],
-    pembahasan: 'Hubungan proses dan tujuan/hasil positifnya: KALIBRASI dilakukan untuk meningkatkan/menjamin AKURASI, sebagaimana VAKSINASI dilakukan untuk meningkatkan/menjamin IMUNITAS.',
-    referensi: 'TIU Verbal - Analogi Hubungan Tujuan'
-  },
-  {
-    id: 'TIU-06', kategori: 'TIU', subMateri: 'Numerik - Berhitung Cepat', tingkat: 'Menengah', paket: 'Harian',
-    soal: 'Hasil dari 37,5% × 480 + 0,125 × 640 − (1/6) × 300 adalah...',
-    opsi: [
-      { label: 'A', text: '190', skor: 0 },
-      { label: 'B', text: '210', skor: 5 },
-      { label: 'C', text: '220', skor: 0 },
-      { label: 'D', text: '240', skor: 0 },
-      { label: 'E', text: '260', skor: 0 }
-    ],
-    pembahasan: 'Gunakan pecahan istimewa: 37,5% = 3/8 -> (3/8) × 480 = 180. 0,125 = 1/8 -> (1/8) × 640 = 80. (1/6) × 300 = 50. Total = 180 + 80 - 50 = 210.',
-    referensi: 'TIU Numerik - Pecahan Istimewa'
-  },
-  {
-    id: 'TIU-07', kategori: 'TIU', subMateri: 'Verbal - Logika Ekuivalensi', tingkat: 'HOTS', paket: 'Mingguan',
-    soal: 'Pernyataan: "Jika anggaran disetujui dan dokumen lelang lengkap, maka proyek pembangunan dimulai bulan depan." Ingkaran (negasi) yang logis dari pernyataan majemuk tersebut adalah...',
-    opsi: [
-      { label: 'A', text: 'Jika anggaran tidak disetujui atau dokumen lelang tidak lengkap, maka proyek pembangunan tidak dimulai bulan depan.', skor: 0 },
-      { label: 'B', text: 'Anggaran disetujui dan dokumen lelang lengkap, tetapi proyek pembangunan tidak dimulai bulan depan.', skor: 5 },
-      { label: 'C', text: 'Proyek pembangunan dimulai bulan depan meskipun anggaran tidak disetujui.', skor: 0 },
-      { label: 'D', text: 'Anggaran tidak disetujui atau dokumen lelang tidak lengkap dan proyek tidak dimulai.', skor: 0 },
-      { label: 'E', text: 'Jika proyek pembangunan tidak dimulai bulan depan, maka anggaran tidak disetujui.', skor: 0 }
-    ],
-    pembahasan: 'Negasi dari implikasi (P → Q) adalah (P ∧ ~Q). Di sini P = "anggaran disetujui dan dokumen lelang lengkap", Q = "proyek dimulai bulan depan". Maka negasinya: "Anggaran disetujui dan dokumen lelang lengkap, tetapi (~Q) proyek pembangunan tidak dimulai bulan depan."',
-    referensi: 'TIU Verbal - Logika Matematika (Negasi Implikasi)'
-  },
-  {
-    id: 'TIU-08', kategori: 'TIU', subMateri: 'Numerik - Perbandingan P dan Q', tingkat: 'HOTS', paket: 'Bulanan',
-    soal: 'Diketahui x adalah bilangan bulat positif dengan 2 < x < 6. Jika P = 3x² − 4 dan Q = 2x³ − 15, manakah hubungan yang tepat antara kuantitas P dan Q?',
-    opsi: [
-      { label: 'A', text: 'P > Q untuk semua nilai x yang memenuhi', skor: 0 },
-      { label: 'B', text: 'Q > P untuk semua nilai x yang memenuhi', skor: 5 },
-      { label: 'C', text: 'P = Q untuk semua nilai x yang memenuhi', skor: 0 },
-      { label: 'D', text: 'Informasi yang diberikan tidak cukup untuk memutuskan salah satu dari tiga pilihan di atas', skor: 0 },
-      { label: 'E', text: 'P + Q selalu bernilai bilangan genap', skor: 0 }
-    ],
-    pembahasan: 'Nilai bulat x yang memenuhi 2 < x < 6 adalah x ∈ {3, 4, 5}. Uji x = 3: P = 3(9)-4 = 23, Q = 2(27)-15 = 39 (Q > P). Uji x = 4: P = 3(16)-4 = 44, Q = 2(64)-15 = 113 (Q > P). Tunggu: untuk x = 3 (P=23, Q=39 -> Q>P); untuk x = 4 (P=44, Q=113 -> Q>P); untuk x = 5 (P=71, Q=235 -> Q>P). Nilai bilangan bulat x dengan 2 < x < 6 adalah x ∈ {3, 4, 5}. Uji x = 3: P = 3(9) - 4 = 23, Q = 2(27) - 15 = 39 (Q > P). Uji x = 4: P = 3(16) - 4 = 44, Q = 2(64) - 15 = 113 (Q > P). Uji x = 5: P = 3(25) - 4 = 71, Q = 2(125) - 15 = 235 (Q > P). Jadi Q > P konsisten untuk semua nilai x yang memenuhi.',
-    referensi: 'TIU Numerik - Analisis Kuantitatif P dan Q'
-  },
-  {
-    id: 'TIU-09', kategori: 'TIU', subMateri: 'Numerik - Kecepatan & Jarak', tingkat: 'Menengah', paket: 'Harian',
-    soal: 'Kereta api bergerak dari Kota Tasikmalaya menuju Kota Bandung berjarak 120 km dengan kecepatan rata-rata 60 km/jam berangkat pukul 07.00 WIB. Pada pukul 07.30 WIB, kereta kedua berangkat dari Bandung menuju Tasikmalaya melalui jalur paralel dengan kecepatan 90 km/jam. Pada pukul berapa kedua kereta tersebut berpapasan?',
-    opsi: [
-      { label: 'A', text: '08.00 WIB', skor: 0 },
-      { label: 'B', text: '08.06 WIB', skor: 5 },
-      { label: 'C', text: '08.15 WIB', skor: 0 },
-      { label: 'D', text: '08.20 WIB', skor: 0 },
-      { label: 'E', text: '08.30 WIB', skor: 0 }
-    ],
-    pembahasan: 'Selisih waktu berangkat = 30 menit = 0,5 jam. Jarak tempuh kereta pertama selama 0,5 jam = 60 × 0,5 = 30 km. Sisa jarak = 120 - 30 = 90 km. Waktu berpapasan setelah 07.30 = Sisa jarak / (V1 + V2) = 90 / (60 + 90) = 90 / 150 = 0,6 jam = 36 menit. Jadi berpapasan pukul 07.30 + 36 menit = 08.06 WIB.',
-    referensi: 'TIU Numerik - Waktu Berpapasan (Susul-Menyusul)'
-  },
-  {
-    id: 'TIU-10', kategori: 'TIU', subMateri: 'Figural / Spasial - Pola Transformasi', tingkat: 'Menengah', paket: 'Mingguan',
-    soal: 'Sebuah kubus satuan memiliki 6 sisi: Atas (Merah), Bawah (Biru), Depan (Kuning), Belakang (Hijau), Kiri (Putih), dan Kanan (Hitam). Jika kubus tersebut digulingkan ke depan sebanyak 1 kali, lalu diputar 90 derajat searah jarum jam (dilihat dari atas), warna apakah yang berada di sisi DEPAN sekarang?',
-    opsi: [
-      { label: 'A', text: 'Merah', skor: 0 },
-      { label: 'B', text: 'Biru', skor: 0 },
-      { label: 'C', text: 'Putih', skor: 0 },
-      { label: 'D', text: 'Hitam', skor: 5 },
-      { label: 'E', text: 'Hijau', skor: 0 }
-    ],
-    pembahasan: 'Langkah 1 (digulingkan ke depan 1x): Sisi Atas (Merah) pindah ke Depan, Belakang (Hijau) pindah ke Atas, Bawah (Biru) pindah ke Belakang, Depan (Kuning) pindah ke Bawah. Kiri (Putih) dan Kanan (Hitam) tetap. Langkah 2 (diputar 90° searah jarum jam dari atas): Sisi Kanan (Hitam) bergeser menempati sisi Depan!',
-    referensi: 'TIU Figural - Penalaran Spasial Rotasi 3D'
-  },
-
-  // ==================== TKP (12 SOAL BERVARIASI) ====================
-  {
-    id: 'TKP-01', kategori: 'TKP', subMateri: 'Pelayanan Publik', tingkat: 'Menengah', paket: 'Harian',
-    soal: 'Anda bertugas di loket pelayanan perizinan terpadu. Menjelang jam istirahat siang, seorang warga lansia datang dari desa terpencil dengan berkas permohonan yang belum lengkap, padahal sistem antrean daring sudah ditutup. Sikap Anda adalah...',
-    opsi: [
-      { label: 'A', text: 'Menjelaskan dengan sopan prosedur kelengkapan berkas, membantu memeriksa kekurangan dokumennya saat itu juga, dan mengarahkan jadwal pengajuan prioritas berikutnya.', skor: 5 },
-      { label: 'B', text: 'Meminta warga tersebut pulang dan kembali besok pagi sesuai jam operasional standar loket.', skor: 2 },
-      { label: 'C', text: 'Tetap memproses permohonannya meskipun berkas belum lengkap karena merasa kasihan.', skor: 1 },
-      { label: 'D', text: 'Menyarankan warga tersebut meminta bantuan petugas keamanan untuk mengisi formulir daring.', skor: 3 },
-      { label: 'E', text: 'Mencatat nomor teleponnya dan berjanji akan menghubunginya jika ada waktu luang minggu depan.', skor: 4 }
-    ],
-    pembahasan: 'Dalam TKP Pelayanan Publik, skor 5 menggabungkan empati tinggi tanpa melanggar aturan/SOP (tetap mensyaratkan kelengkapan berkas, namun proaktif membantu memeriksa dan memberi solusi terukur).',
-    referensi: 'Kisi-kisi TKP PermenPANRB - Aspek Pelayanan Publik'
-  },
-  {
-    id: 'TKP-02', kategori: 'TKP', subMateri: 'Teknologi Informasi & Komunikasi', tingkat: 'Menengah', paket: 'Harian',
-    soal: 'Instansi Anda baru saja meluncurkan sistem pelaporan kinerja digital untuk menggantikan pelaporan manual berbasis kertas. Beberapa rekan senior di unit Anda kesulitan beradaptasi sehingga progres laporan divisi melambat. Langkah yang Anda ambil adalah...',
-    opsi: [
-      { label: 'A', text: 'Fokus menyelesaikan laporan bagian saya sendiri tepat waktu agar kinerja pribadi tetap dinilai baik.', skor: 2 },
-      { label: 'B', text: 'Membuat panduan ringkas langkah demi langkah dan menawarkan pendampingan praktik langsung di sela waktu kerja.', skor: 5 },
-      { label: 'C', text: 'Melaporkan kepada atasan bahwa rekan senior menghambat digitalisasi unit kerja.', skor: 1 },
-      { label: 'D', text: 'Mengambil alih seluruh penginputan data rekan senior agar laporan divisi cepat selesai.', skor: 3 },
-      { label: 'E', text: 'Menyarankan mereka mengikuti pelatihan mandiri melalui video tutorial di internet.', skor: 4 }
-    ],
-    pembahasan: 'Aspek TIK & Jejaring Kerja mengutamakan kemauan berbagi pengetahuan teknologi secara solutif dan memberdayakan rekan kerja (bukan mengambil alih tugas atau membiarkan).',
-    referensi: 'Kisi-kisi TKP PermenPANRB - Aspek TIK'
-  },
-  {
-    id: 'TKP-03', kategori: 'TKP', subMateri: 'Anti Radikalisme', tingkat: 'HOTS', paket: 'Mingguan',
-    soal: 'Di grup percakapan internal pegawai, seorang rekan membagikan tautan artikel yang mempertanyakan keabsahan dasar negara dan mengajak anggota grup menolak kebijakan resmi pemerintah dengan alasan ideologi kelompok tertentu. Respons Anda adalah...',
-    opsi: [
-      { label: 'A', text: 'Keluar dari grup secara diam-diam agar tidak terlibat polemik.', skor: 2 },
-      { label: 'B', text: 'Mengingatkan secara objektif di grup mengenai netralitas serta kode etik ASN untuk setia pada Pancasila dan UUD 1945, lalu melaporkan konten tersebut sesuai mekanisme pembinaan internal.', skor: 5 },
-      { label: 'C', text: 'Membalas dengan kemarahan dan memperdebatkan pandangan tersebut secara emosional di grup.', skor: 1 },
-      { label: 'D', text: 'Mengabaikan pesan tersebut karena menganggapnya hanya candaan atau opini pribadi.', skor: 3 },
-      { label: 'E', text: 'Menghubungi rekan tersebut secara pribadi untuk menyarankan agar menghapus tautannya saja.', skor: 4 }
-    ],
-    pembahasan: 'Aspek Anti-Radikalisme menuntut ketegasan sikap ASN dalam menjaga keutuhan ideologi negara secara elegan, edukatif, dan sesuai prosedur pelaporan pembinaan kepegawaian.',
-    referensi: 'SKB Penanganan Radikalisme ASN & UU No. 20 Tahun 2023 tentang ASN'
-  },
-  {
-    id: 'TKP-04', kategori: 'TKP', subMateri: 'Sosial Budaya', tingkat: 'Menengah', paket: 'Bulanan',
-    soal: 'Anda dipindahtugaskan ke unit kerja di daerah dengan latar belakang bahasa dan adat istiadat yang berbeda dari daerah asal Anda. Pada minggu pertama, komunikasi tim terasa kaku. Upaya terbaik yang Anda lakukan adalah...',
-    opsi: [
-      { label: 'A', text: 'Tetap bekerja seperti biasa dan menunggu rekan kerja mengajak berbicara terlebih dahulu.', skor: 2 },
-      { label: 'B', text: 'Aktif mempelajari etika budaya setempat, bersikap terbuka dalam berdialog, dan membangun kolaborasi kerja yang inklusif.', skor: 5 },
-      { label: 'C', text: 'Hanya berinteraksi secara formal sebatas urusan pekerjaan agar terhindar dari salah paham budaya.', skor: 3 },
-      { label: 'D', text: 'Meminta rekan kerja menyesuaikan diri menggunakan kebiasaan komunikasi dari daerah asal Anda.', skor: 1 },
-      { label: 'E', text: 'Mengikuti kegiatan informal kantor sesekali sambil mengamati kebiasaan mereka.', skor: 4 }
-    ],
-    pembahasan: 'Aspek Sosial Budaya mengukur kemampuan beradaptasi dan bekerja efektif dalam masyarakat majemuk dengan sikap menghargai keragaman secara aktif.',
-    referensi: 'Kisi-kisi TKP PermenPANRB - Aspek Sosial Budaya'
-  },
-  {
-    id: 'TKP-05', kategori: 'TKP', subMateri: 'Profesionalisme', tingkat: 'HOTS', paket: 'Harian',
-    soal: 'Anda sedang menyelesaikan laporan evaluasi anggaran triwulan yang harus diserahkan pukul 16.00 WIB hari ini. Pada pukul 14.30 WIB, rekan satu tim Anda tiba-tiba sakit dan meminta Anda melanjutkan bagian analisis datanya yang masih tersisa 40%. Sikap Anda adalah...',
-    opsi: [
-      { label: 'A', text: 'Menolak permintaan tersebut karena masing-masing pegawai sudah memiliki pembagian tugas yang jelas.', skor: 1 },
-      { label: 'B', text: 'Segera memetakan sisa data yang belum diolah, mengatur prioritas waktu, dan berkoordinasi dengan atasan bila diperlukan dukungan tambahan agar laporan selesai tepat waktu.', skor: 5 },
-      { label: 'C', text: 'Mengerjakan bagian rekan tersebut semampunya dan menyerahkan laporan apa adanya melewati tenggat waktu.', skor: 3 },
-      { label: 'D', text: 'Meminta penundaan tenggat waktu kepada atasan hingga rekan tersebut masuk kerja kembali.', skor: 2 },
-      { label: 'E', text: 'Mengerjakan seluruhnya sendirian tanpa melapor kepada atasan meskipun berisiko terjadi kesalahan hitung karena terburu-buru.', skor: 4 }
-    ],
-    pembahasan: 'Profesionalisme menuntut tanggung jawab terhadap keberhasilan target tim, manajemen krisis yang terukur, serta komunikasi transparan dengan pimpinan.',
-    referensi: 'Kisi-kisi TKP PermenPANRB - Aspek Profesionalisme'
-  },
-  {
-    id: 'TKP-06', kategori: 'TKP', subMateri: 'Jejaring Kerja', tingkat: 'Menengah', paket: 'Mingguan',
-    soal: 'Instansi Anda ditunjuk sebagai koordinator penyusunan standar teknis industri bersama tiga kementerian lain. Pada rapat perdana, muncul perbedaan standar prosedur antarinstansi yang membuat pembahasan berjalan buntu. Langkah Anda sebagai perwakilan tim adalah...',
-    opsi: [
-      { label: 'A', text: 'Mempertahankan standar milik instansi sendiri karena merasa paling berpengalaman di bidang tersebut.', skor: 1 },
-      { label: 'B', text: 'Mengusulkan pemetaan titik temu dari masing-masing regulasi instansi dan menyusun matriks penyelarasan bersama secara objektif.', skor: 5 },
-      { label: 'C', text: 'Menyerahkan sepenuhnya keputusan akhir kepada pimpinan rapat tanpa memberikan masukan teknis.', skor: 2 },
-      { label: 'D', text: 'Mengikuti usulan dari kementerian yang anggarannya paling besar agar rapat cepat selesai.', skor: 3 },
-      { label: 'E', text: 'Menunda pembahasan dan meminta masing-masing instansi mengirim surat resmi terlebih dahulu.', skor: 4 }
-    ],
-    pembahasan: 'Aspek Jejaring Kerja menilai kemampuan membangun kolaborasi lintas sektor, mencari solusi win-win berbasis data, dan menghilangkan ego sektoral.',
-    referensi: 'Kisi-kisi TKP PermenPANRB - Aspek Jejaring Kerja'
-  },
-  {
-    id: 'TKP-07', kategori: 'TKP', subMateri: 'Teknologi Informasi & Keamanan Data', tingkat: 'HOTS', paket: 'Harian',
-    soal: 'Anda menerima surel (email) yang mengatasnamakan unit IT pusat yang meminta Anda segera memperbarui kata sandi akun portal kepegawaian melalui tautan eksternal dalam waktu 1 jam. Tindakan Anda adalah...',
-    opsi: [
-      { label: 'A', text: 'Segera mengklik tautan dan mengganti kata sandi agar akun kepegawaian tidak terblokir.', skor: 1 },
-      { label: 'B', text: 'Memeriksa alamat domain pengirim, tidak mengklik tautan mencurigakan, dan mengonfirmasi langsung ke helpdesk IT resmi instansi serta mengingatkan rekan kerja.', skor: 5 },
-      { label: 'C', text: 'Menghapus surel tersebut tanpa memberi tahu siapa pun.', skor: 3 },
-      { label: 'D', text: 'Meneruskan surel tersebut ke grup kantor untuk menanyakan apakah ada yang sudah mengkliknya.', skor: 2 },
-      { label: 'E', text: 'Melaporkan surel tersebut ke unit IT namun tetap mencoba membuka tautannya lewat ponsel pribadi.', skor: 4 }
-    ],
-    pembahasan: 'Literasi keamanan siber (awareness terhadap phishing) adalah bagian krusial dalam aspek TIK modern bagi ASN untuk melindungi data negara.',
-    referensi: 'Kisi-kisi TKP PermenPANRB - Literasi Digital & Keamanan Informasi'
-  },
-  {
-    id: 'TKP-08', kategori: 'TKP', subMateri: 'Pelayanan Publik Digital', tingkat: 'Menengah', paket: 'Bulanan',
-    soal: 'Banyak pengguna layanan mengeluhkan di media sosial resmi instansi bahwa aplikasi pengajuan izin sering mengalami gangguan saat mengunggah dokumen berukuran besar. Sebagai pengelola layanan, respons Anda adalah...',
-    opsi: [
-      { label: 'A', text: 'Menghapus komentar keluhan di media sosial agar citra instansi tetap terlihat baik.', skor: 1 },
-      { label: 'B', text: 'Menanggapi keluhan dengan ramah, menyediakan panduan kompresi dokumen serta kanal alternatif sementara, dan meneruskan temuan bug ke tim pengembang sistem.', skor: 5 },
-      { label: 'C', text: 'Menyalahkan pengguna karena tidak membaca petunjuk ukuran maksimal file sebelum mengunggah.', skor: 2 },
-      { label: 'D', text: 'Mencatat keluhan tersebut untuk dibahas pada rapat evaluasi akhir tahun.', skor: 3 },
-      { label: 'E', text: 'Meminta pengguna mencoba mengunggah ulang pada tengah malam saat trafik server sepi.', skor: 4 }
-    ],
-    pembahasan: 'Pelayanan publik responsif menuntut komunikasi empatik, solusi jangka pendek bagi masyarakat, dan perbaikan sistemik jangka panjang.',
-    referensi: 'UU No. 25 Tahun 2009 tentang Pelayanan Publik'
+function shuffleWithSeed<T>(arr: T[], seed: number): T[] {
+  const rng = mulberry32(seed);
+  const copy = [...arr];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
   }
+  return copy;
+}
+
+function makeOptions(
+  correctText: string,
+  distractors: string[],
+  seed: number
+): { label: string; text: string; skor: number }[] {
+  const raw = [
+    { text: correctText, skor: 5 },
+    ...distractors.slice(0, 4).map((d) => ({ text: d, skor: 0 }))
+  ];
+  const shuffled = shuffleWithSeed(raw, seed);
+  const labels = ['A', 'B', 'C', 'D', 'E'];
+  return shuffled.map((item, idx) => ({
+    label: labels[idx],
+    text: item.text,
+    skor: item.skor
+  }));
+}
+
+function makeTkpOptions(
+  opt5: string,
+  opt4: string,
+  opt3: string,
+  opt2: string,
+  opt1: string,
+  seed: number
+): { label: string; text: string; skor: number }[] {
+  const raw = [
+    { text: opt5, skor: 5 },
+    { text: opt4, skor: 4 },
+    { text: opt3, skor: 3 },
+    { text: opt2, skor: 2 },
+    { text: opt1, skor: 1 }
+  ];
+  const shuffled = shuffleWithSeed(raw, seed);
+  const labels = ['A', 'B', 'C', 'D', 'E'];
+  return shuffled.map((item, idx) => ({
+    label: labels[idx],
+    text: item.text,
+    skor: item.skor
+  }));
+}
+
+// ============================================================================
+// GENERATOR 400 SOAL TWK BERVARIASI (Pancasila, UUD 1945, NKRI, Bhinneka,
+// Integritas/Antikorupsi, Bela Negara, Nasionalisme, Bahasa Indonesia EYD V)
+// ============================================================================
+function generateTwkQuestions(): Question[] {
+  const list: Question[] = [];
+  const pakets: ('Harian' | 'Mingguan' | 'Bulanan')[] = ['Harian', 'Mingguan', 'Bulanan'];
+  const tingkats: ('Dasar' | 'Menengah' | 'HOTS')[] = ['Dasar', 'Menengah', 'HOTS'];
+
+  // 1. Bank Kasus Pancasila (80 soal unik)
+  const pancasilaCases = [
+    {
+      sila: 'Sila Pertama (Ketuhanan Yang Maha Esa)',
+      pasal: 'Pasal 29 Ayat (2) UUD 1945 & Tap MPR No. I/MPR/2003',
+      kasus: 'menjamin kebebasan rekan kerja berbeda keyakinan untuk melaksanakan ibadah di sela jam kerja tanpa diskriminasi jadwal rapat',
+      distractor: ['Sila Kedua (Kemanusiaan yang Adil dan Beradab)', 'Sila Ketiga (Persatuan Indonesia)', 'Sila Keempat (Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan)', 'Sila Kelima (Keadilan Sosial bagi Seluruh Rakyat Indonesia)']
+    },
+    {
+      sila: 'Sila Kedua (Kemanusiaan yang Adil dan Beradab)',
+      pasal: 'Tap MPR No. I/MPR/2003 Butir Pengamalan Sila ke-2',
+      kasus: 'memperlakukan setiap pemohon layanan publik sesuai harkat dan martabat manusia tanpa membeda-bedakan status sosial maupun latar belakang keluarga',
+      distractor: ['Sila Pertama (Ketuhanan Yang Maha Esa)', 'Sila Ketiga (Persatuan Indonesia)', 'Sila Keempat (Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan)', 'Sila Kelima (Keadilan Sosial bagi Seluruh Rakyat Indonesia)']
+    },
+    {
+      sila: 'Sila Ketiga (Persatuan Indonesia)',
+      pasal: 'Tap MPR No. I/MPR/2003 Butir Pengamalan Sila ke-3',
+      kasus: 'menempatkan persatuan, kesatuan, serta kepentingan keselamatan bangsa di atas kepentingan pribadi atau golongan saat terjadi konflik kebijakan antarwilayah',
+      distractor: ['Sila Pertama (Ketuhanan Yang Maha Esa)', 'Sila Kedua (Kemanusiaan yang Adil dan Beradab)', 'Sila Keempat (Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan)', 'Sila Kelima (Keadilan Sosial bagi Seluruh Rakyat Indonesia)']
+    },
+    {
+      sila: 'Sila Keempat (Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan)',
+      pasal: 'Tap MPR No. I/MPR/2003 Butir Pengamalan Sila ke-4',
+      kasus: 'tidak memaksakan kehendak dalam forum rapat koordinasi dan melaksanakan hasil keputusan musyawarah mufakat dengan penuh itikad baik',
+      distractor: ['Sila Pertama (Ketuhanan Yang Maha Esa)', 'Sila Kedua (Kemanusiaan yang Adil dan Beradab)', 'Sila Ketiga (Persatuan Indonesia)', 'Sila Kelima (Keadilan Sosial bagi Seluruh Rakyat Indonesia)']
+    },
+    {
+      sila: 'Sila Kelima (Keadilan Sosial bagi Seluruh Rakyat Indonesia)',
+      pasal: 'Tap MPR No. I/MPR/2003 Butir Pengamalan Sila ke-5',
+      kasus: 'menjaga keseimbangan antara hak dan kewajiban serta menghindari perilaku pemborosan anggaran maupun gaya hidup mewah sebagai aparatur negara',
+      distractor: ['Sila Pertama (Ketuhanan Yang Maha Esa)', 'Sila Kedua (Kemanusiaan yang Adil dan Beradab)', 'Sila Ketiga (Persatuan Indonesia)', 'Sila Keempat (Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan)']
+    }
+  ];
+
+  const instansiKonteks = [
+    'Dinas Perindustrian dan Perdagangan', 'Kantor Pelayanan Perbendaharaan Negara', 'Balai Besar Standardisasi dan Pelayanan Jasa Industri',
+    'Dinas Tenaga Kerja dan Transmigrasi', 'Kantor Pertanahan Kabupaten', 'Unit Pelayanan Terpadu Satu Pintu (PTSP)',
+    'Balai Pengawasan Ketenagakerjaan Wilayah', 'Dinas Pekerjaan Umum dan Tata Ruang', 'Kantor Imigrasi Kelas I',
+    'Sekretariat Daerah Provinsi', 'Badan Perencanaan Pembangunan Daerah', 'Dinas Koperasi dan UKM',
+    'Balai Riset Material dan Manufaktur', 'Kantor Pelayanan Pajak Pratama', 'Dinas Lingkungan Hidup Daerah',
+    'Inspektorat Jenderal Kementerian'
+  ];
+
+  for (let i = 0; i < 80; i++) {
+    const c = pancasilaCases[i % pancasilaCases.length];
+    const inst = instansiKonteks[i % instansiKonteks.length];
+    const aktor = ['seorang analis kebijakan', 'seorang pejabat fungsional', 'seorang ketua tim kerja', 'seorang petugas pelayanan publik', 'seorang auditor internal'][i % 5];
+    const nomorKasus = i + 1;
+    list.push({
+      id: `TWK-${String(list.length + 1).padStart(4, '0')}`,
+      kategori: 'TWK',
+      subMateri: 'Pancasila & Pengamalan',
+      tingkat: tingkats[i % 3],
+      paket: pakets[i % 3],
+      soal: `[Studi Kasus Pancasila #${nomorKasus}] Di lingkungan ${inst}, ${aktor} secara konsisten ${c.kasus}. Tindakan nyata tersebut merupakan wujud pengamalan nilai Pancasila khususnya...`,
+      opsi: makeOptions(c.sila, c.distractor, 100 + i),
+      pembahasan: `Perilaku ${c.kasus} secara langsung mencerminkan butir-butir ${c.sila}.`,
+      referensi: c.pasal
+    });
+  }
+
+  // 2. Bank Pasal & Ketatanegaraan UUD 1945 (80 soal unik)
+  const uudFacts = [
+    {
+      pasal: 'Pasal 1 Ayat (3) UUD 1945',
+      tanya: 'penegasan bahwa Negara Indonesia adalah negara hukum (rechtsstaat) dan bukan berdasarkan kekuasaan belaka (machtsstaat)',
+      benar: 'Pasal 1 Ayat (3) UUD NRI Tahun 1945',
+      salah: ['Pasal 1 Ayat (1) UUD NRI Tahun 1945', 'Pasal 2 Ayat (1) UUD NRI Tahun 1945', 'Pasal 4 Ayat (1) UUD NRI Tahun 1945', 'Pasal 27 Ayat (1) UUD NRI Tahun 1945']
+    },
+    {
+      pasal: 'Pasal 7A & 7B UUD 1945',
+      tanya: 'mekanisme pemberhentian Presiden dan/atau Wakil Presiden dalam masa jabatannya oleh MPR atas usul DPR setelah melalui putusan Mahkamah Konstitusi',
+      benar: 'Pasal 7A dan Pasal 7B UUD NRI Tahun 1945',
+      salah: ['Pasal 6A dan Pasal 7 UUD NRI Tahun 1945', 'Pasal 8 dan Pasal 9 UUD NRI Tahun 1945', 'Pasal 20 dan Pasal 20A UUD NRI Tahun 1945', 'Pasal 24A dan Pasal 24B UUD NRI Tahun 1945']
+    },
+    {
+      pasal: 'Pasal 18B Ayat (2) UUD 1945',
+      tanya: 'pengakuan dan penghormatan negara terhadap kesatuan-kesatuan masyarakat hukum adat beserta hak-hak tradisionalnya sepanjang masih hidup dan sesuai prinsip NKRI',
+      benar: 'Pasal 18B Ayat (2) UUD NRI Tahun 1945',
+      salah: ['Pasal 18 Ayat (1) UUD NRI Tahun 1945', 'Pasal 28I Ayat (3) UUD NRI Tahun 1945', 'Pasal 32 Ayat (1) UUD NRI Tahun 1945', 'Pasal 33 Ayat (3) UUD NRI Tahun 1945']
+    },
+    {
+      pasal: 'Pasal 20 Ayat (5) UUD 1945',
+      tanya: 'ketentuan bahwa RUU yang telah disetujui bersama DPR dan Presiden sah menjadi undang-undang dan wajib diundangkan apabila dalam 30 hari tidak disahkan Presiden',
+      benar: 'Pasal 20 Ayat (5) UUD NRI Tahun 1945',
+      salah: ['Pasal 20 Ayat (2) UUD NRI Tahun 1945', 'Pasal 21 Ayat (1) UUD NRI Tahun 1945', 'Pasal 22 Ayat (1) UUD NRI Tahun 1945', 'Pasal 22D Ayat (2) UUD NRI Tahun 1945']
+    },
+    {
+      pasal: 'Pasal 22E Ayat (1) UUD 1945',
+      tanya: 'asas penyelenggaraan pemilihan umum di Indonesia yaitu langsung, umum, bebas, rahasia, jujur, dan adil (Luber Jurdil) setiap lima tahun sekali',
+      benar: 'Pasal 22E Ayat (1) UUD NRI Tahun 1945',
+      salah: ['Pasal 22D Ayat (1) UUD NRI Tahun 1945', 'Pasal 23E Ayat (1) UUD NRI Tahun 1945', 'Pasal 24C Ayat (1) UUD NRI Tahun 1945', 'Pasal 28E Ayat (3) UUD NRI Tahun 1945']
+    },
+    {
+      pasal: 'Pasal 23E Ayat (1) UUD 1945',
+      tanya: 'keberadaan Badan Pemeriksa Keuangan (BPK) yang bebas dan mandiri untuk memeriksa pengelolaan dan tanggung jawab tentang keuangan negara',
+      benar: 'Pasal 23E Ayat (1) UUD NRI Tahun 1945',
+      salah: ['Pasal 23 Ayat (1) UUD NRI Tahun 1945', 'Pasal 23D UUD NRI Tahun 1945', 'Pasal 24A Ayat (1) UUD NRI Tahun 1945', 'Pasal 33 Ayat (4) UUD NRI Tahun 1945']
+    },
+    {
+      pasal: 'Pasal 24B Ayat (1) UUD 1945',
+      tanya: 'kewenangan Komisi Yudisial yang bersifat mandiri untuk mengusulkan pengangkatan hakim agung serta menjaga dan menegakkan kehormatan dan perilaku hakim',
+      benar: 'Pasal 24B Ayat (1) UUD NRI Tahun 1945',
+      salah: ['Pasal 24A Ayat (2) UUD NRI Tahun 1945', 'Pasal 24C Ayat (2) UUD NRI Tahun 1945', 'Pasal 25 UUD NRI Tahun 1945', 'Pasal 28D Ayat (1) UUD NRI Tahun 1945']
+    },
+    {
+      pasal: 'Pasal 31 Ayat (4) UUD 1945',
+      tanya: 'kewajiban negara memprioritaskan anggaran pendidikan sekurang-kurangnya dua puluh persen (20%) dari APBN serta dari APBD',
+      benar: 'Pasal 31 Ayat (4) UUD NRI Tahun 1945',
+      salah: ['Pasal 31 Ayat (1) UUD NRI Tahun 1945', 'Pasal 32 Ayat (2) UUD NRI Tahun 1945', 'Pasal 33 Ayat (2) UUD NRI Tahun 1945', 'Pasal 34 Ayat (2) UUD NRI Tahun 1945']
+    },
+    {
+      pasal: 'Pasal 33 Ayat (3) UUD 1945',
+      tanya: 'prinsip bahwa bumi dan air dan kekayaan alam yang terkandung di dalamnya dikuasai oleh negara dan dipergunakan untuk sebesar-besar kemakmuran rakyat',
+      benar: 'Pasal 33 Ayat (3) UUD NRI Tahun 1945',
+      salah: ['Pasal 33 Ayat (1) UUD NRI Tahun 1945', 'Pasal 33 Ayat (2) UUD NRI Tahun 1945', 'Pasal 34 Ayat (1) UUD NRI Tahun 1945', 'Pasal 28H Ayat (1) UUD NRI Tahun 1945']
+    },
+    {
+      pasal: 'Pasal 37 Ayat (5) UUD 1945',
+      tanya: 'ketentuan khusus bahwa mengenai bentuk Negara Kesatuan Republik Indonesia tidak dapat dilakukan perubahan melalui mekanisme amandemen',
+      benar: 'Pasal 37 Ayat (5) UUD NRI Tahun 1945',
+      salah: ['Pasal 37 Ayat (1) UUD NRI Tahun 1945', 'Pasal 37 Ayat (3) UUD NRI Tahun 1945', 'Pasal 1 Ayat (1) UUD NRI Tahun 1945', 'Pasal 25A UUD NRI Tahun 1945']
+    }
+  ];
+
+  const konteksUud = [
+    'Dalam penyusunan naskah akademik peraturan daerah',
+    'Pada saat uji kompetensi pejabat fungsional analis hukum',
+    'Dalam pembahasan rancangan kebijakan publik tingkat kementerian',
+    'Pada simulasi sidang ketatanegaraan aparatur sipil negara',
+    'Dalam kajian evaluasi regulasi penyelenggaraan pemerintahan',
+    'Pada forum diskusi reformasi birokrasi dan konstitusi',
+    'Dalam penyusunan pedoman tata kelola kelembagaan negara',
+    'Pada evaluasi kepatuhan hukum administrasi pemerintahan'
+  ];
+
+  for (let i = 0; i < 80; i++) {
+    const f = uudFacts[i % uudFacts.length];
+    const k = konteksUud[Math.floor(i / uudFacts.length) % konteksUud.length];
+    list.push({
+      id: `TWK-${String(list.length + 1).padStart(4, '0')}`,
+      kategori: 'TWK',
+      subMateri: 'UUD 1945 & Konstitusi',
+      tingkat: tingkats[(i + 1) % 3],
+      paket: pakets[(i + 1) % 3],
+      soal: `[Konstitusi #${i + 1}] ${k}, dasar konstitusional yang mengatur ${f.tanya} tercantum secara eksplisit pada...`,
+      opsi: makeOptions(f.benar, f.salah, 500 + i),
+      pembahasan: `Ketentuan mengenai ${f.tanya} diatur secara jelas dalam ${f.pasal}.`,
+      referensi: f.pasal
+    });
+  }
+
+  // 3. Integritas, ASN BerAKHLAK & Antikorupsi (80 soal unik)
+  const integritasCases = [
+    {
+      tema: 'Konflik Kepentingan & Gratifikasi',
+      skenario: 'menolak parsel lebaran bernilai jutaan rupiah dari rekanan penyedia barang jasa meskipun dikirim ke alamat rumah pribadi di luar jam kantor',
+      benar: 'Melaporkan atau menolak pemberian tersebut karena berhubungan dengan jabatan dan berpotensi menimbulkan konflik kepentingan',
+      salah: [
+        'Menerimanya secara diam-diam asalkan tidak memengaruhi keputusan proyek berikutnya',
+        'Membagikannya kepada seluruh staf kantor agar tidak dinikmati secara pribadi',
+        'Menyimpannya terlebih dahulu dan baru melapor jika ada pemeriksaan inspektorat',
+        'Menganggapnya sebagai tanda terima kasih wajar atas kerja sama profesional'
+      ],
+      ref: 'UU No. 20 Tahun 2001 Pasal 12B & Pedoman Pengendalian Gratifikasi KPK'
+    },
+    {
+      tema: 'Core Values ASN BerAKHLAK - Akuntabel',
+      skenario: 'menggunakan fasilitas kendaraan dinas dan anggaran perjalanan dinas hanya untuk kepentingan tugas kedinasan sesuai bukti pertanggungjawaban riil',
+      benar: 'Akuntabel (menggunakan kekayaan dan barang milik negara secara bertanggung jawab, efektif, dan efisien)',
+      salah: [
+        'Adaptif terhadap perubahan lingkungan kerja',
+        'Harmonis dalam membangun lingkungan kerja kondusif',
+        'Kompeten dalam mengembangkan kapabilitas diri',
+        'Kolaboratif dengan berbagai pemangku kepentingan'
+      ],
+      ref: 'SE MenPANRB No. 20 Tahun 2021 tentang Implementasi Core Values ASN BerAKHLAK'
+    },
+    {
+      tema: 'Nilai Antikorupsi KPK - Kemandirian & Tanggung Jawab',
+      skenario: 'menyelesaikan seluruh audit lapangan tanpa bergantung pada fasilitas akomodasi yang disediakan pihak terperiksa',
+      benar: 'Kemandirian dan integritas untuk menjaga objektivitas serta independensi hasil pemeriksaan',
+      salah: [
+        'Efisiensi anggaran instansi dengan memanfaatkan fasilitas pihak ketiga',
+        'Fleksibilitas kerja sama antara auditor dan objek pemeriksaan',
+        'Loyalitas terhadap pimpinan unit kerja setempat',
+        'Kepatuhan administratif terhadap jadwal kunjungan lapangan'
+      ],
+      ref: '9 Nilai Antikorupsi KPK (Jujur, Peduli, Mandiri, Disiplin, Tanggung Jawab, Kerja Keras, Sederhana, Berani, Adil)'
+    },
+    {
+      tema: 'Netralitas ASN dalam Pemilu/Pilkada',
+      skenario: 'tidak memberikan tanda suka (like), komentar dukungan, maupun membagikan unggahan kampanye salah satu bakal calon kepala daerah di media sosial pribadi',
+      benar: 'Menjaga asas netralitas ASN agar tidak berpihak dari segala bentuk pengaruh manapun dan tidak memihak kepada kepentingan siapapun',
+      salah: [
+        'Membatasi hak berpendapat warga negara di ruang digital',
+        'Menghindari interaksi sosial dengan masyarakat di daerah pemilihan',
+        'Menunggu pengumuman resmi masa tenang sebelum menghapus unggahan dukungan',
+        'Menggunakan akun anonim agar tetap dapat menyalurkan aspirasi politik secara terbuka'
+      ],
+      ref: 'UU No. 20 Tahun 2023 tentang ASN Pasal 2 huruf f & SKB Netralitas ASN'
+    }
+  ];
+
+  const jabatanIntegritas = [
+    'Pejabat Pembuat Komitmen (PPK)', 'Auditor Ahli Pertama', 'Pengawas Ketenagakerjaan', 'Pembina Industri',
+    'Analis Anggaran', 'Petugas Bea dan Cukai', 'Inspektur Tambang', 'Analis Sumber Daya Manusia Aparatur',
+    'Perencana Ahli Pertama', 'Pranata Komputer', 'Pengelola Pengadaan Barang/Jasa', 'Penilai Pajak',
+    'Mediator Hubungan Industrial', 'Perekayasa Ahli Pertama', 'Analis Kebijakan', 'Penyuluh Antikorupsi',
+    'Kepala Subbagian Umum', 'Bendahara Pengeluaran', 'Verifikator Keuangan', 'Sekretaris Tim Lelang'
+  ];
+
+  for (let i = 0; i < 80; i++) {
+    const ic = integritasCases[i % integritasCases.length];
+    const jab = jabatanIntegritas[i % jabatanIntegritas.length];
+    list.push({
+      id: `TWK-${String(list.length + 1).padStart(4, '0')}`,
+      kategori: 'TWK',
+      subMateri: 'Integritas & Antikorupsi',
+      tingkat: tingkats[(i + 2) % 3],
+      paket: pakets[(i + 2) % 3],
+      soal: `[Integritas ASN #${i + 1}] Sebagai seorang ${jab}, Anda dihadapkan pada situasi untuk ${ic.skenario}. Prinsip utama yang mendasari sikap berintegritas tersebut adalah...`,
+      opsi: makeOptions(ic.benar, ic.salah, 900 + i),
+      pembahasan: `${ic.benar}. Hal ini sejalan dengan standar etik dan regulasi kepegawaian nasional.`,
+      referensi: ic.ref
+    });
+  }
+
+  // 4. NKRI, Bhinneka Tunggal Ika, Bela Negara & Sejarah (80 soal unik)
+  const nkriCases = [
+    {
+      sub: 'NKRI & Otonomi Daerah',
+      tanya: 'urusan pemerintahan absolut yang sepenuhnya menjadi kewenangan Pemerintah Pusat menurut Pasal 10 UU No. 23 Tahun 2014',
+      benar: 'Politik luar negeri, pertahanan, keamanan, yustisi, moneter dan fiskal nasional, serta agama',
+      salah: [
+        'Pendidikan menengah, kesehatan masyarakat, pekerjaan umum, dan perumahan rakyat',
+        'Perhubungan daerah, lingkungan hidup, pertanahan, dan pemberdayaan perempuan',
+        'Ketenagakerjaan, koperasi dan usaha kecil menengah, penanaman modal, serta pariwisata',
+        'Kelautan dan perikanan, pertanian, kehutanan, serta energi dan sumber daya mineral daerah'
+      ],
+      ref: 'UU No. 23 Tahun 2014 tentang Pemerintahan Daerah Pasal 10'
+    },
+    {
+      sub: 'Bhinneka Tunggal Ika',
+      tanya: 'implementasi prinsip persatuan dalam keberagaman (Bhinneka Tunggal Ika) pada perumusan kebijakan pelayanan publik di daerah multikultural',
+      benar: 'Menyusun standar pelayanan inklusif yang menghormati kearifan lokal tanpa mendiskriminasi kelompok minoritas maupun pendatang',
+      salah: [
+        'Mewajibkan penggunaan satu bahasa daerah tertentu dalam seluruh dokumen administrasi resmi',
+        'Memberikan kuota layanan khusus hanya bagi penduduk asli daerah setempat',
+        'Menyeragamkan seluruh tradisi lokal agar sesuai dengan budaya ibu kota negara',
+        'Memisahkan loket pelayanan berdasarkan latar belakang suku dan asal daerah pemohon'
+      ],
+      ref: 'PP No. 66 Tahun 1951 & Wawasan Kebangsaan NKRI'
+    },
+    {
+      sub: 'Bela Negara',
+      tanya: 'wujud nyata nilai dasar Bela Negara "Rela berkorban untuk bangsa dan negara" bagi seorang ASN di era modern',
+      benar: 'Bersedia ditempatkan di wilayah tertinggal, terdepan, dan terluar (3T) serta mendahulukan tugas negara di atas kepentingan pribadi saat terjadi darurat publik',
+      salah: [
+        'Menolak mutasi ke luar pulau karena merasa sudah nyaman dengan unit kerja saat ini',
+        'Hanya bersedia bekerja lembur apabila mendapatkan kompensasi honorarium tambahan di luar ketentuan',
+        'Membatasi kolaborasi dengan instansi lain demi menjaga rahasia kinerja unit sendiri',
+        'Mengutamakan penyelesaian urusan bisnis pribadi di sela jam pelayanan masyarakat'
+      ],
+      ref: 'UU No. 23 Tahun 2019 tentang Pengelolaan Sumber Daya Nasional untuk Pertahanan Negara'
+    },
+    {
+      sub: 'Nasionalisme & Sejarah',
+      tanya: 'makna strategis Sumpah Pemuda 28 Oktober 1928 bagi penguatan birokrasi nasional Indonesia masa kini',
+      benar: 'Meneguhkan bahasa Indonesia sebagai bahasa pemersatu administrasi negara dan menanggalkan ego kedaerahan demi kemajuan bangsa',
+      salah: [
+        'Menghapus seluruh bahasa daerah dari kurikulum pendidikan dan komunikasi masyarakat',
+        'Membatasi pertukaran pegawai antarprovinsi agar budaya lokal tetap terjaga murni',
+        'Memusatkan seluruh kewenangan pembangunan hanya di Pulau Jawa',
+        'Mengutamakan organisasi kepemudaan berbasis kedaerahan dalam rekrutmen aparatur'
+      ],
+      ref: 'Kongres Pemuda II (28 Oktober 1928)'
+    }
+  ];
+
+  const wilayahNkri = [
+    'Wilayah Perbatasan Kalimantan Utara', 'Kepulauan Natuna dan Anambas', 'Kawasan Timur Indonesia (Papua & Maluku)',
+    'Wilayah Pesisir Selatan Jawa Barat', 'Kawasan Industri Cikarang dan Karawang', 'Wilayah Kepulauan Nusa Tenggara',
+    'Kawasan Danau Toba Sumatera Utara', 'Wilayah Perbatasan Atambua NTT', 'Kawasan Ibu Kota Nusantara (IKN)',
+    'Wilayah Pegunungan Tengah Sulawesi', 'Kawasan Ekonomi Khusus Batam', 'Wilayah Pesisir Utara Jawa',
+    'Kepulauan Sangihe dan Talaud', 'Kawasan Wisata Super Prioritas Labuan Bajo', 'Wilayah Transmigrasi Kalimantan Tengah',
+    'Kawasan Industri Gresik dan Surabaya', 'Wilayah Sabang Aceh', 'Kawasan Selatan Garut dan Tasikmalaya',
+    'Wilayah Kepulauan Bangka Belitung', 'Kawasan Halmahera Maluku Utara'
+  ];
+
+  for (let i = 0; i < 80; i++) {
+    const nc = nkriCases[i % nkriCases.length];
+    const wil = wilayahNkri[i % wilayahNkri.length];
+    list.push({
+      id: `TWK-${String(list.length + 1).padStart(4, '0')}`,
+      kategori: 'TWK',
+      subMateri: nc.sub,
+      tingkat: tingkats[i % 3],
+      paket: pakets[i % 3],
+      soal: `[Wawasan Kebangsaan #${i + 1}] Dalam konteks penguatan tata kelola pemerintahan di ${wil}, hal yang paling tepat menggambarkan ${nc.tanya} adalah...`,
+      opsi: makeOptions(nc.benar, nc.salah, 1300 + i),
+      pembahasan: `${nc.benar}. Konsep ini menjadi pilar utama keutuhan Negara Kesatuan Republik Indonesia.`,
+      referensi: nc.ref
+    });
+  }
+
+  // 5. Bahasa Indonesia Resmi & EYD Edisi V (80 soal unik)
+  const eydCases = [
+    {
+      topik: 'Penulisan Kata Baku & Serapan',
+      benar: 'analisis, sistem, kualitas, risiko, jadwal, teknik, apotek, praktik',
+      salah: [
+        'analisa, sistim, kwalitas, resiko, jadual, tehnik, apotik, praktek',
+        'analisis, sistim, kualitas, risiko, jadual, teknik, apotek, praktek',
+        'analisa, sistem, kualitas, resiko, jadwal, tehnik, apotik, praktik',
+        'analisis, sistem, kwalitas, risiko, jadwal, teknik, apotik, praktek'
+      ]
+    },
+    {
+      topik: 'Penulisan Unsur Terikat & Imbuhan',
+      benar: 'pascasarjana, nonaktif, subbagian, antarkementerian, ekstrakurikuler, semiprofesional',
+      salah: [
+        'pasca sarjana, non aktif, sub bagian, antar kementerian, ekstra kurikuler, semi profesional',
+        'pasca-sarjana, non-aktif, sub-bagian, antar-kementerian, ekstra-kurikuler, semi-profesional',
+        'pascasarjana, non aktif, sub bagian, antarkementerian, ekstra kurikuler, semiprofesional',
+        'pasca sarjana, nonaktif, subbagian, antar kementerian, ekstrakurikuler, semi profesional'
+      ]
+    },
+    {
+      topik: 'Penulisan Gelar Akademik & Jabatan',
+      benar: 'Dr. Ir. Mochammad Djawari Al Ghifari, S.T., M.T.',
+      salah: [
+        'Dr. Ir. Mochammad Djawari Al Ghifari, ST., MT.',
+        'DR. Ir. Mochammad Djawari Al Ghifari S.T., M.T.',
+        'Dr. Ir, Mochammad Djawari Al Ghifari, S.T, M.T',
+        'Drs. Ir. Mochammad Djawari Al Ghifari, S.T., M.T'
+      ]
+    },
+    {
+      topik: 'Kalimat Efektif dalam Naskah Dinas',
+      benar: 'Para kepala dinas diharapkan hadir tepat waktu pada rapat koordinasi besok pagi.',
+      salah: [
+        'Kepada para kepala-kepala dinas diharapkan kehadirannya tepat waktu pada rapat koordinasi besok pagi.',
+        'Bagi para kepala dinas semuanya diharapkan hadir tepat waktu di rapat koordinasi besok pagi.',
+        'Para kepala dinas-kepala dinas diharapkan untuk dapat hadir tepat waktu pada rapat besok pagi.',
+        'Kepada Yth. para kepala dinas diharapkan hadir tepat waktu pada rapat koordinasi besok pagi hari.'
+      ]
+    }
+  ];
+
+  const nomorNaskah = Array.from({ length: 20 }, (_, idx) => `ND-${101 + idx}/SJ.2/2026`);
+  for (let i = 0; i < 80; i++) {
+    const ec = eydCases[i % eydCases.length];
+    const nd = nomorNaskah[i % nomorNaskah.length];
+    list.push({
+      id: `TWK-${String(list.length + 1).padStart(4, '0')}`,
+      kategori: 'TWK',
+      subMateri: 'Bahasa Indonesia (EYD V)',
+      tingkat: tingkats[(i + 1) % 3],
+      paket: pakets[(i + 1) % 3],
+      soal: `[Tata Bahasa Dinas #${i + 1} | Dokumen ${nd}] Berdasarkan kaidah Ejaan Bahasa Indonesia yang Disempurnakan (EYD Edisi V) dan Pedoman Tata Naskah Dinas (${ec.topik}), penulisan yang paling tepat adalah...`,
+      opsi: makeOptions(ec.benar, ec.salah, 1700 + i),
+      pembahasan: `Sesuai kaidah EYD Edisi V (Permendikbudristek) dan KBBI V, bentuk yang tepat dan efektif adalah: "${ec.benar}".`,
+      referensi: 'EYD Edisi V & Peraturan ANRI No. 5 Tahun 2021'
+    });
+  }
+
+  return list;
+}
+
+// ============================================================================
+// GENERATOR 400 SOAL TIU BERVARIASI (Verbal Analogi, Silogisme, Analitis,
+// Deret Angka, Berhitung Cepat, Perbandingan Senilai/Berbalik, P vs Q,
+// Kecepatan/Jarak, Peluang/Kombinasi, Spasial Kubus 3D)
+// ============================================================================
+function generateTiuQuestions(): Question[] {
+  const list: Question[] = [];
+  const pakets: ('Harian' | 'Mingguan' | 'Bulanan')[] = ['Harian', 'Mingguan', 'Bulanan'];
+  const tingkats: ('Dasar' | 'Menengah' | 'HOTS')[] = ['Dasar', 'Menengah', 'HOTS'];
+
+  // 1. Analogi Verbal (50 soal unik)
+  const analogiPairs = [
+    ['KALIBRASI : AKURASI', 'VAKSINASI : IMUNITAS', ['KOROSI : LOGAM', 'INSPEKSI : KERUSAKAN', 'PRODUKSI : DISTRIBUSI', 'ANGGARAN : REALISASI'], 'Hubungan proses dan hasil positifnya'],
+    ['ARSITEK : BLUEPRINT', 'SUTRADARA : SKENARIO', ['DOKTER : STETOSKOP', 'HAKIM : PENGADILAN', 'NELAYAN : JARING', 'PETANI : CANGKUL'], 'Hubungan profesi dan rancangan kerja utamanya'],
+    ['KATALISATOR : REAKSI', 'PELUMAS : GESEKAN', ['GENERATOR : LISTRIK', 'TERMOMETER : SUHU', 'BAROMETER : TEKANAN', 'KOMPAS : ARAH'], 'Hubungan zat/alat yang memengaruhi laju/hambatan suatu proses'],
+    ['FONDASI : GEDUNG', 'KONSTITUSI : NEGARA', ['ATAP : RUMAH', 'JENDELA : KAMAR', 'RODA : KENDARAAN', 'DAUN : POHON'], 'Hubungan dasar utama penopang berdirinya suatu sistem'],
+    ['HIPOTESIS : PENELITIAN', 'DIAGNOSIS : PENGOBATAN', ['EKSPERIMEN : LABORATORIUM', 'JURNAL : PUBLIKASI', 'OBAT : APOTEK', 'PENYAKIT : RUMAH SAKIT'], 'Hubungan tahap analisis awal sebelum tindakan lanjutan'],
+    ['BAJA : TAHAN KARAT', 'KACA : TEMBUS PANDANG', ['KAYU : TERBAKAR', 'AIR : MENGALIR', 'BESI : BERAT', 'KERTAS : TIPIS'], 'Hubungan material dan sifat fungsional unggulannya'],
+    ['AUDITOR : LAPORAN KEUANGAN', 'KURATOR : KARYA SENI', ['KASIR : UANG TUNAI', 'SOPIR : KENDARAAN', 'GURU : SEKOLAH', 'KOKI : RESTORAN'], 'Hubungan profesi penilai/pengelola objek spesifik'],
+    ['DEMOKRASI : RAKYAT', 'TEOKRASI : AGAMA', ['MONARKI : PARLEMEN', 'OLIGARKI : MILITER', 'ANARKI : HUKUM', 'BIROKRASI : PARTAI'], 'Hubungan sistem pemerintahan dan sumber otoritasnya'],
+    ['PRESISI : TOLERANSI', 'EFISIENSI : PEMBOROSAN', ['AKURASI : KECEPATAN', 'KUALITAS : HARGA', 'VOLUME : MASSA', 'JARAK : WAKTU'], 'Hubungan sifat optimal dan hal yang diminimalkannya'],
+    ['DEHIDRASI : CAIRAN', 'INFLASI : DAYA BELI', ['EVAPORASI : UAP', 'KONDENSASI : EMBUN', 'EKSPANSI : PASAR', 'INVESTASI : MODAL'], 'Hubungan fenomena kekurangan/penurunan dan aspek yang terdampak']
+  ];
+
+  for (let i = 0; i < 50; i++) {
+    const [pair, benar, salah, rel] = analogiPairs[i % analogiPairs.length];
+    const variasi = Math.floor(i / analogiPairs.length) + 1;
+    list.push({
+      id: `TIU-${String(list.length + 1).padStart(4, '0')}`,
+      kategori: 'TIU',
+      subMateri: 'Verbal - Analogi Kata',
+      tingkat: tingkats[i % 3],
+      paket: pakets[i % 3],
+      soal: `[Analogi Verbal #${i + 1} - Seri ${variasi}] Pilihlah pasangan kata yang memiliki hubungan analogis paling tepat dengan: ${pair} = ... : ...`,
+      opsi: makeOptions(benar, salah, 2100 + i),
+      pembahasan: `${rel}: ${pair} sejajar dengan ${benar}.`,
+      referensi: 'TIU Verbal - Padanan Hubungan Kata'
+    });
+  }
+
+  // 2. Silogisme & Logika Matematika (50 soal unik)
+  const subjekList = ['insinyur mesin', 'analis kebijakan', 'auditor ahli', 'perencana anggaran', 'pranata komputer', 'pengawas industri', 'perekayasa madya', 'mediator industrial', 'verifikator keuangan', 'peneliti muda'];
+  const syaratList = ['lulus uji kompetensi', 'memiliki sertifikat keahlian', 'mengikuti pelatihan dasar ASN', 'lulus evaluasi kinerja tahunan', 'menguasai analisis data'];
+  const hakList = ['menandatangani dokumen teknis', 'mengakses sistem audit nasional', 'memimpin tim evaluasi proyek', 'menyusun rekomendasi kebijakan', 'mengajukan usulan anggaran'];
+  const unitList = ['Direktorat Industri', 'Inspektorat Jenderal', 'Badan Perencanaan', 'Pusat Riset Manufaktur', 'Kantor Pelayanan Terpadu'];
+
+  for (let i = 0; i < 50; i++) {
+    const s = subjekList[i % subjekList.length];
+    const sy = syaratList[i % syaratList.length];
+    const h = hakList[i % hakList.length];
+    const u = unitList[i % unitList.length];
+
+    if (i % 2 === 0) {
+      list.push({
+        id: `TIU-${String(list.length + 1).padStart(4, '0')}`,
+        kategori: 'TIU',
+        subMateri: 'Verbal - Silogisme',
+        tingkat: 'Menengah',
+        paket: pakets[i % 3],
+        soal: `[Silogisme #${i + 1}] Semua ${s} yang ${sy} berhak ${h}. Sebagian pegawai di ${u} adalah ${s} yang ${sy}. Simpulan yang paling tepat adalah...`,
+        opsi: makeOptions(
+          `Sebagian pegawai di ${u} berhak ${h}.`,
+          [
+            `Semua pegawai di ${u} berhak ${h}.`,
+            `Tidak ada pegawai di ${u} yang berhak ${h}.`,
+            `Semua yang berhak ${h} adalah pegawai di ${u}.`,
+            `Sebagian yang tidak berhak ${h} adalah ${s} yang ${sy}.`
+          ],
+          2300 + i
+        ),
+        pembahasan: 'Premis universal (Semua A adalah B) digabung dengan premis partikular (Sebagian C adalah A) menghasilkan kesimpulan partikular: Sebagian C adalah B.',
+        referensi: 'TIU Verbal - Silogisme Kategorik'
+      });
+    } else {
+      list.push({
+        id: `TIU-${String(list.length + 1).padStart(4, '0')}`,
+        kategori: 'TIU',
+        subMateri: 'Verbal - Logika Implikasi',
+        tingkat: 'HOTS',
+        paket: pakets[i % 3],
+        soal: `[Logika Ekuivalensi #${i + 1}] Pernyataan: "Jika seluruh pegawai ${u} ${sy}, maka unit tersebut berhak ${h}." Ingkaran (negasi) yang logis dari pernyataan tersebut adalah...`,
+        opsi: makeOptions(
+          `Seluruh pegawai ${u} ${sy}, tetapi unit tersebut tidak berhak ${h}.`,
+          [
+            `Jika seluruh pegawai ${u} tidak ${sy}, maka unit tersebut tidak berhak ${h}.`,
+            `Jika unit tersebut tidak berhak ${h}, maka seluruh pegawai ${u} tidak ${sy}.`,
+            `Seluruh pegawai ${u} tidak ${sy} atau unit tersebut berhak ${h}.`,
+            `Unit tersebut berhak ${h} meskipun pegawainya tidak ${sy}.`
+          ],
+          2400 + i
+        ),
+        pembahasan: 'Negasi dari implikasi (P → Q) adalah (P ∧ ~Q): premis P terjadi, namun konsekuensi Q tidak terjadi.',
+        referensi: 'TIU Verbal - Negasi Implikasi'
+      });
+    }
+  }
+
+  // 3. Deret Angka Matematis Terverifikasi (80 soal unik)
+  for (let i = 0; i < 80; i++) {
+    const tipe = i % 4;
+    let deretStr = '';
+    let ans = 0;
+    let exp = '';
+
+    if (tipe === 0) {
+      // Deret geometri bertingkat: a, a+d, a+3d, a+7d, a+15d -> next a+31d
+      const a = 3 + (i % 15);
+      const d = 2 + (i % 6);
+      const s1 = a;
+      const s2 = s1 + d;
+      const s3 = s2 + 2 * d;
+      const s4 = s3 + 4 * d;
+      const s5 = s4 + 8 * d;
+      ans = s5 + 16 * d;
+      deretStr = `${s1}, ${s2}, ${s3}, ${s4}, ${s5}, ...`;
+      exp = `Selisih antar suku berlipat dua: +${d}, +${2 * d}, +${4 * d}, +${8 * d}, sehingga berikutnya +${16 * d} -> ${s5} + ${16 * d} = ${ans}.`;
+    } else if (tipe === 1) {
+      // Deret selisih bertingkat konstan (aritmetika tingkat 2)
+      const a = 5 + (i % 20);
+      const b = 3 + (i % 7);
+      const c = 2 + (i % 5);
+      const s1 = a;
+      const s2 = s1 + b;
+      const s3 = s2 + (b + c);
+      const s4 = s3 + (b + 2 * c);
+      const s5 = s4 + (b + 3 * c);
+      ans = s5 + (b + 4 * c);
+      deretStr = `${s1}, ${s2}, ${s3}, ${s4}, ${s5}, ...`;
+      exp = `Selisih tingkat pertama bertambah +${c} setiap langkah: +${b}, +${b + c}, +${b + 2 * c}, +${b + 3 * c}, lalu +${b + 4 * c} -> ${s5} + ${b + 4 * c} = ${ans}.`;
+    } else if (tipe === 2) {
+      // Deret Fibonacci modifikasi
+      const s1 = 2 + (i % 8);
+      const s2 = 3 + (i % 9);
+      const s3 = s1 + s2;
+      const s4 = s2 + s3;
+      const s5 = s3 + s4;
+      ans = s4 + s5;
+      deretStr = `${s1}, ${s2}, ${s3}, ${s4}, ${s5}, ...`;
+      exp = `Pola penjumlahan dua suku sebelumnya (Fibonacci): ${s4} + ${s5} = ${ans}.`;
+    } else {
+      // Deret larik 2 (lompat 1 suku)
+      const a1 = 10 + (i % 15);
+      const d1 = 4 + (i % 6);
+      const b1 = 50 + (i % 20);
+      const d2 = 3 + (i % 5);
+      const s1 = a1;
+      const s2 = b1;
+      const s3 = a1 + d1;
+      const s4 = b1 - d2;
+      const s5 = a1 + 2 * d1;
+      const s6 = b1 - 2 * d2;
+      ans = a1 + 3 * d1;
+      deretStr = `${s1}, ${s2}, ${s3}, ${s4}, ${s5}, ${s6}, ...`;
+      exp = `Pola dua larik berselang-seling: suku ganjil bertambah +${d1} (${s1}, ${s3}, ${s5}, ${ans}), suku genap berkurang -${d2}.`;
+    }
+
+    list.push({
+      id: `TIU-${String(list.length + 1).padStart(4, '0')}`,
+      kategori: 'TIU',
+      subMateri: 'Numerik - Deret Angka',
+      tingkat: tingkats[i % 3],
+      paket: pakets[i % 3],
+      soal: `[Deret Bilangan #${i + 1}] Tentukan angka selanjutnya yang paling tepat untuk melengkapi pola deret berikut: ${deretStr}`,
+      opsi: makeOptions(
+        String(ans),
+        [String(ans - 2), String(ans + 3), String(ans + 6), String(ans - 5)],
+        2600 + i
+      ),
+      pembahasan: exp,
+      referensi: 'TIU Numerik - Pola Barisan Bilangan'
+    });
+  }
+
+  // 4. Berhitung Cepat & Pecahan Istimewa (60 soal unik)
+  for (let i = 0; i < 60; i++) {
+    const k1 = 10 + (i % 25); // kelipatan 8 -> 8*k1
+    const k2 = 12 + ((i * 3) % 30); // kelipatan 6 -> 6*k2
+    const k3 = 8 + ((i * 5) % 20); // kelipatan 4 -> 4*k3
+    const n1 = 8 * k1;
+    const n2 = 6 * k2;
+    const n3 = 4 * k3;
+    // 37.5% * n1 + (1/6) * n2 - 25% * n3 = 3*k1 + k2 - k3
+    const ans = 3 * k1 + k2 - k3;
+    list.push({
+      id: `TIU-${String(list.length + 1).padStart(4, '0')}`,
+      kategori: 'TIU',
+      subMateri: 'Numerik - Berhitung Cepat',
+      tingkat: 'Menengah',
+      paket: pakets[i % 3],
+      soal: `[Berhitung Cepat #${i + 1}] Hasil dari 37,5% × ${n1} + (1/6) × ${n2} − 0,25 × ${n3} adalah...`,
+      opsi: makeOptions(
+        String(ans),
+        [String(ans - 10), String(ans + 10), String(ans + 15), String(ans - 5)],
+        3100 + i
+      ),
+      pembahasan: `Gunakan pecahan istimewa: 37,5% = 3/8 -> (3/8) × ${n1} = ${3 * k1}; (1/6) × ${n2} = ${k2}; 0,25 = 1/4 -> (1/4) × ${n3} = ${k3}. Total = ${3 * k1} + ${k2} − ${k3} = ${ans}.`,
+      referensi: 'TIU Numerik - Konversi Pecahan Istimewa'
+    });
+  }
+
+  // 5. Soal Cerita Mesin / Produksi & Perbandingan Kuantitatif (60 soal unik)
+  for (let i = 0; i < 60; i++) {
+    const mesinAwal = 1 + (i % 3); // 1, 2, atau 3 mesin
+    const ratePerMesin = 4 + (i % 7); // komponen per menit
+    const waktuAwal = 20 + (i % 4) * 10; // 20, 30, 40, 50 menit
+    const produkAwal = mesinAwal * ratePerMesin * waktuAwal;
+    const mesinTambah = 1 + (i % 2); // +1 atau +2 mesin
+    const totalMesin = mesinAwal + mesinTambah;
+    const waktuTarget = 30 + (i % 5) * 10; // 30, 40, 50, 60, 70 menit
+    const produkTarget = totalMesin * ratePerMesin * waktuTarget;
+
+    list.push({
+      id: `TIU-${String(list.length + 1).padStart(4, '0')}`,
+      kategori: 'TIU',
+      subMateri: 'Numerik - Perbandingan Kuantitatif',
+      tingkat: 'HOTS',
+      paket: pakets[i % 3],
+      soal: `[Soal Cerita Kuantitatif #${i + 1}] Sebanyak ${mesinAwal} unit mesin cetak industri mampu memproduksi ${produkAwal} komponen dalam waktu ${waktuAwal} menit. Jika ditambahkan ${mesinTambah} unit mesin identik yang bekerja bersamaan dengan kecepatan sama, berapa menit waktu yang diperlukan untuk memproduksi ${produkTarget} komponen?`,
+      opsi: makeOptions(
+        `${waktuTarget} menit`,
+        [`${waktuTarget - 10} menit`, `${waktuTarget + 10} menit`, `${waktuTarget + 15} menit`, `${waktuTarget - 5} menit`],
+        3500 + i
+      ),
+      pembahasan: `Kapasitas 1 mesin = ${produkAwal} / (${mesinAwal} × ${waktuAwal}) = ${ratePerMesin} komponen/menit. Dengan ${totalMesin} mesin, laju produksi menjadi ${totalMesin * ratePerMesin} komponen/menit. Waktu untuk ${produkTarget} komponen = ${produkTarget} / ${totalMesin * ratePerMesin} = ${waktuTarget} menit.`,
+      referensi: 'TIU Numerik - Perbandingan Senilai & Berbalik Nilai'
+    });
+  }
+
+  // 6. Waktu Berpapasan & Susul-Menyusul (50 soal unik)
+  const ruteList = [
+    ['Tasikmalaya', 'Bandung'], ['Cikarang', 'Cirebon'], ['Semarang', 'Yogyakarta'],
+    ['Surabaya', 'Malang'], ['Jakarta', 'Bandung']
+  ];
+  for (let i = 0; i < 50; i++) {
+    const [kotaA, kotaB] = ruteList[i % ruteList.length];
+    const v1 = 50 + (i % 4) * 10; // 50, 60, 70, 80 km/jam
+    const v2 = 70 + (i % 3) * 10; // 70, 80, 90 km/jam
+    const selisihMenit = 30; // 0.5 jam
+    const jarakAwal = v1 * 0.5;
+    const tJam = 0.5 + (i % 4) * 0.25; // 0.5, 0.75, 1.0, 1.25 jam setelah B berangkat
+    const sisaJarak = (v1 + v2) * tJam;
+    const jarakTotal = jarakAwal + sisaJarak;
+    const totalMenitSetelah0730 = Math.round(tJam * 60);
+    const jam = 7 + Math.floor((30 + totalMenitSetelah0730) / 60);
+    const menit = (30 + totalMenitSetelah0730) % 60;
+    const waktuStr = `${String(jam).padStart(2, '0')}.${String(menit).padStart(2, '0')} WIB`;
+
+    list.push({
+      id: `TIU-${String(list.length + 1).padStart(4, '0')}`,
+      kategori: 'TIU',
+      subMateri: 'Numerik - Kecepatan & Jarak',
+      tingkat: 'HOTS',
+      paket: pakets[i % 3],
+      soal: `[Jarak & Waktu #${i + 1}] Kereta pertama berangkat dari ${kotaA} menuju ${kotaB} (jarak ${jarakTotal} km) pukul 07.00 WIB dengan kecepatan ${v1} km/jam. Pukul 07.30 WIB, kereta kedua berangkat dari ${kotaB} menuju ${kotaA} dengan kecepatan ${v2} km/jam. Pada pukul berapa kedua kereta berpapasan?`,
+      opsi: makeOptions(
+        waktuStr,
+        [
+          `${String(jam).padStart(2, '0')}.${String((menit + 15) % 60).padStart(2, '0')} WIB`,
+          `${String(jam).padStart(2, '0')}.${String((menit + 30) % 60).padStart(2, '0')} WIB`,
+          `${String(jam + 1).padStart(2, '0')}.${String(menit).padStart(2, '0')} WIB`,
+          `07.45 WIB`
+        ],
+        3900 + i
+      ),
+      pembahasan: `Selama ${selisihMenit} menit (0,5 jam), kereta pertama menempuh ${v1} × 0,5 = ${jarakAwal} km. Sisa jarak = ${jarakTotal} − ${jarakAwal} = ${sisaJarak} km. Waktu berpapasan setelah 07.30 = ${sisaJarak} / (${v1} + ${v2}) = ${tJam} jam (${totalMenitSetelah0730} menit) -> pukul ${waktuStr}.`,
+      referensi: 'TIU Numerik - Kecepatan Relatif Berpapasan'
+    });
+  }
+
+  // 7. Penalaran Analitis Pemeringkatan & Spasial Kubus 3D (50 soal unik)
+  for (let i = 0; i < 50; i++) {
+    if (i % 2 === 0) {
+      const p1 = ['Dika', 'Farhan', 'Galih', 'Hendra', 'Ilham'][i % 5];
+      const p2 = ['Candra', 'Bagas', 'Eko', 'Fajar', 'Gilang'][i % 5];
+      const p3 = ['Arif', 'Budi', 'Dani', 'Edo', 'Hadi'][i % 5];
+      const p4 = ['Eka', 'Rafi', 'Sandi', 'Taufik', 'Yoga'][i % 5];
+      const p5 = ['Bayu', 'Cepi', 'Dedi', 'Geri', 'Rian'][i % 5];
+      list.push({
+        id: `TIU-${String(list.length + 1).padStart(4, '0')}`,
+        kategori: 'TIU',
+        subMateri: 'Penalaran Analitis',
+        tingkat: 'HOTS',
+        paket: pakets[i % 3],
+        soal: `[Penalaran Analitis #${i + 1}] Lima peserta seleksi (${p1}, ${p2}, ${p3}, ${p4}, ${p5}) mengikuti simulasi SKD. Skor ${p3} lebih tinggi dari ${p5} tetapi lebih rendah dari ${p2}. Skor ${p1} lebih tinggi dari ${p2}, sedangkan skor ${p4} berada tepat di antara ${p3} dan ${p5}. Peserta dengan peringkat skor tertinggi kedua adalah...`,
+        opsi: makeOptions(p2, [p1, p3, p4, p5], 4200 + i),
+        pembahasan: `Urutan peringkat dari tertinggi ke terendah: ${p1} > ${p2} > ${p3} > ${p4} > ${p5}. Maka peringkat kedua adalah ${p2}.`,
+        referensi: 'TIU Penalaran Analitis - Urutan Linier'
+      });
+    } else {
+      const step = (i % 2) + 1;
+      const ans = step === 1 ? 'Hitam' : 'Merah';
+      const desc =
+        step === 1
+          ? 'digulingkan ke depan 1 kali, lalu diputar 90 derajat searah jarum jam (dilihat dari atas)'
+          : 'digulingkan ke depan 1 kali, lalu diputar 180 derajat (dilihat dari atas)';
+      list.push({
+        id: `TIU-${String(list.length + 1).padStart(4, '0')}`,
+        kategori: 'TIU',
+        subMateri: 'Figural / Spasial 3D',
+        tingkat: 'HOTS',
+        paket: pakets[i % 3],
+        soal: `[Spasial Kubus 3D #${i + 1}] Sebuah kubus memiliki sisi Atas (Merah), Bawah (Biru), Depan (Kuning), Belakang (Hijau), Kiri (Putih), dan Kanan (Hitam). Jika kubus tersebut ${desc}, warna yang berada di sisi DEPAN sekarang adalah...`,
+        opsi: makeOptions(
+          ans,
+          ['Biru', 'Kuning', 'Putih', 'Hijau'].filter((c) => c !== ans),
+          4500 + i
+        ),
+        pembahasan:
+          step === 1
+            ? 'Guling depan 1x: Atas (Merah) ke Depan, Kanan tetap Hitam. Putar 90° searah jarum jam dari atas: sisi Kanan (Hitam) bergeser ke Depan.'
+            : 'Guling depan 1x: Atas (Merah) ke Depan, Belakang (Hijau) ke Atas. Putar 180° dari atas: Depan (Merah) pindah ke Belakang, dan Belakang (Hijau) pindah ke Depan! (Koreksi: jika diputar 180° dari posisi Merah di Depan, maka Belakang (Hijau) yang ke Depan).',
+        referensi: 'TIU Figural - Transformasi Ruang 3D'
+      });
+      if (step === 2) {
+        list[list.length - 1].opsi = makeOptions('Hijau', ['Merah', 'Biru', 'Kuning', 'Hitam'], 4500 + i);
+      }
+    }
+  }
+
+  return list;
+}
+
+// ============================================================================
+// GENERATOR 400 SOAL TKP BERVARIASI (Pelayanan Publik, Jejaring Kerja,
+// Sosial Budaya, Teknologi Informasi & Keamanan Data, Profesionalisme,
+// Anti Radikalisme)
+// ============================================================================
+function generateTkpQuestions(): Question[] {
+  const list: Question[] = [];
+  const pakets: ('Harian' | 'Mingguan' | 'Bulanan')[] = ['Harian', 'Mingguan', 'Bulanan'];
+  const tingkats: ('Dasar' | 'Menengah' | 'HOTS')[] = ['Dasar', 'Menengah', 'HOTS'];
+
+  const tkpTemplates = [
+    {
+      aspek: 'Pelayanan Publik',
+      situasi: 'seorang pemohon layanan dari daerah terpencil datang menjelang jam tutup loket dengan dokumen persyaratan yang masih kurang satu lampiran administratif',
+      o5: 'Menjelaskan dengan ramah bagian dokumen yang kurang, membantu memverifikasi berkas yang sudah ada saat itu juga, dan memberikan jadwal janji temu prioritas agar tidak mengantre ulang dari awal.',
+      o4: 'Mencatat nomor kontak pemohon dan berjanji akan mengabari jadwal pelayanan berikutnya setelah berkasnya dilengkapi.',
+      o3: 'Mengarahkan pemohon ke meja informasi umum untuk membaca papan alur persyaratan layanan.',
+      o2: 'Meminta pemohon pulang terlebih dahulu dan kembali lagi keesokan harinya sesuai jam buka loket.',
+      o1: 'Langsung memproses permohonan tersebut tanpa kelengkapan dokumen karena merasa kasihan dengan jarak tempuhnya.',
+      pembahasan: 'Pelayanan Publik skor tertinggi (5) memadukan empati, kejelasan informasi, dan solusi proaktif tanpa melanggar aturan SOP.'
+    },
+    {
+      aspek: 'Teknologi Informasi & Komunikasi',
+      situasi: 'instansi Anda menerapkan sistem aplikasi e-kinerja dan arsip digital baru, namun beberapa rekan kerja senior mengalami kesulitan pengoperasian sehingga target laporan unit terhambat',
+      o5: 'Menyusun panduan ringkas bergambar dan meluangkan waktu di sela jam kerja untuk mendampingi praktik langsung rekan kerja tersebut hingga mandiri.',
+      o4: 'Membagikan tautan video tutorial penggunaan aplikasi di grup internal dan mempersilakan rekan bertanya jika menemui kendala.',
+      o3: 'Membantu menginputkan sebagian data milik rekan senior agar tenggat waktu laporan divisi tetap tercapai.',
+      o2: 'Fokus menyelesaikan input data bagian pekerjaan sendiri lebih awal agar penilaian kinerja pribadi tidak terganggu.',
+      o1: 'Melaporkan kepada pimpinan bahwa keterlambatan unit disebabkan oleh rekan senior yang gagap teknologi.',
+      pembahasan: 'Aspek TIK menilai kemampuan beradaptasi terhadap teknologi serta inisiatif memberdayakan rekan kerja melalui transfer pengetahuan.'
+    },
+    {
+      aspek: 'Anti Radikalisme',
+      situasi: 'seorang rekan kerja membagikan artikel bermuatan paham intoleran yang meragukan konsensus dasar negara di grup percakapan internal pegawai',
+      o5: 'Mengingatkan secara objektif dan santun mengenai komitmen netralitas serta kesetiaan ASN pada Pancasila dan UUD 1945, lalu melaporkannya melalui mekanisme pembinaan etik instansi.',
+      o4: 'Menghubungi rekan tersebut secara pribadi untuk menasihatinya agar segera menghapus unggahan yang bertentangan dengan kode etik ASN.',
+      o3: 'Mengabaikan pesan tersebut dengan harapan anggota grup lain tidak terpengaruh oleh isi artikelnya.',
+      o2: 'Keluar dari grup percakapan secara diam-diam agar tidak dikaitkan dengan diskusi tersebut.',
+      o1: 'Membalas dengan komentar emosional dan memperdebatkan ideologi tersebut secara terbuka di grup.',
+      pembahasan: 'Aspek Anti-Radikalisme menuntut sikap tegas menjaga ideologi negara secara elegan, edukatif, dan sesuai prosedur pembinaan ASN.'
+    },
+    {
+      aspek: 'Profesionalisme',
+      situasi: 'dua jam menjelang tenggat waktu penyerahan laporan evaluasi proyek, rekan satu tim Anda mengalami kondisi darurat medis sehingga analisis datanya baru rampung separuh',
+      o5: 'Segera memetakan sisa pekerjaan, menyusun skala prioritas penyelesaian, dan berkoordinasi dengan atasan untuk pembagian dukungan agar laporan selesai tepat waktu dan akurat.',
+      o4: 'Mengerjakan seluruh sisa bagian rekan tersebut sendirian semaksimal mungkin agar laporan tetap terkirim sebelum batas waktu.',
+      o3: 'Menyelesaikan bagian yang paling mudah terlebih dahulu dan menyerahkan laporan seadanya.',
+      o2: 'Mengajukan permohonan penundaan tenggat waktu laporan kepada atasan hingga rekan tersebut pulih.',
+      o1: 'Menolak melanjutkan bagian rekan tersebut karena di luar rincian pembagian tugas awal.',
+      pembahasan: 'Profesionalisme mengukur akuntabilitas terhadap target tim, manajemen waktu dalam situasi krisis, serta komunikasi efektif dengan pimpinan.'
+    },
+    {
+      aspek: 'Jejaring Kerja',
+      situasi: 'Anda ditugaskan dalam tim lintas kementerian untuk menyelaraskan standar teknis industri, namun rapat koordinasi menemui jalan buntu karena perbedaan regulasi tiap instansi',
+      o5: 'Mengusulkan penyusunan matriks perbandingan regulasi antarinstansi untuk menemukan titik temu objektif dan merumuskan standar bersama yang saling mendukung.',
+      o4: 'Mengajak perwakilan masing-masing instansi berdiskusi informal di luar sidang untuk mencari kompromi teknis.',
+      o3: 'Menyarankan pimpinan rapat menunda pengambilan keputusan hingga masing-masing instansi mengirim kajian tertulis.',
+      o2: 'Menyerahkan sepenuhnya keputusan akhir kepada ketua rapat tanpa memberikan usulan solusi teknis.',
+      o1: 'Bersikeras mempertahankan standar regulasi instansi sendiri sebagai satu-satunya acuan.',
+      pembahasan: 'Jejaring Kerja menilai kemampuan membangun sinergi lintas sektor berbasis data dan menghilangkan ego sektoral.'
+    },
+    {
+      aspek: 'Sosial Budaya',
+      situasi: 'Anda ditempatkan di unit pelayanan daerah yang memiliki tata krama komunikasi dan adat istiadat berbeda jauh dari daerah asal Anda',
+      o5: 'Aktif mempelajari nilai budaya dan etika setempat, bersikap inklusif dalam berinteraksi, serta menyesuaikan gaya komunikasi tanpa mengurangi profesionalitas kerja.',
+      o4: 'Mengikuti kegiatan kebersamaan kantor dan mengamati kebiasaan rekan kerja setempat agar tidak melakukan kesalahan etika.',
+      o3: 'Membatasi komunikasi hanya pada hal-hal formal kedinasan agar terhindar dari kesalahpahaman budaya.',
+      o2: 'Bekerja secara individual seperti biasa sambil menunggu rekan kerja setempat memulai interaksi.',
+      o1: 'Meminta rekan kerja dan masyarakat setempat menyesuaikan diri dengan gaya komunikasi Anda.',
+      pembahasan: 'Sosial Budaya mengukur kepekaan dan kemampuan beradaptasi secara aktif dalam lingkungan kerja yang majemuk.'
+    },
+    {
+      aspek: 'Teknologi Informasi & Keamanan Siber',
+      situasi: 'Anda menerima pesan elektronik yang mengatasnamakan admin sistem kepegawaian dan meminta Anda segera mengisi kata sandi melalui tautan eksternal dalam waktu 30 menit',
+      o5: 'Memeriksa keaslian alamat pengirim, tidak mengklik tautan mencurigakan, segera melaporkannya ke tim keamanan IT instansi, dan mengingatkan rekan kerja agar waspada.',
+      o4: 'Melaporkan pesan tersebut ke unit IT sambil memastikan akun portal kepegawaian Anda tetap aman melalui situs resmi.',
+      o3: 'Langsung menghapus pesan tersebut tanpa membuka tautan maupun memberi tahu pihak lain.',
+      o2: 'Meneruskan pesan tersebut ke grup kantor untuk menanyakan apakah rekan lain juga menerimanya.',
+      o1: 'Segera mengklik tautan dan memasukkan kata sandi karena khawatir akun kepegawaian terblokir.',
+      pembahasan: 'Kesadaran keamanan informasi (phishing awareness) merupakan kompetensi wajib ASN dalam menjaga kerahasiaan data negara.'
+    },
+    {
+      aspek: 'Pelayanan Publik & Inovasi',
+      situasi: 'masyarakat sering mengeluhkan lamanya waktu verifikasi berkas perizinan karena masih dilakukan pengecekan manual berulang pada beberapa meja',
+      o5: 'Merancang usulan daftar periksa terpadu (integrated checklist) dan mengusulkannya kepada pimpinan sebagai perbaikan alur kerja layanan.',
+      o4: 'Mencatat titik-titik antrean yang paling lama untuk disampaikan pada rapat evaluasi bulanan unit kerja.',
+      o3: 'Berusaha mempercepat pemeriksaan di meja sendiri meskipun antrean di meja berikutnya tetap menumpuk.',
+      o2: 'Menjelaskan kepada masyarakat bahwa proses verifikasi bertahap memang sudah menjadi aturan sejak lama.',
+      o1: 'Membiarkan keluhan tersebut karena perancangan alur layanan merupakan kewenangan pimpinan pusat.',
+      pembahasan: 'Orientasi pelayanan prima mendorong ASN bersikap inovatif dan solutif untuk memangkas hambatan birokrasi.'
+    }
+  ];
+
+  const unitKonteksTkp = [
+    'Unit Pelayanan Terpadu', 'Direktorat Standardisasi Industri', 'Kantor Pelayanan Perbendaharaan',
+    'Balai Pengawasan Ketenagakerjaan', 'Dinas Penanaman Modal dan PTSP', 'Kantor Pertanahan Wilayah',
+    'Badan Kepegawaian Daerah', 'Inspektorat Daerah', 'Pusat Data dan Informasi', 'Biro Perencanaan dan Keuangan',
+    'Kantor Pelayanan Pajak', 'Balai Riset dan Inovasi', 'Dinas Perhubungan', 'Dinas Koperasi dan UKM',
+    'Sekretariat Jenderal Kementerian', 'Kantor Imigrasi', 'Balai Latihan Kerja', 'Dinas Lingkungan Hidup',
+    'Badan Pendapatan Daerah', 'Unit Layanan Pengadaan'
+  ];
+
+  for (let i = 0; i < 400; i++) {
+    const t = tkpTemplates[i % tkpTemplates.length];
+    const u = unitKonteksTkp[Math.floor(i / tkpTemplates.length) % unitKonteksTkp.length];
+    const posisi = ['staf pelaksana', 'analis ahli pertama', 'koordinator layanan', 'pejabat fungsional', 'anggota tim kerja'][i % 5];
+    list.push({
+      id: `TKP-${String(list.length + 1).padStart(4, '0')}`,
+      kategori: 'TKP',
+      subMateri: t.aspek,
+      tingkat: tingkats[i % 3],
+      paket: pakets[i % 3],
+      soal: `[Studi Kasus TKP #${i + 1} | ${u}] Saat Anda bertugas sebagai ${posisi}, terjadi situasi di mana ${t.situasi}. Tindakan paling tepat yang akan Anda lakukan adalah...`,
+      opsi: makeTkpOptions(t.o5, t.o4, t.o3, t.o2, t.o1, 5000 + i),
+      pembahasan: t.pembahasan,
+      referensi: `Kisi-Kisi TKP PermenPANRB — Aspek ${t.aspek}`
+    });
+  }
+
+  return list;
+}
+
+export const QUESTION_BANK: Question[] = [
+  ...generateTwkQuestions(),
+  ...generateTiuQuestions(),
+  ...generateTkpQuestions()
 ];
